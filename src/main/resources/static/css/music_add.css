@@ -1,0 +1,10 @@
+.main-container {
+    margin: 40px auto 0;
+    width: 100%;
+    height: 100%;
+}
+
+.main-content {
+    width: 500px;
+    height: 100px;
+}
