@@ -1,0 +1,82 @@
+.main-container {
+    margin-top: 108px;
+    display: flex;    
+    width: 100%;
+    height: 100%;
+}
+
+.main-aside {
+    position: fixed;
+    top: 108px;
+    left: 0;
+    right: 0;
+    width: 150px;
+}
+
+.main-aside ul {
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.main-aside ul li {
+    margin: 10px 0 0 5px;
+    list-style: none;
+}
+
+
+.main-aside ul li a {
+    text-decoration: none;
+    list-style: none;
+    font-size: 15px;
+    color: black;
+}
+
+
+
+.main-content {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 220px;
+    width: 100%;
+    height: 100%;
+}
+
+.main-infolist {
+    padding: 30px;
+    width: 33%;
+    height: 450px;
+}
+
+.main-info {
+    width: 100%;
+    height: 100%;
+
+    background-color: gray;
+    border-radius: 5px;
+}
+
+.main-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 77%;
+
+    background-color: black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.title, .singer {
+    margin: 5px 10px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
+.tag {
+    margin: 5px 10px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #660099;
+}

@@ -1,38 +1,43 @@
 .container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   border-bottom: 1px solid rgb(198, 198, 198);
+  background-color: white;
 }
 
-.left_container {
+.left-container {
   display: flex;
   align-items: center;
   margin: 20px 20px;
 }
 
-.logo_img {
+.logo-img {
   width: 60px;
   margin-right: 15px;
 
 }
 
-.left_container p {
+.left-container p {
   font-size: 20px;
   font-weight: 700;
 }
 
-.right_container {
+.right-container {
   display: flex;
 }
 
-.login_btn {
+.login-btn {
   width: 130px;
   margin-right: 10px;
 }
 
-.regist_btn {
+.regist-btn {
   width: 130px;
   margin-right: 30px;
 }
