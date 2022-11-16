@@ -1,0 +1,104 @@
+.main {
+  margin-top: 200px;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  
+  margin: 0 auto;
+
+  width: 60%;
+}
+
+.video {
+  width: 60%;
+  height: 350px;
+
+  margin-right: 20px;
+
+}
+
+.music-info {
+  width: 30%;
+  height: 350px;
+  border: 1px solid rgb(198, 198, 198);
+  border-radius: 7px;
+
+  background-color: beige;
+}
+
+.writer {
+  text-align: right;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.singer {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.song-name {
+  margin-left: 10px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.song-info {
+  margin-left: 10px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.youtube-link {
+  margin-left: 10px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.modify-btn {
+  margin: 10px auto;
+  width: 55%;
+  text-align: right;
+}
+
+.comments-content {
+  margin: 10px auto;
+  width: 55%;
+}
+
+
+.comments-content p {
+  font-size: 14px;
+  font-weight: 500;
+
+
+  margin: 50px 0px 10px;
+}
+
+.comments-content input {
+  width: 90%;
+  height: 40px;
+  margin: 5px 0px;
+  border-radius: 6px;
+  border: 1px solid rgb(198, 198, 198);
+}
+
+.add-btn {
+  margin-left: 10px;
+}
+
+.regist {
+  width: 100%;
+  margin: 5px 0px;
+}
+
+.cancle {
+  width: 100%;
+  margin: 5px 0px;
+}
