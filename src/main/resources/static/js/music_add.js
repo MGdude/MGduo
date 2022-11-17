@@ -29,7 +29,6 @@ class AddEventService {
         this.#responseGenreData = Api.getInstance().getGenreApi();
         this.#responseSeasonData = Api.getInstance().getSeasonApi();
 
-        this.addSelectEvent();
         this.init();
         this.addTitleEvent();
         this.addSingerEvent();
@@ -38,32 +37,6 @@ class AddEventService {
         this.addCategoryEvent();
         this.addGenderEvent();
         this.addGenreEvent();
-        this.addSelectEvent();
-    }
-
-    addSelectEvent() {
-        this.#categoryInputObj.innerHTML = `<option value="none">분류</option>`;
-        this.#genreInputObj.innerHTML = `<option value="none">장르</option>`;
-        this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
-        this.#seasonInputObj.innerHTML = `<option value="none">계절</option>`;
-
-        this.#responseCategoryData.forEach(data => {
-            this.#categoryInputObj.innerHTML += `
-            <option value="${data.optionId}">${data.optionName}</option>
-            `;
-        });
-        
-        this.#responseGenreData.forEach(data => {
-            this.#genreInputObj.innerHTML += `
-            <option value="${data.optionId}">${data.optionName}</option>
-            `;
-        });
-        
-        this.#responseSeasonData.forEach(data => {
-            this.#seasonInputObj.innerHTML += `
-            <option value="${data.optionId}">${data.optionName}</option>
-            `;
-        });
     }
 
     init() {
@@ -75,89 +48,114 @@ class AddEventService {
         this.#genreInputObj.disabled = true;
         this.#seasonInputObj.disabled = true;
         this.#addButton.disabled = true;
+
+        this.#categoryInputObj.innerHTML = `<option value="none">분류</option>`;
+        this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
+        this.#genreInputObj.innerHTML = `<option value="none">장르</option>`;
+        this.#seasonInputObj.innerHTML = `<option value="none">계절</option>`;
     }
 
     addTitleEvent() {
         this.#titleInputObj.onkeyup = () => {
-            if(this.#titleInputObj.value.length != 0) {
-                this.#singerInputObj.disabled = false;
-            }else {
+            if(this.#titleInputObj.value.length == 0) {
                 this.#singerInputObj.disabled = true;
+            }else {
+                this.#singerInputObj.disabled = false;
             }
         }
     }
 
     addSingerEvent() {
         this.#singerInputObj.onkeyup = () => {
-            if(this.#singerInputObj.value.length != 0) {
-                this.#infoInputObj.disabled = false;
-            }else {
+            if(this.#singerInputObj.value.length == 0) {
                 this.#infoInputObj.disabled = true;
+            }else {
+                this.#infoInputObj.disabled = false;
             }
         }
     }
 
     addInfoEvent() {
         this.#infoInputObj.onkeyup = () => {
-            if(this.#infoInputObj.value.length != 0) {
-                this.#linkInputObj.disabled = false;
-            }else {
+            if(this.#infoInputObj.value.length == 0) {
                 this.#linkInputObj.disabled = true;
+            }else {
+                this.#linkInputObj.disabled = false;
             }
         }
     }
 
     addLinkEvent() {
         this.#linkInputObj.onkeyup = () => {
-            if(this.#linkInputObj.value.length != 0) {
-                this.#categoryInputObj.disabled = false;
-            }else {
+            if(this.#linkInputObj.value.length == 0) {
                 this.#categoryInputObj.disabled = true;
+            }else {
+                this.#categoryInputObj.disabled = false;
+                this.#categoryInputObj.innerHTML = `<option value="none">분류</option>`;
+                this.#responseCategoryData.forEach(data => {
+                    this.#categoryInputObj.innerHTML += `
+                    <option value="${data.optionId}">${data.optionName}</option>
+                    `;
+                });
             }
         }
     }
 
     addCategoryEvent() {
         this.#categoryInputObj.onchange = () => {
-            if(this.#categoryInputObj.value != "none") {
-                this.#genderInputObj.disabled = false;
-                
+            if(this.#categoryInputObj.value == "none") {
+                this.#genderInputObj.disabled = true;
             }else if(this.#categoryInputObj.value == "1") {
-                this.#genderInputObj.disabled = true;
+                this.#genderInputObj.disabled = false;
                 this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
-                for(let i=0; i < this.#responseGenderData-1; i++) {
+                this.#responseGenderData.forEach(data => {
+                    if (data.optionName == "coed"){
+                        return false;
+                    }
                     this.#genderInputObj.innerHTML += `
-                    <option value="${this.#responseGenderData[i].optionId}">${this.#responseGenderData[i].optionName}</option>
+                    <option value="${data.optionId}">${data.optionName}</option>
                     `;
-                }
+                });
             }else {
+                this.#genderInputObj.disabled = false;
                 this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
-                for(let i=0; i < this.#responseGenderData; i++) {
+                this.#responseGenderData.forEach(data => {
                     this.#genderInputObj.innerHTML += `
-                    <option value="${this.#responseGenderData[i].optionId}">${this.#responseGenderData[i].optionName}</option>
+                    <option value="${data.optionId}">${data.optionName}</option>
                     `;
-                }
-                this.#genderInputObj.disabled = true;
+                });
             }
         }
     }
 
     addGenderEvent() {
         this.#genderInputObj.onchange = () => {
-            if(this.#genderInputObj.value != "none") {
-                this.#genreInputObj.disabled = false;
-            }else {
+            if(this.#genderInputObj.value == "none") {
                 this.#genreInputObj.disabled = true;
+            }else {
+                this.#genreInputObj.disabled = false;
+                this.#genreInputObj.innerHTML = `<option value="none">장르</option>`;
+                this.#responseGenreData.forEach(data => {
+                    this.#genreInputObj.innerHTML += `
+                    <option value="${data.optionId}">${data.optionName}</option>
+                    `;
+                });
             }
         }
     }
     
     addGenreEvent() {
         this.#genreInputObj.onchange = () => {
-            if(this.#genreInputObj.value != "none") {
-                this.#seasonInputObj.disabled = false;
-            }else {
+            if(this.#genreInputObj.value == "none") {
                 this.#seasonInputObj.disabled = true;
+            }else {
+                this.#seasonInputObj.disabled = false;
+                this.#seasonInputObj.innerHTML = `<option value="none">계절</option>`;
+                this.#responseSeasonData.forEach(data => {
+                    this.#seasonInputObj.innerHTML += `
+                    <option value="${data.optionId}">${data.optionName}</option>
+                    `;
+                });
             }
         }
     }
@@ -214,6 +212,12 @@ class Api {
             success: response => {
                 responseData = response.data;
                 console.log(response.data);
+                console.log(response.data[0].optionId);
+                console.log(response.data[0].optionName);
+                console.log(response.data[1].optionId);
+                console.log(response.data[1].optionName);
+                console.log(response.data[2].optionId);
+                console.log(response.data[2].optionName);
             },
             error: error => {
                 console.log(error);
