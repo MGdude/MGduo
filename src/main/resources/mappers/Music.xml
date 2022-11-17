@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Music.Group.Repository.MusicRepository">
+    <select id="getCategoryOptions" resultType="com.Music.Group.Domain.SelectOption">
+        select
+            id, name
+        from
+            category
+    </select>
+    <select id="getGenderOptions" resultType="com.Music.Group.Domain.SelectOption">
+        select
+            id, name
+        from
+            gender
+    </select>
+    <select id="getGenreOptions" resultType="com.Music.Group.Domain.SelectOption">
+        select
+            id, name
+        from
+            genre
+    </select>
+    <select id="getSeasonOptions" resultType="com.Music.Group.Domain.SelectOption">
+        select
+            id, name
+        from
+            season
+        order by
+            id
+    </select>
+</mapper>

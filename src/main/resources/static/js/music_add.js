@@ -1,3 +1,283 @@
+class AddEventService {
+    #titleInputObj;
+    #singerInputObj;
+    #infoInputObj;
+    #linkInputObj;
+    #categoryInputObj;
+    #genderInputObj;
+    #genreInputObj;
+    #seasonInputObj;
+    #addButton;
+    #responseCategoryData;
+    #responseGenderData;
+    #responseGenreData;
+    #responseSeasonData;
+
+    constructor() {
+        this.#titleInputObj = document.querySelectorAll(".inputs")[0];
+        this.#singerInputObj = document.querySelectorAll(".inputs")[1];
+        this.#infoInputObj = document.querySelectorAll(".inputs")[2];
+        this.#linkInputObj = document.querySelectorAll(".inputs")[3];
+        this.#categoryInputObj = document.querySelectorAll(".inputs")[4];
+        this.#genderInputObj = document.querySelectorAll(".inputs")[5];
+        this.#genreInputObj = document.querySelectorAll(".inputs")[6];
+        this.#seasonInputObj = document.querySelectorAll(".inputs")[7];
+        this.#addButton = document.querySelector(".add-button");
+
+        this.#responseCategoryData = Api.getInstance().getCategoryApi();
+        this.#responseGenderData = Api.getInstance().getGenderApi();
+        this.#responseGenreData = Api.getInstance().getGenreApi();
+        this.#responseSeasonData = Api.getInstance().getSeasonApi();
+
+        this.addSelectEvent();
+        this.init();
+        this.addTitleEvent();
+        this.addSingerEvent();
+        this.addInfoEvent();
+        this.addLinkEvent();
+        this.addCategoryEvent();
+        this.addGenderEvent();
+        this.addGenreEvent();
+        this.addSelectEvent();
+    }
+
+    addSelectEvent() {
+        this.#categoryInputObj.innerHTML = `<option value="none">분류</option>`;
+        this.#genreInputObj.innerHTML = `<option value="none">장르</option>`;
+        this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
+        this.#seasonInputObj.innerHTML = `<option value="none">계절</option>`;
+
+        this.#responseCategoryData.forEach(data => {
+            this.#categoryInputObj.innerHTML += `
+            <option value="${data.optionId}">${data.optionName}</option>
+            `;
+        });
+        
+        this.#responseGenreData.forEach(data => {
+            this.#genreInputObj.innerHTML += `
+            <option value="${data.optionId}">${data.optionName}</option>
+            `;
+        });
+        
+        this.#responseSeasonData.forEach(data => {
+            this.#seasonInputObj.innerHTML += `
+            <option value="${data.optionId}">${data.optionName}</option>
+            `;
+        });
+    }
+
+    init() {
+        this.#singerInputObj.disabled = true;
+        this.#infoInputObj.disabled = true;
+        this.#linkInputObj.disabled = true;
+        this.#categoryInputObj.disabled = true;
+        this.#genderInputObj.disabled = true;
+        this.#genreInputObj.disabled = true;
+        this.#seasonInputObj.disabled = true;
+        this.#addButton.disabled = true;
+    }
+
+    addTitleEvent() {
+        this.#titleInputObj.onkeyup = () => {
+            if(this.#titleInputObj.value.length != 0) {
+                this.#singerInputObj.disabled = false;
+            }else {
+                this.#singerInputObj.disabled = true;
+            }
+        }
+    }
+
+    addSingerEvent() {
+        this.#singerInputObj.onkeyup = () => {
+            if(this.#singerInputObj.value.length != 0) {
+                this.#infoInputObj.disabled = false;
+            }else {
+                this.#infoInputObj.disabled = true;
+            }
+        }
+    }
+
+    addInfoEvent() {
+        this.#infoInputObj.onkeyup = () => {
+            if(this.#infoInputObj.value.length != 0) {
+                this.#linkInputObj.disabled = false;
+            }else {
+                this.#linkInputObj.disabled = true;
+            }
+        }
+    }
+
+    addLinkEvent() {
+        this.#linkInputObj.onkeyup = () => {
+            if(this.#linkInputObj.value.length != 0) {
+                this.#categoryInputObj.disabled = false;
+            }else {
+                this.#categoryInputObj.disabled = true;
+            }
+        }
+    }
+
+    addCategoryEvent() {
+        this.#categoryInputObj.onchange = () => {
+            if(this.#categoryInputObj.value != "none") {
+                this.#genderInputObj.disabled = false;
+                
+            }else if(this.#categoryInputObj.value == "1") {
+                this.#genderInputObj.disabled = true;
+                this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
+                for(let i=0; i < this.#responseGenderData-1; i++) {
+                    this.#genderInputObj.innerHTML += `
+                    <option value="${this.#responseGenderData[i].optionId}">${this.#responseGenderData[i].optionName}</option>
+                    `;
+                }
+            }else {
+                this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
+                for(let i=0; i < this.#responseGenderData; i++) {
+                    this.#genderInputObj.innerHTML += `
+                    <option value="${this.#responseGenderData[i].optionId}">${this.#responseGenderData[i].optionName}</option>
+                    `;
+                }
+                this.#genderInputObj.disabled = true;
+            }
+        }
+    }
+
+    addGenderEvent() {
+        this.#genderInputObj.onchange = () => {
+            if(this.#genderInputObj.value != "none") {
+                this.#genreInputObj.disabled = false;
+            }else {
+                this.#genreInputObj.disabled = true;
+            }
+        }
+    }
+    
+    addGenreEvent() {
+        this.#genreInputObj.onchange = () => {
+            if(this.#genreInputObj.value != "none") {
+                this.#seasonInputObj.disabled = false;
+            }else {
+                this.#seasonInputObj.disabled = true;
+            }
+        }
+    }
+
+    addSeasonEvent() {
+        this.#seasonInputObj.onchange = () => {
+            if(this.#seasonInputObj.value != "none") {
+                this.#addButton.disabled = false;
+            }else {
+                this.#addButton.disabled = true;
+            }
+        }
+    }
+
+    
+}
+
+class Api {
+    static #instance = null;
+    static getInstance() {
+      if(this.#instance == null) {
+        this.#instance = new Api();
+      }
+      return this.#instance;
+    }
+
+    getCategoryApi() {
+        let responseData = null;
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: "/api/music/option/category",
+            dataType: "json",
+            success: response => {
+                responseData = response.data;
+                console.log(response.data);
+            },
+            error: error => {
+                console.log(error);
+            }
+        });
+        return responseData;
+    }
+
+    getGenderApi() {
+        let responseData = null;
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: "/api/music/option/gender",
+            dataType: "json",
+            success: response => {
+                responseData = response.data;
+                console.log(response.data);
+            },
+            error: error => {
+                console.log(error);
+            }
+        });
+        return responseData;
+    }
+
+    getGenreApi() {
+        let responseData = null;
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: "/api/music/option/genre",
+            dataType: "json",
+            success: response => {
+                responseData = response.data;
+                console.log(response.data);
+            },
+            error: error => {
+                console.log(error);
+            }
+        });
+        return responseData;
+    }
+
+    getSeasonApi() {
+        let responseData = null;
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: "/api/music/option/season",
+            dataType: "json",
+            success: response => {
+                responseData = response.data;
+                console.log(response.data);
+            },
+            error: error => {
+                console.log(error);
+            }
+        });
+        return responseData;
+    }
+
+    addApi() {
+        $.ajax({
+            async: false,
+            type: "post",
+            url: "/api/music/add",
+            dataType: "json",
+            success: (response) => {
+                alert("Music 등록 완료");
+                location.replace("/");
+            },
+            error: (error) => {
+                alert("상품 등록 실패\n" + error.responseJSON.msg);
+                console.log(error);
+            }
+        });
+    }
+}
+
 window.onload = () => {
     new AddEventService();
 }

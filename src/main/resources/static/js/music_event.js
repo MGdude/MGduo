@@ -6,7 +6,7 @@ class AddEventService {
     #categoryInputObj;
     #genderInputObj;
     #genreInputObj;
-    #seasonInputObj;
+    #seasonInputObj;WE
     #addButton;
 
     constructor() {
