@@ -85,6 +85,7 @@ class UserData {
                 },
                 error: (error) => {
                     console.log(error);
+                    console.log(error.responseJSON.data);
                 }
     
             });
