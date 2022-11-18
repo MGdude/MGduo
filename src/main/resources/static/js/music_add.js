@@ -37,6 +37,7 @@ class AddEventService {
         this.addCategoryEvent();
         this.addGenderEvent();
         this.addGenreEvent();
+        this.addSeasonEvent();
     }
 
     init() {
@@ -162,15 +163,13 @@ class AddEventService {
 
     addSeasonEvent() {
         this.#seasonInputObj.onchange = () => {
-            if(this.#seasonInputObj.value != "none") {
-                this.#addButton.disabled = false;
-            }else {
+            if(this.#seasonInputObj.value == "none") {
                 this.#addButton.disabled = true;
+            }else {
+                this.#addButton.disabled = false;
             }
         }
     }
-
-    
 }
 
 class Api {
@@ -263,25 +262,54 @@ class Api {
         });
         return responseData;
     }
-
-    addApi() {
-        $.ajax({
-            async: false,
-            type: "post",
-            url: "/api/music/add",
-            dataType: "json",
-            success: (response) => {
-                alert("Music 등록 완료");
-                location.replace("/");
-            },
-            error: (error) => {
-                alert("상품 등록 실패\n" + error.responseJSON.msg);
-                console.log(error);
-            }
-        });
-    }
 }
 
+class MusicAdd {
+    static #instance = null;
+
+    static getInstance() {
+        if(this.#instance == null) {
+            this.#instance = new MusicAdd();
+        }
+        return this.#instance;
+    }
+
+    addApi() {
+        const addButton = document.querySelector(".add-button");
+
+        addButton.onclick = () => {
+            
+            const musicData = {
+                "userName" : "user_name",
+                "title" : document.querySelectorAll(".inputs")[0].value,
+                "singer" : document.querySelectorAll(".inputs")[1].value,
+                "info" : document.querySelectorAll(".inputs")[2].value,
+                "url" : document.querySelectorAll(".inputs")[3].value,
+                "categoryId" : document.querySelectorAll(".inputs")[4].value,
+                "genderId" : document.querySelectorAll(".inputs")[5].value,
+                "genreId" : document.querySelectorAll(".inputs")[6].value,
+                "seasonId" : document.querySelectorAll(".inputs")[7].value
+            }
+            console.log(musicData);
+            $.ajax({
+                async: false,
+                type: "post",
+                url: "/api/music/add",
+                contentType: "application/json",// 전송할 데이터가 json인 경우
+                data: JSON.stringify(musicData), // 전송할 데이터가 있으면
+                success: (response) => {
+                    alert("Music 등록 완료");
+                    location.replace("/");
+                },
+                error: (error) => {
+                    alert("Music 등록 실패\n" + error.responseJSON.msg);
+                    console.log(error);
+                }
+            });
+        }
+    }
+}
 window.onload = () => {
     new AddEventService();
+    MusicAdd.getInstance().addApi();
 }

@@ -1,5 +1,7 @@
 package com.Music.Group.Service;
 
+import com.Music.Group.Domain.Music;
+import com.Music.Group.Dto.MusicAddDto;
 import com.Music.Group.Dto.SelectOptionResponseDto;
 import com.Music.Group.Repository.MusicRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +52,10 @@ public class MusicServiceImpl implements MusicService{
             selectOptionResponseDtoList.add(SelectOption.toDto());
         });
         return selectOptionResponseDtoList;
+    }
+
+    @Override
+    public void musicAdd(MusicAddDto musicAddDto) throws Exception {
+        musicRepository.musicAdd(musicAddDto.toEntity());
     }
 }

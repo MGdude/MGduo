@@ -1,5 +1,6 @@
 package com.Music.Group.Repository;
 
+import com.Music.Group.Domain.Music;
 import com.Music.Group.Domain.SelectOption;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,4 +13,5 @@ public interface MusicRepository {
     public List<SelectOption> getGenreOptions() throws Exception;
     public List<SelectOption> getSeasonOptions() throws Exception;
 
+    public int musicAdd(Music music) throws Exception;
 }

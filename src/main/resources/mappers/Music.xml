@@ -4,6 +4,24 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.Music.Group.Repository.MusicRepository">
+    <insert id="musicAdd" parameterType="com.Music.Group.Domain.Music">
+        INSERT INTO
+            music_mst
+        VALUES(
+            0,
+            'username',
+            #{title},
+            #{singer},
+            #{info},
+            #{url},
+            #{category_id},
+            #{gender_id},
+            #{genre_id},
+            #{season_id},
+            now(),
+            now()
+            )
+    </insert>
     <select id="getCategoryOptions" resultType="com.Music.Group.Domain.SelectOption">
         select
             id, name
