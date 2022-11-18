@@ -2,7 +2,7 @@ package com.Music.Group.Service;
 
 import com.Music.Group.Domain.User;
 import com.Music.Group.Repository.AccountRepository;
-import com.Music.Group.dto.RegisterDto;
+import com.Music.Group.Dto.RegisterDto;
 import com.Music.Group.exception.CustomValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +26,16 @@ public class AccountServiceImpl implements AccountService{
             
 
             throw new CustomValidationException("Duplicate username", errorMap);
+        }
+    }
+
+    @Override
+    public void passwordChecking(RegisterDto registerDto) throws Exception {
+        if(registerDto.getPassword().equals(registerDto.getPasswordChk()) == false) {
+            Map<String, String> errorMap = new HashMap<String, String>();
+            errorMap.put("passwordChk", "Password가 일치하지 않습니다.");
+
+            throw new CustomValidationException("Password Not Match", errorMap);
         }
     }
 

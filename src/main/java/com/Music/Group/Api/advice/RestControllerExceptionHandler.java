@@ -1,6 +1,6 @@
 package com.Music.Group.Api.advice;
 
-import com.Music.Group.dto.CMRespDto;
+import com.Music.Group.Dto.CMRespDto;
 import com.Music.Group.exception.CustomInternalServerErrorException;
 import com.Music.Group.exception.CustomValidationException;
 import org.springframework.http.ResponseEntity;

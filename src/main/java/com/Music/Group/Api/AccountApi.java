@@ -3,8 +3,8 @@ package com.Music.Group.Api;
 import com.Music.Group.Service.AccountService;
 import com.Music.Group.Validation.ValidationSequence;
 import com.Music.Group.aop.annotation.LogAspect;
-import com.Music.Group.dto.CMRespDto;
-import com.Music.Group.dto.RegisterDto;
+import com.Music.Group.Dto.CMRespDto;
+import com.Music.Group.Dto.RegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,6 +25,7 @@ public class AccountApi {
     public ResponseEntity<?> register(@Validated(ValidationSequence.class) @RequestBody RegisterDto registerDto, BindingResult bindingResult) throws Exception {
 
         accountService.duplicateUsername(registerDto);
+        accountService.passwordChecking(registerDto);
         accountService.register(registerDto);
 
         return ResponseEntity.created(URI.create("/login")).body(new CMRespDto<>("success", registerDto.getUsername()));
