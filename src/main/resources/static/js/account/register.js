@@ -80,11 +80,13 @@ class UserData {
                 contentType: "application/json",
                 data: JSON.stringify(user),
                 dataType: "json",
-                success: (response) => {
+                success: (response, textStatus, request) => {
                     console.log(response);
+                    const successURI = request.getResponseHeader("Location");
+                    location.replace(successURI + "?username=" + response.data);
                 },
                 error: (error) => {
-                    console.log(error);
+                    alert(error.responseJSON.data.password);
                     console.log(error.responseJSON.data);
                 }
     
