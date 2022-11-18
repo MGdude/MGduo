@@ -50,10 +50,10 @@ class AddEventService {
         this.#seasonInputObj.disabled = true;
         this.#addButton.disabled = true;
 
-        this.#categoryInputObj.innerHTML = `<option value="none">분류</option>`;
-        this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
-        this.#genreInputObj.innerHTML = `<option value="none">장르</option>`;
-        this.#seasonInputObj.innerHTML = `<option value="none">계절</option>`;
+        this.#categoryInputObj.innerHTML = `<option value="0">분류</option>`;
+        this.#genderInputObj.innerHTML = `<option value="0">성별</option>`;
+        this.#genreInputObj.innerHTML = `<option value="0">장르</option>`;
+        this.#seasonInputObj.innerHTML = `<option value="0">계절</option>`;
     }
 
     addTitleEvent() {
@@ -92,7 +92,7 @@ class AddEventService {
                 this.#categoryInputObj.disabled = true;
             }else {
                 this.#categoryInputObj.disabled = false;
-                this.#categoryInputObj.innerHTML = `<option value="none">분류</option>`;
+                this.#categoryInputObj.innerHTML = `<option value="0">분류</option>`;
                 this.#responseCategoryData.forEach(data => {
                     this.#categoryInputObj.innerHTML += `
                     <option value="${data.optionId}">${data.optionName}</option>
@@ -104,11 +104,11 @@ class AddEventService {
 
     addCategoryEvent() {
         this.#categoryInputObj.onchange = () => {
-            if(this.#categoryInputObj.value == "none") {
+            if(this.#categoryInputObj.value == "0") {
                 this.#genderInputObj.disabled = true;
             }else if(this.#categoryInputObj.value == "1") {
                 this.#genderInputObj.disabled = false;
-                this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
+                this.#genderInputObj.innerHTML = `<option value="0">성별</option>`;
                 this.#responseGenderData.forEach(data => {
                     if (data.optionName == "coed"){
                         return false;
@@ -119,7 +119,7 @@ class AddEventService {
                 });
             }else {
                 this.#genderInputObj.disabled = false;
-                this.#genderInputObj.innerHTML = `<option value="none">성별</option>`;
+                this.#genderInputObj.innerHTML = `<option value="0">성별</option>`;
                 this.#responseGenderData.forEach(data => {
                     this.#genderInputObj.innerHTML += `
                     <option value="${data.optionId}">${data.optionName}</option>
@@ -131,11 +131,11 @@ class AddEventService {
 
     addGenderEvent() {
         this.#genderInputObj.onchange = () => {
-            if(this.#genderInputObj.value == "none") {
+            if(this.#genderInputObj.value == "0") {
                 this.#genreInputObj.disabled = true;
             }else {
                 this.#genreInputObj.disabled = false;
-                this.#genreInputObj.innerHTML = `<option value="none">장르</option>`;
+                this.#genreInputObj.innerHTML = `<option value="0">장르</option>`;
                 this.#responseGenreData.forEach(data => {
                     this.#genreInputObj.innerHTML += `
                     <option value="${data.optionId}">${data.optionName}</option>
@@ -147,11 +147,11 @@ class AddEventService {
     
     addGenreEvent() {
         this.#genreInputObj.onchange = () => {
-            if(this.#genreInputObj.value == "none") {
+            if(this.#genreInputObj.value == "0") {
                 this.#seasonInputObj.disabled = true;
             }else {
                 this.#seasonInputObj.disabled = false;
-                this.#seasonInputObj.innerHTML = `<option value="none">계절</option>`;
+                this.#seasonInputObj.innerHTML = `<option value="0">계절</option>`;
                 this.#responseSeasonData.forEach(data => {
                     this.#seasonInputObj.innerHTML += `
                     <option value="${data.optionId}">${data.optionName}</option>
@@ -163,7 +163,7 @@ class AddEventService {
 
     addSeasonEvent() {
         this.#seasonInputObj.onchange = () => {
-            if(this.#seasonInputObj.value == "none") {
+            if(this.#seasonInputObj.value == "0") {
                 this.#addButton.disabled = true;
             }else {
                 this.#addButton.disabled = false;
@@ -302,8 +302,12 @@ class MusicAdd {
                     location.replace("/");
                 },
                 error: (error) => {
-                    alert("Music 등록 실패\n" + error.responseJSON.msg);
-                    console.log(error);
+                    console.log(error.responseJSON.data);
+                    Object.values(error.responseJSON.data).forEach((errormessage,index) => {
+                        if (index == 0){
+                            alert("Music 등록 실패\n" + errormessage);
+                        }
+                    });
                 }
             });
         }

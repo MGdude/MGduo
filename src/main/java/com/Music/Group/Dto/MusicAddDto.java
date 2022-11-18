@@ -1,27 +1,38 @@
 package com.Music.Group.Dto;
 
 import com.Music.Group.Domain.Music;
-import lombok.Builder;
 import lombok.Data;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 
 @Data
 public class MusicAddDto {
 
     private String userName;
 
+    @NotBlank(message = "빈 칸을 입력, 항목을 선택해 주세요.")
     private String title;
+    @NotBlank(message = "빈 칸을 입력, 항목을 선택해 주세요.")
     private String singer;
+    @NotBlank(message = "빈 칸을 입력, 항목을 선택해 주세요.")
     private String info;
+    @NotBlank(message = "빈 칸을 입력, 항목을 선택해 주세요.")
     private String url;
+    @Min(value = 1, message = "빈 칸을 입력, 항목을 선택해 주세요.")
     private int categoryId;
+    @Min(value = 1, message = "빈 칸을 입력, 항목을 선택해 주세요.")
     private int genderId;
+    @Min(value = 1, message = "빈 칸을 입력, 항목을 선택해 주세요.")
     private int genreId;
+    @Min(value = 1, message = "빈 칸을 입력, 항목을 선택해 주세요.")
     private int seasonId;
 
 
     public Music toEntity() {
         return Music.builder()
-                .user_name(userName)
+                .username(userName)
                 .title(title)
                 .singer(singer)
                 .info(info)

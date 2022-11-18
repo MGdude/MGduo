@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class Music {
     private int id;
-    private String user_name;
+    private String username;
     private String title;
     private String singer;
     private String info;

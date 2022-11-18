@@ -1,6 +1,6 @@
 package com.Music.Group.Service;
 
-import com.Music.Group.dto.RegisterDto;
+import com.Music.Group.Dto.RegisterDto;
 
 public interface AccountService {
 

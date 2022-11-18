@@ -6,8 +6,10 @@ import com.Music.Group.Service.MusicService;
 import com.Music.Group.Service.MusicServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -38,7 +40,8 @@ public class MusicApi {
     }
 
     @PostMapping("/music/add")
-    public ResponseEntity<?> musicAdd(@RequestBody MusicAddDto musicAddDto) throws Exception {
+    public ResponseEntity<?> musicAdd(@Valid @RequestBody MusicAddDto musicAddDto, BindingResult bindingResult) throws Exception {
+        System.out.println(musicAddDto);
         musicService.musicAdd(musicAddDto);
         return ResponseEntity.created(URI.create("/")).body(new CMRespDto<>("Music add Successfully", null));
     }

@@ -1,4 +1,4 @@
-package com.Music.Group.dto;
+package com.Music.Group.Dto;
 
 import com.Music.Group.Domain.User;
 import com.Music.Group.Validation.ValidationGroup;
