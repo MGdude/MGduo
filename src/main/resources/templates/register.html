@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/header.css">
   <link rel="stylesheet" href="/static/css/register.css">
@@ -32,12 +33,13 @@
       </div>
       <div class="login-content">
         <p>회원가입</p>
-        <input class="id" type="text" placeholder="아이디를 입력해주세요" required>
+        <input class="username" type="text" placeholder="아이디를 입력해주세요" required>
         <input class="password" type="password" placeholder="비밀번호를 입력해주세요" required>
         <input class="pw-chk" type="password" placeholder="비밀번호를 다시 입력해주세요" required>
-        <button type="button" class="btn regist">회원가입하기</button>
+        <button type="submit" class="btn regist">회원가입하기</button>
         <button type="button" class="btn cancle">취소</button>
       </div>
   </main>
+  <script src="/static/js/account/register.js"></script>
 </body>
 </html>
