@@ -76,7 +76,7 @@ class UserData {
             $.ajax({
                 async: false,
                 type: "post",
-                url: "api/account/register",
+                url: "/api/account/register",
                 contentType: "application/json",
                 data: JSON.stringify(user),
                 dataType: "json",

@@ -4,9 +4,9 @@ import lombok.Getter;
 
 import java.util.Map;
 
+@Getter
 public class CustomValidationException extends RuntimeException{
 
-    @Getter
     private Map<String, String> errorMap;
 
     public CustomValidationException(String message, Map<String, String> errorMap) {
