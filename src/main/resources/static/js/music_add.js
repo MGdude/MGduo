@@ -278,13 +278,19 @@ class MusicAdd {
         const addButton = document.querySelector(".add-button");
 
         addButton.onclick = () => {
-            
+            let youtubeUrl = document.querySelectorAll(".inputs")[3].value;
+            console.log(youtubeUrl);
+            youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('/') + 1);
+            if (youtubeUrl.includes('=')) {
+                youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('=') + 1);
+            }
+
             const musicData = {
                 "userName" : "user_name",
                 "title" : document.querySelectorAll(".inputs")[0].value,
                 "singer" : document.querySelectorAll(".inputs")[1].value,
                 "info" : document.querySelectorAll(".inputs")[2].value,
-                "url" : document.querySelectorAll(".inputs")[3].value,
+                "url" : youtubeUrl,
                 "categoryId" : document.querySelectorAll(".inputs")[4].value,
                 "genderId" : document.querySelectorAll(".inputs")[5].value,
                 "genreId" : document.querySelectorAll(".inputs")[6].value,

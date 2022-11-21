@@ -41,8 +41,12 @@ public class MusicApi {
 
     @PostMapping("/music/add")
     public ResponseEntity<?> musicAdd(@Valid @RequestBody MusicAddDto musicAddDto, BindingResult bindingResult) throws Exception {
-        System.out.println(musicAddDto);
         musicService.musicAdd(musicAddDto);
         return ResponseEntity.created(URI.create("/")).body(new CMRespDto<>("Music add Successfully", null));
+    }
+
+    @GetMapping("/music/all")
+    public ResponseEntity<?> getMusicAll() throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", musicService.getMusicAll()));
     }
 }

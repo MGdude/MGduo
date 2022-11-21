@@ -43,8 +43,9 @@
 
 .main-infolist {
     padding: 30px;
-    width: 33%;
-    height: 450px;
+    width: 24%;
+    height: 350px;
+
 }
 
 .main-info {
@@ -53,6 +54,7 @@
 
     background-color: gray;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .main-img {
@@ -63,6 +65,16 @@
     height: 77%;
 
     background-color: black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.main-img img {
+    width: 100%;
+    height: 100%;
+
+    -webkit-user-drag: none;
+
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
