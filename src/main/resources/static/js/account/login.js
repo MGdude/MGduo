@@ -21,19 +21,6 @@ class ErrorName {
   }
 }
 
-class Logout {
-  static #instance = null;
-  static getInstance() {
-    if(this.#instance == null) {
-      this.#instance = new Logout();
-    }
-    return this.#instance();
-  }
-  changeMsg() {
-    const loginBtn = document.querySelector(".login-btn");
-    
-  }
-}
 
 window.onload = () => {
   ErrorName.getInstance().getErrors();

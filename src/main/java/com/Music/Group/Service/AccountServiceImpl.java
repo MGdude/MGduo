@@ -1,8 +1,6 @@
 package com.Music.Group.Service;
 
-import com.Music.Group.Domain.Login;
 import com.Music.Group.Domain.User;
-import com.Music.Group.Dto.LoginDto;
 import com.Music.Group.Repository.AccountRepository;
 import com.Music.Group.Dto.RegisterDto;
 import com.Music.Group.exception.CustomValidationException;
