@@ -1,6 +1,8 @@
 package com.Music.Group.Service;
 
+import com.Music.Group.Domain.Login;
 import com.Music.Group.Domain.User;
+import com.Music.Group.Dto.LoginDto;
 import com.Music.Group.Repository.AccountRepository;
 import com.Music.Group.Dto.RegisterDto;
 import com.Music.Group.exception.CustomValidationException;
@@ -31,7 +33,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void passwordChecking(RegisterDto registerDto) throws Exception {
-        if(registerDto.getPassword().equals(registerDto.getPasswordChk()) == false) {
+        if(!registerDto.getPassword().equals(registerDto.getPasswordChk())) {
             Map<String, String> errorMap = new HashMap<String, String>();
             errorMap.put("passwordChk", "Password가 일치하지 않습니다.");
 
@@ -48,4 +50,5 @@ public class AccountServiceImpl implements AccountService{
             System.out.println("회원가입 중 오류 발생");
         }
     }
+
 }

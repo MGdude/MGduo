@@ -54,4 +54,14 @@
         )
     </insert>
 
+    <select id="checkIdAndPw" parameterType="String" resultType="com.Music.Group.Domain.Login">
+        SELECT
+            *
+        FROM user_mst
+        WHERE
+            username = #{username}
+        AND
+            PASSWORD = #{password}
+    </select>
+
 </mapper>

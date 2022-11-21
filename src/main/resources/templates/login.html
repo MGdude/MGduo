@@ -32,11 +32,14 @@
       </div>
       <div class="login-content">
         <p>로그인</p>
-        <input class="id" type="text" th:value="${username}" placeholder="아이디를 입력해주세요" required>
-        <input class="password" type="password" placeholder="패스워드를 입력해주세요" required>
-        <button class="btn content-login">로그인</button>
-        <button class="btn content-regist">회원가입</button>
+        <form action="/login" method="post">
+          <input name="username" class="id" type="text" th:value="${username}" placeholder="아이디를 입력해주세요" required>
+          <input name="password" class="password" type="password" placeholder="패스워드를 입력해주세요" required>
+          <button class="btn content-login">로그인</button>
+          <button class="btn content-regist">회원가입</button>
+        </form>
       </div>
   </main>
+  <script src="/static/js/account/login.js"></script>
 </body>
 </html>

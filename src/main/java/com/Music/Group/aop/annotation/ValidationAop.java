@@ -16,7 +16,7 @@ import java.util.Map;
 @Aspect
 @Component
 public class ValidationAop {
-    @Pointcut("execution(* com.Music.Group.Api.AccountApi.*(..))")
+    @Pointcut("execution(* com.Music.Group.Api.AccountApi.register(..))")
     private void executionPointCut() {}
 
     @Around("executionPointCut()")
