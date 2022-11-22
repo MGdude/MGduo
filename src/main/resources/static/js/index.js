@@ -92,5 +92,7 @@ class MsuicAddEvent {
 
 
 window.onload = () => {
+    PrincipalDtl.getInstance();
+    HeaderEvent.getInstance();
     new MsuicAddEvent();
 }

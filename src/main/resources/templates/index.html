@@ -22,11 +22,13 @@
             </button>
           </div>
           <div class="right-container">
-            <form action="">
-              <button class="btn login-btn" sec:authorize="isAnonymous()">로그인</button>
-              <button class="btn login-btn" sec:authorize="isAuthenticated()">로그아웃</button>
-            </form>
-            <button class="btn regist-btn">회원가입</button>
+            <button class="btn login-btn ">로그인</button>
+            <button class="btn logout-btn ">로그아웃<button>
+            <!-- 타임리프를 이용한 로그인, 로그아웃 창 결과 -->
+            <!-- <button class="btn login-btn" sec:authorize="isAnonymous()">로그인</button>
+            <button class="btn login-btn" sec:authorize="isAuthenticated()">로그아웃</button> -->
+            <button class="btn regist-btn ">회원가입</button>
+            <button class="btn addmusic-btn ">뮤직등록</button>
           </div>
         </div>
       </header>
@@ -140,6 +142,7 @@
             
         </div>
     </mian>
+    <script src="/static/js/header.js"></script>
     <script src="/static/js/index.js"></script>
 </body>
 </html>

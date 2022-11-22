@@ -6,6 +6,11 @@ class ErrorName {
     }
     return this.#instance;
   }
+  
+  constructor() {
+    this.getErrors();
+    this.alreadyLogin();
+  }
 
   getErrors() {
     const url = location.href;
@@ -30,12 +35,27 @@ class ErrorName {
   }
 }
 
+class BtnEvent {
+  static #instance = null;
+  static getInstance() {
+    if(this.#instance == null) {
+      this.#instance = new BtnEvent();
+    }
+    return this.#instance;
+  }
 
-
+  btnEvent() {
+    const registerBtn = document.querySelector(".content-regist");
+    registerBtn.onclick = () => {
+      location.href = "/register";
+    }
+  }
+}
 
 
 window.onload = () => {
-  ErrorName.getInstance().getErrors();
-  ErrorName.getInstance().alreadyLogin();
-  PrincipalDtl.getInstance().changeBtn();
+  PrincipalDtl.getInstance();
+  HeaderEvent.getInstance();
+  ErrorName.getInstance();
+  BtnEvent.getInstance().btnEvent();
 }

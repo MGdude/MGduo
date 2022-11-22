@@ -9,7 +9,7 @@
             music_mst
         VALUES(
             0,
-            'username',
+            #{username},
             #{title},
             #{singer},
             #{info},

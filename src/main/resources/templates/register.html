@@ -22,8 +22,13 @@
         </button>
       </div>
       <div class="right-container">
-        <button class="btn login-btn">로그인</button>
-        <button class="btn regist-btn">회원가입</button>
+        <button class="btn login-btn ">로그인</button>
+        <button class="btn logout-btn ">로그아웃<button>
+        <!-- 타임리프를 이용한 로그인, 로그아웃 창 결과 -->
+        <!-- <button class="btn login-btn" sec:authorize="isAnonymous()">로그인</button>
+        <button class="btn login-btn" sec:authorize="isAuthenticated()">로그아웃</button> -->
+        <button class="btn regist-btn ">회원가입</button>
+        <button class="btn addmusic-btn ">뮤직등록</button>
       </div>
     </div>
   </header>
@@ -36,10 +41,11 @@
         <input class="username" type="text" placeholder="아이디를 입력해주세요" required>
         <input class="password" type="password" placeholder="비밀번호를 입력해주세요" required>
         <input class="pw-chk" type="password" placeholder="비밀번호를 다시 입력해주세요" required>
-        <button type="submit" class="btn regist">회원가입하기</button>
-        <button type="button" class="btn cancle">취소</button>
+        <button type="submit" class="btn regist-button">회원가입하기</button>
+        <button type="button" class="btn cancel-button">취소</button>
       </div>
   </main>
+  <script src="/static/js/header.js"></script>
   <script src="/static/js/account/register.js"></script>
 </body>
 </html>

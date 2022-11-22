@@ -26,4 +26,9 @@ public class MusicController {
     public String loadCollections(@PathVariable String type, @PathVariable String value) {
         return "index";
     }
+
+    @GetMapping("/music/{musicId}")
+    public String loadCollections(@PathVariable int musicId) {
+        return "music_post";
+    }
 }

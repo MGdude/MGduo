@@ -106,7 +106,28 @@ class UserData {
 
 }
 
+class BtnEvent {
+    static #instance = null;
+    static getInstance() {
+        if(this.#instance == null) {
+            this.#instance = new BtnEvent();
+        }
+        return this.#instance;
+    }
+
+    btnEvent() {
+        const cancelBtn = document.querySelector(".cancel-button");
+           
+        cancelBtn.onclick = () => {
+            location.href = "/";
+        }
+      }
+}
+
 window.onload = () => {
+    PrincipalDtl.getInstance();
+    HeaderEvent.getInstance();
+    BtnEvent.getInstance().btnEvent();
     new Option();
     UserData.getInstance().getUserApi();
 }

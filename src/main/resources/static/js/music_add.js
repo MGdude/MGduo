@@ -278,6 +278,8 @@ class MusicAdd {
         const addButton = document.querySelector(".add-button");
 
         addButton.onclick = () => {
+            let userName = PrincipalDtl.getInstance().getResponseData().username;
+            
             let youtubeUrl = document.querySelectorAll(".inputs")[3].value;
             console.log(youtubeUrl);
             youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('/') + 1);
@@ -286,7 +288,7 @@ class MusicAdd {
             }
 
             const musicData = {
-                "userName" : "user_name",
+                "userName" : userName,
                 "title" : document.querySelectorAll(".inputs")[0].value,
                 "singer" : document.querySelectorAll(".inputs")[1].value,
                 "info" : document.querySelectorAll(".inputs")[2].value,
@@ -296,7 +298,7 @@ class MusicAdd {
                 "genreId" : document.querySelectorAll(".inputs")[6].value,
                 "seasonId" : document.querySelectorAll(".inputs")[7].value
             }
-            console.log(musicData);
+            // console.log(musicData);
             $.ajax({
                 async: false,
                 type: "post",
@@ -320,6 +322,8 @@ class MusicAdd {
     }
 }
 window.onload = () => {
+    PrincipalDtl.getInstance();
+    HeaderEvent.getInstance();
     new AddEventService();
     MusicAdd.getInstance().addApi();
 }
