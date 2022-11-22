@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/header.css">
   <link rel="stylesheet" href="/static/css/login.css">
@@ -21,8 +22,15 @@
         </button>
       </div>
       <div class="right-container">
-        <button class="btn login-btn">로그인</button>
-        <button class="btn regist-btn">회원가입</button>
+        <form action="">
+          <button class="btn login-btn ">로그인</button>
+          <button class="btn logout-btn ">로그아웃<button>
+          <!-- 타임리프를 이용한 로그인, 로그아웃 창 결과 -->
+          <!-- <button class="btn login-btn" sec:authorize="isAnonymous()">로그인</button>
+          <button class="btn login-btn" sec:authorize="isAuthenticated()">로그아웃</button> -->
+          <button class="btn regist-btn ">회원가입</button>
+          <button class="btn addmusic-btn ">뮤직등록</button>
+        </form>
       </div>
     </div>
   </header>
@@ -41,6 +49,6 @@
       </div>
   </main>
   <script src="/static/js/account/login.js"></script>
-  <!-- <script src="/static/js/header.js"></script> -->
+  <script src="/static/js/header.js"></script>
 </body>
 </html>

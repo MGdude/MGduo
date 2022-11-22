@@ -19,9 +19,23 @@ class ErrorName {
       alert("오류");
     }
   }
+
+  alreadyLogin() {
+    let test = PrincipalDtl.getInstance().getPrincipalData();
+    console.log(test);
+
+    if(test != "") {
+      location.replace("/");
+    }
+  }
 }
+
+
+
 
 
 window.onload = () => {
   ErrorName.getInstance().getErrors();
+  ErrorName.getInstance().alreadyLogin();
+  PrincipalDtl.getInstance().changeBtn();
 }
