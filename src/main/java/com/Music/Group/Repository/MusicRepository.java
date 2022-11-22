@@ -14,4 +14,7 @@ public interface MusicRepository {
     public List<SelectOption> getSeasonOptions() throws Exception;
 
     public int musicAdd(Music music) throws Exception;
+
+    public List<Music> getMusicList() throws Exception;
+    public List<Music> getMusicTypeList(String type, String value) throws Exception;
 }

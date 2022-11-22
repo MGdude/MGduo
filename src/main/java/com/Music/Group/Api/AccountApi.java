@@ -22,7 +22,6 @@ public class AccountApi {
 
     private final AccountService accountService;
 
-    @LogAspect
     @PostMapping("/register")
     public ResponseEntity<?> register(@Validated({ValidationSequence.class}) @RequestBody RegisterDto registerDto, BindingResult bindingResult) throws Exception {
 

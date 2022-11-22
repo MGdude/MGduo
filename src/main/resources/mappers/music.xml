@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Music.Group.Repository.MusicRepository">
+    <insert id="musicAdd" parameterType="com.Music.Group.Domain.Music">
+        INSERT INTO
+            music_mst
+        VALUES(
+            0,
+            'username',
+            #{title},
+            #{singer},
+            #{info},
+            #{url},
+            #{category_id},
+            #{gender_id},
+            #{genre_id},
+            #{season_id},
+            now(),
+            now()
+            )
+    </insert>
+    <select id="getCategoryOptions" resultType="com.Music.Group.Domain.SelectOption">
+        select
+            id, name
+        from
+            category
+    </select>
+    <select id="getGenderOptions" resultType="com.Music.Group.Domain.SelectOption">
+        select
+            id, name
+        from
+            gender
+    </select>
+    <select id="getGenreOptions" resultType="com.Music.Group.Domain.SelectOption">
+        select
+            id, name
+        from
+            genre
+    </select>
+    <select id="getSeasonOptions" resultType="com.Music.Group.Domain.SelectOption">
+        select
+            id, name
+        from
+            season
+        order by
+            id
+    </select>
+    <select id="getMusicList" resultType="com.Music.Group.Domain.Music">
+        select
+            mm.id,
+            mm.title,
+            mm.singer,
+            mm.url,
+            category.name AS category_name,
+            gender.name AS gender_name,
+            genre.name AS genre_name,
+            season.name AS season_name
+        from
+            music_mst mm
+            LEFT OUTER JOIN category ON(category.id = mm.category_id)
+            LEFT OUTER JOIN gender ON(gender.id = mm.gender_id)
+            LEFT OUTER JOIN genre ON(genre.id = mm.genre_id)
+            LEFT OUTER JOIN season ON(season.id = mm.season_id)
+    </select>
+    <select id="getMusicTypeList" resultType="com.Music.Group.Domain.Music">
+        select
+            mm.id,
+            mm.title,
+            mm.singer,
+            mm.url,
+            category.name AS category_name,
+            gender.name AS gender_name,
+            genre.name AS genre_name,
+            season.name AS season_name
+        from
+            music_mst mm
+            LEFT OUTER JOIN category ON(category.id = mm.category_id)
+            LEFT OUTER JOIN gender ON(gender.id = mm.gender_id)
+            LEFT OUTER JOIN genre ON(genre.id = mm.genre_id)
+            LEFT OUTER JOIN season ON(season.id = mm.season_id)
+        where
+            1 = 1
+            <choose>
+                <when test='type == "category"'>
+                    and mm.category_id = (SELECT id FROM category WHERE category.name = #{value})
+                </when>
+                <when test='type == "gender"'>
+                    and mm.gender_id = (SELECT id FROM gender WHERE gender.name = #{value})
+                </when>
+                <when test='type == "genre"'>
+                    and mm.genre_id = (SELECT id FROM genre WHERE genre.name = #{value})
+                </when>
+                <when test='type == "season"'>
+                    and mm.season_id = (SELECT id FROM season WHERE season.name = #{value})
+                </when>
+            </choose>
+
+    </select>
+</mapper>

@@ -1,16 +1,14 @@
 package com.Music.Group.Service;
 
-import com.Music.Group.Domain.Music;
 import com.Music.Group.Dto.MusicAddDto;
+import com.Music.Group.Dto.MusicListResponseDto;
 import com.Music.Group.Dto.SelectOptionResponseDto;
 import com.Music.Group.Repository.MusicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -58,4 +56,27 @@ public class MusicServiceImpl implements MusicService{
     public void musicAdd(MusicAddDto musicAddDto) throws Exception {
         musicRepository.musicAdd(musicAddDto.toEntity());
     }
+
+    @Override
+    public List<MusicListResponseDto> getMusicAll() throws Exception {
+        List<MusicListResponseDto> musicListResponseDtoList = new ArrayList<MusicListResponseDto>();
+
+        musicRepository.getMusicList().forEach(music -> {
+            musicListResponseDtoList.add(music.toDto());
+        });
+
+        return musicListResponseDtoList;
+    }
+
+    @Override
+    public List<MusicListResponseDto> getMusicTypeList(String type, String value) throws Exception {
+        List<MusicListResponseDto> musicListResponseDtoList = new ArrayList<MusicListResponseDto>();
+        musicRepository.getMusicTypeList(type, value).forEach(music -> {
+            musicListResponseDtoList.add(music.toDto());
+        });
+
+        return musicListResponseDtoList;
+    }
+
+
 }
