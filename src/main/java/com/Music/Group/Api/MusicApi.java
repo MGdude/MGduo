@@ -49,4 +49,10 @@ public class MusicApi {
     public ResponseEntity<?> getMusicAll() throws Exception {
         return ResponseEntity.ok(new CMRespDto<>("Get Successfully", musicService.getMusicAll()));
     }
+
+    @GetMapping("/music/{type}/{value}")
+    public ResponseEntity<?> getMusicTypeList(@PathVariable String type, @PathVariable String value) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", musicService.getMusicTypeList(type, value)));
+    }
+
 }

@@ -15,4 +15,5 @@ public interface MusicService{
     public void musicAdd(MusicAddDto musicAddDto) throws Exception;
 
     public List<MusicListResponseDto> getMusicAll() throws Exception;
+    public List<MusicListResponseDto> getMusicTypeList(String type, String value) throws Exception;
 }

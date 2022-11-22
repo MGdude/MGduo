@@ -68,5 +68,15 @@ public class MusicServiceImpl implements MusicService{
         return musicListResponseDtoList;
     }
 
+    @Override
+    public List<MusicListResponseDto> getMusicTypeList(String type, String value) throws Exception {
+        List<MusicListResponseDto> musicListResponseDtoList = new ArrayList<MusicListResponseDto>();
+        musicRepository.getMusicTypeList(type, value).forEach(music -> {
+            musicListResponseDtoList.add(music.toDto());
+        });
+
+        return musicListResponseDtoList;
+    }
+
 
 }
