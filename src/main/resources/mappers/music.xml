@@ -99,4 +99,17 @@
             </choose>
 
     </select>
+    <select id="getMusicPost" resultType="com.Music.Group.Domain.Music">
+        SELECT
+            id,
+            username,
+            title,
+            singer,
+            info,
+            url
+        FROM
+            music_mst
+        WHERE
+            id = #{musicId}
+    </select>
 </mapper>

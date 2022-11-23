@@ -1,6 +1,7 @@
 package com.Music.Group.Domain;
 
 import com.Music.Group.Dto.MusicListResponseDto;
+import com.Music.Group.Dto.MusicPostDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +43,17 @@ public class Music {
                 .genderName(gender_name)
                 .genreName(genre_name)
                 .seasonName(season_name)
+                .build();
+    }
+
+    public MusicPostDto toMusicPostDto() {
+        return MusicPostDto.builder()
+                .id(id)
+                .username(username)
+                .title(title)
+                .singer(singer)
+                .info(info)
+                .url(url)
                 .build();
     }
 }

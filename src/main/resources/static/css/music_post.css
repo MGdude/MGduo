@@ -1,63 +1,74 @@
 .main {
-  margin-top: 200px;
+  margin-top: 150px;
   width: 100%;
   height: 100%;
 }
 
+.main-content {
+  display: flex;
+}
+
 .content {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   
-  margin: 0 auto;
+  margin: 0 3%;
 
-  width: 60%;
+  width: 1300px;
+  height: 800px;
+}
+
+.video-size {
+  width: 100%;
+  height: 80%;
 }
 
 .video {
-  width: 60%;
-  height: 350px;
+  width: 100%;
+  height: 100%;
 
   margin-right: 20px;
 
 }
 
 .music-info {
-  width: 30%;
-  height: 350px;
-  border: 1px solid rgb(198, 198, 198);
+  width: 100%;
+  height: 20%;
+  margin-top: 5px;
   border-radius: 7px;
 
-  background-color: beige;
+  background-color: #ebebeb;
 }
 
 .writer {
   text-align: right;
-  margin-right: 10px;
+  margin: 5px 10px 5px 0px;
   font-size: 15px;
   font-weight: 700;
 }
 
-.singer {
-  margin-left: 10px;
+.song-name {
+  margin: 5px 0px 5px 10px;
   font-size: 20px;
   font-weight: 700;
 }
 
-.song-name {
-  margin-left: 10px;
-  font-size: 17px;
+.singer {
+  margin: 5px 0px 5px 10px;
+  font-size: 15px;
   font-weight: 700;
 }
 
 .song-info {
-  margin-left: 10px;
-  font-size: 17px;
+  margin: 5px 0px 5px 10px;
+  font-size: 15px;
   font-weight: 700;
 }
 
 .youtube-link {
-  margin-left: 10px;
-  font-size: 17px;
+  margin: 5px 0px 5px 10px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -69,7 +80,7 @@
 
 .comments-content {
   margin: 10px auto;
-  width: 55%;
+  width: 30%;
 }
 
 
@@ -77,12 +88,11 @@
   font-size: 14px;
   font-weight: 500;
 
-
-  margin: 50px 0px 10px;
+  margin: 10px 0px 10px;
 }
 
 .comments-content input {
-  width: 90%;
+  width: 80%;
   height: 40px;
   margin: 5px 0px;
   border-radius: 6px;

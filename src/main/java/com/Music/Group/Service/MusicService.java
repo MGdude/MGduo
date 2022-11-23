@@ -1,7 +1,9 @@
 package com.Music.Group.Service;
 
+import com.Music.Group.Domain.Music;
 import com.Music.Group.Dto.MusicAddDto;
 import com.Music.Group.Dto.MusicListResponseDto;
+import com.Music.Group.Dto.MusicPostDto;
 import com.Music.Group.Dto.SelectOptionResponseDto;
 
 import java.util.List;
@@ -16,4 +18,7 @@ public interface MusicService{
 
     public List<MusicListResponseDto> getMusicAll() throws Exception;
     public List<MusicListResponseDto> getMusicTypeList(String type, String value) throws Exception;
+
+    public MusicPostDto getMusicPostService(int musicId) throws Exception;
+
 }

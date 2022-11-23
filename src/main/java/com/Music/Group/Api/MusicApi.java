@@ -2,6 +2,7 @@ package com.Music.Group.Api;
 
 import com.Music.Group.Dto.CMRespDto;
 import com.Music.Group.Dto.MusicAddDto;
+import com.Music.Group.Service.CommentService;
 import com.Music.Group.Service.MusicService;
 import com.Music.Group.Service.MusicServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.net.URI;
 public class MusicApi {
 
     private final MusicService musicService;
+    private final CommentService commentService;
 
     @GetMapping("/music/option/category")
     public ResponseEntity<?> getCategoryOption() throws Exception {
@@ -53,6 +55,16 @@ public class MusicApi {
     @GetMapping("/music/{type}/{value}")
     public ResponseEntity<?> getMusicTypeList(@PathVariable String type, @PathVariable String value) throws Exception {
         return ResponseEntity.ok(new CMRespDto<>("Get Successfully", musicService.getMusicTypeList(type, value)));
+    }
+
+    @GetMapping("/music/{musicId}")
+    public ResponseEntity<?> getMusicPost(@PathVariable int musicId) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("success", musicService.getMusicPostService(musicId)));
+    }
+
+    @PostMapping("/music/addComment")
+    public ResponseEntity<?> commentAdd() throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", null));
     }
 
 }

@@ -1,7 +1,9 @@
 package com.Music.Group.Service;
 
+import com.Music.Group.Domain.Music;
 import com.Music.Group.Dto.MusicAddDto;
 import com.Music.Group.Dto.MusicListResponseDto;
+import com.Music.Group.Dto.MusicPostDto;
 import com.Music.Group.Dto.SelectOptionResponseDto;
 import com.Music.Group.Repository.MusicRepository;
 import lombok.RequiredArgsConstructor;
@@ -78,5 +80,10 @@ public class MusicServiceImpl implements MusicService{
         return musicListResponseDtoList;
     }
 
+    @Override
+    public MusicPostDto getMusicPostService(int musicId) throws Exception {
+
+        return musicRepository.getMusicPost(musicId).toMusicPostDto();
+    }
 
 }
