@@ -52,10 +52,15 @@ class HeaderEvent {
   }
 
   btnEvent() {
+    const logoImgBtn = document.querySelector(".logo-img");
     const loginBtn = document.querySelector(".login-btn");
     const logoutBtn = document.querySelector(".logout-btn");
     const registBtn = document.querySelector(".regist-btn");
     const addMusicBtn = document.querySelector(".addmusic-btn");
+
+    logoImgBtn.onclick = () => {
+      location.href = "/";
+    }
 
     loginBtn.onclick = () => {
       location.href = "/login";

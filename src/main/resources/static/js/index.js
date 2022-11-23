@@ -45,12 +45,13 @@ class Api {
     }
 }
 
-class MsuicAddEvent {
+class MusicEvent {
     #musicList;
     
     constructor() {
         this.getMusicType();
         this.getMusicList();
+        this.addMusicBtn();
     }
 
     getMusicType() {
@@ -88,11 +89,19 @@ class MsuicAddEvent {
             location.href = "/";
         }
     }
-}
 
+    addMusicBtn() {
+        this.#musicList.forEach((music,index) => {
+            const mainInfo = document.querySelectorAll(".main-info")[index];
+            mainInfo.onclick = () => {
+                location.href = "/music/" + music.musicId;
+            }
+        });
+    }
+}
 
 window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
-    new MsuicAddEvent();
+    new MusicEvent();
 }
