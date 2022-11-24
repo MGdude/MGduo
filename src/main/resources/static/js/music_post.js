@@ -37,9 +37,9 @@ class MusicPostApi {
       url: "/api/music/addComment",
       contentType: "application/json",
       data: JSON.stringify(commentData),
-      dataType: "json",
       success: (response) => {
-        console.log(response.data);
+        console.log(response);
+        location.href = "/music/" + response.data;
       },
       error: (error) => {
         console.log(error);
@@ -104,11 +104,15 @@ class CommentEvent {
 
   addComment() {
     const addCommentBtn = document.querySelector(".add-btn");
+    let responseData = MusicPostApi.getInstance().getMusicApi();
 
     addCommentBtn.onclick = () => {
       let commentData = {
-        "comment" : document.querySelector(".comment").value
+        "comment" : document.querySelector(".comment").value,
+        "musicId" : responseData.id,
+        "userName" : responseData.username,
       }
+      console.log(commentData);
       MusicPostApi.getInstance().addCommentApi(commentData);
     }
   }

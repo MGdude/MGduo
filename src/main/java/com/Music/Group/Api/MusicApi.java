@@ -1,6 +1,7 @@
 package com.Music.Group.Api;
 
 import com.Music.Group.Dto.CMRespDto;
+import com.Music.Group.Dto.CommentAddDto;
 import com.Music.Group.Dto.MusicAddDto;
 import com.Music.Group.Service.CommentService;
 import com.Music.Group.Service.MusicService;
@@ -60,11 +61,12 @@ public class MusicApi {
     @GetMapping("/music/{musicId}")
     public ResponseEntity<?> getMusicPost(@PathVariable int musicId) throws Exception {
         return ResponseEntity.ok(new CMRespDto<>("success", musicService.getMusicPostService(musicId)));
-    }
+    }x
 
     @PostMapping("/music/addComment")
-    public ResponseEntity<?> commentAdd() throws Exception {
-        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", null));
+    public ResponseEntity<?> commentAdd(@RequestBody CommentAddDto commentAddDto) throws Exception {
+        commentService.addComment(commentAddDto);
+        return ResponseEntity.created(URI.create("/")).body(new CMRespDto<>("Comment add Successfully", commentAddDto.getMusicId()));
     }
 
 }

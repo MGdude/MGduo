@@ -1,10 +1,14 @@
 package com.Music.Group.Domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Builder
 public class Comment {
@@ -13,7 +17,7 @@ public class Comment {
     private String username;
     private String comment;
     private int step;
-    private int group;
+    private int groups;
     private LocalDateTime create_date;
     private LocalDateTime update_date;
 }

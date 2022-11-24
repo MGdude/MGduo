@@ -9,7 +9,7 @@ public class CommentAddDto {
     private String userName;
     private String comment;
     private int step;
-    private int group;
+    private int groups;
 
     public Comment toEntity() {
         return Comment.builder()
@@ -17,7 +17,7 @@ public class CommentAddDto {
                 .username(userName)
                 .comment(comment)
                 .step(step)
-                .group(group)
+                .groups(groups)
                 .build();
     }
 }
