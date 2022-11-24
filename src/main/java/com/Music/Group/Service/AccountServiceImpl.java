@@ -3,6 +3,7 @@ package com.Music.Group.Service;
 import com.Music.Group.Domain.User;
 import com.Music.Group.Repository.AccountRepository;
 import com.Music.Group.Dto.RegisterDto;
+import com.Music.Group.exception.CustomInternalServerErrorException;
 import com.Music.Group.exception.CustomValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,11 +42,9 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void register(RegisterDto registerDto) throws Exception {
-        User user = registerDto.toEntity();
-        System.out.println(registerDto);
-        int result = accountRepository.saveUser(user);
+        int result = accountRepository.saveUser(registerDto.toEntity());
         if(result == 0) {
-            System.out.println("회원가입 중 오류 발생");
+            throw new CustomInternalServerErrorException("Server Error");
         }
     }
 

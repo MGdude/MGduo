@@ -18,4 +18,19 @@
         NOW()
         )
 </insert>
+    <select id="getComments" resultType="com.Music.Group.Domain.Comment">
+        SELECT
+            music_id,
+            username,
+            comment,
+            step,
+            groups,
+            update_date
+        FROM
+            comments_mst
+        where
+            music_id = #{music_id}
+        ORDER BY
+            groups
+    </select>
 </mapper>

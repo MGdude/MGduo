@@ -1,8 +1,8 @@
-class MusicPostApi {
+class Api {
   static #instance = null;
   static getInstance() {
     if(this.#instance == null) {
-      this.#instance = new MusicPostApi();
+      this.#instance = new Api();
     }
     return this.#instance;
   }
@@ -29,12 +29,33 @@ class MusicPostApi {
     return responseData;
   }
 
-  addCommentApi(commentData) {
+  getCommentApi(){
+    let responseData = null;
+
+    const url = location.href;
+    const musicId = url.substring(url.lastIndexOf("/") + 1);
     
     $.ajax({
       async: false,
+      type: "get",
+      url: "/api/comment/" + musicId,
+      dataType: "json",
+      success: (response) => {
+        responseData = response.data;
+        console.log(responseData);
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+    return responseData;
+  }
+
+  addCommentApi(commentData) {
+    $.ajax({
+      async: false,
       type: "post",
-      url: "/api/music/addComment",
+      url: "/api/comment/add",
       contentType: "application/json",
       data: JSON.stringify(commentData),
       success: (response) => {
@@ -63,10 +84,8 @@ class MusicDtl {
   }
 
   getMusicDtl() {
-    let responseData = MusicPostApi.getInstance().getMusicApi();
+    let responseData = Api.getInstance().getMusicApi();
     const content = document.querySelector(".content");
-    console.log(responseData);
-
     if(responseData != null) {
       content.innerHTML += `
          <div class="video-size">
@@ -99,21 +118,48 @@ class CommentEvent {
   }
 
   constructor() {
+    this.getComment();
     this.addComment();
+  }
+
+  getComment() {
+    let responseData = Api.getInstance().getCommentApi();
+    const comments = document.querySelector(".comments");
+    comments.innerHTML = "";
+
+    responseData.forEach(comment => {
+      comments.innerHTML += `
+        <div class="comment-box">
+          <div class="comment-username">${comment.userName}</div>
+          <div class="comment-text">${comment.comment}</div>
+          <div class="comment-date">${comment.updateDate}</div>
+        </div>
+      `;
+    });
+    
   }
 
   addComment() {
     const addCommentBtn = document.querySelector(".add-btn");
-    let responseData = MusicPostApi.getInstance().getMusicApi();
-
+    let responseData = Api.getInstance().getMusicApi();
+    let principalDtlData = PrincipalDtl.getInstance().getResponseData();
     addCommentBtn.onclick = () => {
-      let commentData = {
-        "comment" : document.querySelector(".comment").value,
-        "musicId" : responseData.id,
-        "userName" : responseData.username,
+      const comment = document.querySelector(".comment").value;
+      if (principalDtlData == "") {
+        alert("로그인 후 이용 가능합니다.");
+        localStorage.preUrl = location.pathname;
+        location.href = "/login";
+      } else if (comment == "") {
+        alert("내용을 입력하세요.");
+      } else {
+        let commentData = {
+          "comment" : comment,
+          "musicId" : responseData.id,
+          "userName" : principalDtlData.user.username
+        }
+        console.log(commentData);
+        Api.getInstance().addCommentApi(commentData);
       }
-      console.log(commentData);
-      MusicPostApi.getInstance().addCommentApi(commentData);
     }
   }
 }

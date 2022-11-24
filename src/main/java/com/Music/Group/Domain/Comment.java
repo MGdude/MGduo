@@ -1,5 +1,6 @@
 package com.Music.Group.Domain;
 
+import com.Music.Group.Dto.CommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,16 @@ public class Comment {
     private int groups;
     private LocalDateTime create_date;
     private LocalDateTime update_date;
+
+    public CommentDto toDto() {
+        return CommentDto.builder()
+                .musicId(music_id)
+                .userName(username)
+                .comment(comment)
+                .step(step)
+                .groups(groups)
+                .createDate(create_date)
+                .updateDate(update_date)
+                .build();
+    }
 }

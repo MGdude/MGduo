@@ -101,6 +101,11 @@ class MusicEvent {
 }
 
 window.onload = () => {
+    let preUrl = localStorage.preUrl;
+    localStorage.removeItem("preUrl");
+    if(preUrl != null) {
+        location.replace(preUrl);
+    }
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
     new MusicEvent();
