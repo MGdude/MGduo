@@ -3,18 +3,18 @@ class Option {
     #password;
     #passwordChk;
     #registerBtn;
-    #cancleBtn;
+    #cancelBtn;
 
     constructor() {
         this.#userName = document.querySelectorAll(".login-content input")[0];
         this.#password = document.querySelectorAll(".login-content input")[1];
         this.#passwordChk = document.querySelectorAll(".login-content input")[2];
-        this.#registerBtn = document.querySelector(".regist");
-        this.#cancleBtn = document.querySelector(".cancle");
+        this.#registerBtn = document.querySelector(".register-button");
+        this.#cancelBtn = document.querySelector(".cancel-button");
         this.init();
         this.passwordEvent();
         this.registerBtnEvent();
-        this.cancleEvent();
+        this.cancelEvent();
     }
 
     init() {
@@ -45,9 +45,9 @@ class Option {
         }
     }
 
-    cancleEvent() {
-        this.#cancleBtn.onclick = () => {
-            location.href = "/index";
+    cancelEvent() {
+        this.#cancelBtn.onclick = () => {
+            location.href = "/";
         }
     }
 
@@ -65,9 +65,9 @@ class UserData {
     }
 
     getUserApi() {
-        const registBtn = document.querySelector(".regist");
+        const registerBtn = document.querySelector(".register-button");
 
-        registBtn.onclick = () => {
+        registerBtn.onclick = () => {
             let user = {
                 "username" : document.querySelectorAll(".login-content input")[0].value,
                 "password" : document.querySelectorAll(".login-content input")[1].value,

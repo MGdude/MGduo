@@ -147,7 +147,7 @@ class CommentEvent {
       const comment = document.querySelector(".comment").value;
       if (principalDtlData == "") {
         alert("로그인 후 이용 가능합니다.");
-        localStorage.preUrl = location.pathname;
+//        localStorage.preUrl = location.pathname;
         location.href = "/login";
       } else if (comment == "") {
         alert("내용을 입력하세요.");

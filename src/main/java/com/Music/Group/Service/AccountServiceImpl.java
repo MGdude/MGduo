@@ -20,7 +20,6 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public void duplicateUsername(RegisterDto registerDto) throws Exception {
         User user = accountRepository.findUserByUsername(registerDto.getUsername());
-        System.out.println(user);
         if(user != null) {
             Map<String, String> errorMap = new HashMap<String, String>();
             errorMap.put("username", "이미 사용중인 아이디 입니다.");
