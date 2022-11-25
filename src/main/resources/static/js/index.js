@@ -109,5 +109,5 @@ window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
     new MusicEvent();
-    new Api();
+    new TestApi();
 }

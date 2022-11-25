@@ -1,8 +1,8 @@
-class Api {
+class TestApi {
   static #instance = null;
   static getInstance() {
     if(this.#instance = null) {
-      this.#instance = new Api();
+      this.#instance = new TestApi();
     }
     return this.#instance;
   }
@@ -12,20 +12,25 @@ class Api {
   }
 
   getSearchApi() {
-    let search = document.querySelector(".search").value;
+   
+    const searchBtn = document.querySelector(".search-img");
 
-    $.ajax({
-      async: false,
-      type: "get",
-      url: "/api/music/" + search,
-      data: "json",
-      success: (response) => {
-        console.log(response.data);
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
+    searchBtn.onclick = () => {
+      let search = document.querySelector(".search").value;
+      $.ajax({
+        async: false,
+        type: "get",
+        url: "/api/" + search,
+        data: "json",
+        success: (response) => {
+          console.log(search);
+          console.log(response.data);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+    }
   }
 
 }
