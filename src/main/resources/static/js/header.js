@@ -1,3 +1,35 @@
+class Api {
+  static #instance = null;
+  static getInstance() {
+    if(this.#instance = null) {
+      this.#instance = new Api();
+    }
+    return this.#instance;
+  }
+
+  constructor() {
+    this.getSearchApi();
+  }
+
+  getSearchApi() {
+    let search = document.querySelector(".search").value;
+
+    $.ajax({
+      async: false,
+      type: "get",
+      url: "/api/music/" + search,
+      data: "json",
+      success: (response) => {
+        console.log(response.data);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+}
+
 class PrincipalDtl {
   static #instance = null;
   static getInstance() {
