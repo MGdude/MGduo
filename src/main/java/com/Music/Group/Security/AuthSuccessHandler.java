@@ -25,7 +25,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
-        clearSession(request);
+//        clearSession(request);
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
 
@@ -47,11 +47,9 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
          */
         if (savedRequest != null) {
             uri = savedRequest.getRedirectUrl();
-        } else if (prevPage != null && !prevPage.equals("")) {
+        } else if (prevPage != null) {
             // 회원가입 - 로그인으로 넘어온 경우 "/"로 redirect
-            if (prevPage.contains("/auth/join")) {
-                uri = "/";
-            } else {
+            if(!prevPage.equals("")) {
                 uri = prevPage;
             }
         }
@@ -60,10 +58,10 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     }
 
     // 로그인 실패 후 성공 시 남아있는 에러 세션 제거
-    protected void clearSession(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-        }
-    }
+//    protected void clearSession(HttpServletRequest request) {
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+//        }
+//    }
 }

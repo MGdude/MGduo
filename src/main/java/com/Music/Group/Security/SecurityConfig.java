@@ -11,10 +11,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthenticationSuccessHandler authenticationSuccessHandler;
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {return  new BCryptPasswordEncoder();}
 
@@ -31,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .failureHandler(new AuthFailureHandler())
-                .successHandler(authenticationSuccessHandler);
+                .successHandler(new AuthSuccessHandler());
 
 
     }
