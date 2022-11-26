@@ -65,9 +65,6 @@ public class MusicApi {
         return ResponseEntity.ok(new CMRespDto<>("success", musicService.getMusicPostService(musicId)));
     }
 
-    @GetMapping("/{search}")
-    public ResponseEntity<?> search(@PathVariable String search) throws Exception {
-        return ResponseEntity.ok(new CMRespDto<>("Search Successfully", searchService.getSearchList(search)));
-    }
+
 
 }

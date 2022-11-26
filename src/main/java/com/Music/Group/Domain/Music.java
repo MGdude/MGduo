@@ -60,8 +60,14 @@ public class Music {
 
     public SearchDto toSearchDto() {
         return SearchDto.builder()
+                .id(id)
                 .title(title)
                 .singer(singer)
+                .url(url)
+                .categoryName(category_name)
+                .genderName(gender_name)
+                .genreName(genre_name)
+                .seasonName(season_name)
                 .build();
     }
 }

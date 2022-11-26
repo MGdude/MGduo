@@ -1,14 +1,15 @@
-class TestApi {
+class SearchApi {
   static #instance = null;
   static getInstance() {
     if(this.#instance = null) {
-      this.#instance = new TestApi();
+      this.#instance = new SearchApi();
     }
     return this.#instance;
   }
 
   constructor() {
     this.getSearchApi();
+    this.clickEvent();
   }
 
   getSearchApi() {
@@ -17,23 +18,45 @@ class TestApi {
 
     searchBtn.onclick = () => {
       let search = document.querySelector(".search").value;
+      let responseData = null;
       $.ajax({
         async: false,
         type: "get",
         url: "/api/" + search,
         data: "json",
         success: (response) => {
-          console.log(search);
-          console.log(response.data);
+          const mainContent = document.querySelector(".main-content");
+          mainContent.innerHTML = "";
+          responseData = response.data;
+          if(responseData.length > 0) {
+            responseData.forEach(search => {
+              mainContent.innerHTML += `
+              <div class="main-infolist">
+                  <div class="main-info">
+                      <div class="main-img">
+                          <img src="https://i.ytimg.com/vi/${search.url}/hqdefault.jpg" alt="">
+                      </div>
+                      <div class="title">곡명: ${search.title}</div>
+                      <div class="singer">가수명: ${search.singer}</div>
+                      <div class="tag">#${search.categoryName}(${search.genderName}) #${search.genreName} #${search.seasonName}</div>
+                  </div>
+              </div>
+              `;
+            })
+          }
+          console.log(responseData);
         },
         error: (error) => {
           console.log(error);
         }
       });
+      return responseData;
     }
   }
-
 }
+
+
+
 
 class PrincipalDtl {
   static #instance = null;
