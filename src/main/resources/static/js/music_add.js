@@ -106,11 +106,12 @@ class AddEventService {
         this.#categoryInputObj.onchange = () => {
             if(this.#categoryInputObj.value == "0") {
                 this.#genderInputObj.disabled = true;
+                this.#genderInputObj.innerHTML = `<option value="0">성별</option>`;
             }else if(this.#categoryInputObj.value == "1") {
                 this.#genderInputObj.disabled = false;
                 this.#genderInputObj.innerHTML = `<option value="0">성별</option>`;
                 this.#responseGenderData.forEach(data => {
-                    if (data.optionName == "coed"){
+                    if (data.optionId == 3){
                         return false;
                     }
                     this.#genderInputObj.innerHTML += `
@@ -211,12 +212,6 @@ class Api {
             success: response => {
                 responseData = response.data;
                 console.log(response.data);
-                console.log(response.data[0].optionId);
-                console.log(response.data[0].optionName);
-                console.log(response.data[1].optionId);
-                console.log(response.data[1].optionName);
-                console.log(response.data[2].optionId);
-                console.log(response.data[2].optionName);
             },
             error: error => {
                 console.log(error);
@@ -262,19 +257,41 @@ class Api {
         });
         return responseData;
     }
+
+    addMusicApi(musicData) {
+        $.ajax({
+            async: false,
+            type: "post",
+            url: "/api/music/add",
+            contentType: "application/json",// 전송할 데이터가 json인 경우
+            data: JSON.stringify(musicData), // 전송할 데이터가 있으면
+            success: (response) => {
+                alert("Music 등록 완료");
+                location.replace("/");
+            },
+            error: (error) => {
+                console.log(error.responseJSON.data);
+                Object.values(error.responseJSON.data).forEach((errormessage,index) => {
+                    if (index == 0){
+                        alert("Music 등록 실패\n" + errormessage);
+                    }
+                });
+            }
+        });
+    }
 }
 
-class MusicAdd {
+class Music {
     static #instance = null;
 
     static getInstance() {
         if(this.#instance == null) {
-            this.#instance = new MusicAdd();
+            this.#instance = new Music();
         }
         return this.#instance;
     }
 
-    addApi() {
+    addMusicEvent() {
         const addButton = document.querySelector(".add-button");
 
         addButton.onclick = () => {
@@ -298,26 +315,7 @@ class MusicAdd {
                 "genreId" : document.querySelectorAll(".inputs")[6].value,
                 "seasonId" : document.querySelectorAll(".inputs")[7].value
             }
-            // console.log(musicData);
-            $.ajax({
-                async: false,
-                type: "post",
-                url: "/api/music/add",
-                contentType: "application/json",// 전송할 데이터가 json인 경우
-                data: JSON.stringify(musicData), // 전송할 데이터가 있으면
-                success: (response) => {
-                    alert("Music 등록 완료");
-                    location.replace("/");
-                },
-                error: (error) => {
-                    console.log(error.responseJSON.data);
-                    Object.values(error.responseJSON.data).forEach((errormessage,index) => {
-                        if (index == 0){
-                            alert("Music 등록 실패\n" + errormessage);
-                        }
-                    });
-                }
-            });
+            Api.getInstance().addMusicApi(musicData);
         }
     }
 }
@@ -325,5 +323,5 @@ window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
     new AddEventService();
-    MusicAdd.getInstance().addApi();
+    Music.getInstance().addMusicEvent();
 }

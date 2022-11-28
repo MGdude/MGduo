@@ -54,6 +54,10 @@ public class Music {
                 .singer(singer)
                 .info(info)
                 .url(url)
+                .categoryId(category_id)
+                .genderId(gender_id)
+                .genreId(genre_id)
+                .seasonId(season_id)
                 .build();
     }
 }

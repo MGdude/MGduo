@@ -63,6 +63,10 @@ public class MusicApi {
         return ResponseEntity.ok(new CMRespDto<>("success", musicService.getMusicPostService(musicId)));
     }
 
+    @GetMapping("/music/update/{musicId}")
+    public ResponseEntity<?> getMusicUpdate(@PathVariable int musicId) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("success", musicService.getMusicPostService(musicId)));
+    }
 
 
 }

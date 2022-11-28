@@ -106,7 +106,11 @@
             title,
             singer,
             info,
-            url
+            url,
+            category_id,
+            gender_id,
+            genre_id,
+            season_id
         FROM
             music_mst
         WHERE

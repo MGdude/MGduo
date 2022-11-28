@@ -30,7 +30,5 @@
             comments_mst
         where
             music_id = #{music_id}
-        ORDER BY
-            groups
     </select>
 </mapper>

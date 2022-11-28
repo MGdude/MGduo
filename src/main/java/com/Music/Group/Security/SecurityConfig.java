@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.httpBasic().disable();
         http.authorizeRequests()
-                .antMatchers("/music_add", "/music_update")
+                .antMatchers("/music_add")
                 .authenticated()
                 .anyRequest()
                 .permitAll()

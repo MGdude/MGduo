@@ -12,4 +12,8 @@ public class MusicPostDto {
     private String singer;
     private String info;
     private String url;
+    private int categoryId;
+    private int genderId;
+    private int genreId;
+    private int seasonId;
 }

@@ -78,31 +78,74 @@ class MusicDtl {
     }
     return this.#instance;
   }
+  #responseData;
+  #principal;
 
   constructor() {
+    this.#principal = PrincipalDtl.getInstance().getResponseData();
+    this.#responseData = Api.getInstance().getMusicApi();
     this.getMusicDtl();
+    this.getMusicButton();
   }
 
   getMusicDtl() {
-    let responseData = Api.getInstance().getMusicApi();
     const content = document.querySelector(".content");
-    if(responseData != null) {
+    if(this.#responseData != null) {
       content.innerHTML += `
          <div class="video-size">
-          <iframe class="video" width="783" height="440" src="https://www.youtube.com/embed/${responseData.url}" title="[MV] IU(아이유)_LILAC(라일락)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe class="video" width="783" height="440" src="https://www.youtube.com/embed/${this.#responseData.url}" title="[MV] IU(아이유)_LILAC(라일락)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="music-info">
-          <p class="writer">작성자 : ${responseData.username}</p>
-          <p class="song-name">${responseData.title}</p>
-          <p class="singer">${responseData.singer}</p>
-          <p class="song-info">곡 설명 : ${responseData.info}</p>
-          <p class="youtube-link">유튜브 링크 : <a href="https://www.youtube.com/watch?v=${responseData.url}">https://www.youtube.com/watch?v=${responseData.url}</a></p>
-          <!-- <div class="modify-btn">
-            <button class="btn">수정</button>
-            <button class="btn">삭제</button>
-          </div> -->
+          <p class="writer">작성자 : ${this.#responseData.username}</p>
+          <p class="song-name">${this.#responseData.title}</p>
+          <p class="singer">${this.#responseData.singer}</p>
+          <p class="song-info">곡 설명 : ${this.#responseData.info}</p>
+          <p class="youtube-link">유튜브 링크 : <a href="https://www.youtube.com/watch?v=${this.#responseData.url}">https://www.youtube.com/watch?v=${this.#responseData.info.url}</a></p>
+          <div class="modify-btn">
+
+          </div>
         </div>
       `;
+    }
+    
+  }
+
+  getMusicButton() {
+    if(this.#principal != ""){
+      if(this.#principal.username == this.#responseData.username){
+        const button = document.querySelector(".modify-btn");
+        button.innerHTML += `
+          <button class="btn post-update-btn">수정</button>
+          <button class="btn post-delete-btn">삭제</button>
+        `;
+
+        this.getMusicButtonEvent();
+      }
+    }
+  }
+
+  getMusicButtonEvent() {
+    const updateBtn = document.querySelector(".post-update-btn");
+    const deleteBtn = document.querySelector(".post-delete-btn");
+    
+    updateBtn.onclick = () => {
+      if(confirm("게시물을 수정하시겠습니까?")) {
+        if(this.#principal.username == this.#responseData.username){
+          location.href = "/music_update/" + this.#responseData.id;
+        }else {
+          alert("권한이 없는 사용자입니다.");
+        }
+      }
+    }
+
+    deleteBtn.onclick = () => {
+      if(confirm("게시물을 삭제하시겠습니까?")) {
+        if(this.#principal.username == this.#responseData.username){
+          
+        }else {
+          alert("권한이 없는 사용자입니다.");
+        }
+      }
     }
   }
 }

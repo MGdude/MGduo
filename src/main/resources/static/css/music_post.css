@@ -74,9 +74,16 @@
 }
 
 .modify-btn {
-  margin: 10px auto;
-  width: 55%;
+  margin-right: 10px;
   text-align: right;
+}
+
+.post-update-btn {
+  margin-right: 5px;
+}
+
+.post-delete-btn {
+  margin-left: 5px;
 }
 
 .comments-content {  

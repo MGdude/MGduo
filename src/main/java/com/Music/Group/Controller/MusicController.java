@@ -17,8 +17,8 @@ public class MusicController {
         return "music_post";
     }
 
-    @GetMapping("/music_update")
-    public String musicUpdate() {
+    @GetMapping("/music_update/{musicId}")
+    public String musicUpdate(@PathVariable int musicId) {
         return "music_update";
     }
 
@@ -31,4 +31,5 @@ public class MusicController {
     public String loadCollections(@PathVariable int musicId) {
         return "music_post";
     }
+
 }
