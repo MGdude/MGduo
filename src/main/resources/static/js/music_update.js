@@ -1,114 +1,65 @@
-class AddEventService {
-    #titleInputObj;
-    #singerInputObj;
-    #infoInputObj;
-    #linkInputObj;
+class Usercheck {
+
+}
+
+class SelectService {
     #categoryInputObj;
     #genderInputObj;
     #genreInputObj;
     #seasonInputObj;
-    #updateButton;
+
     #responseCategoryData;
     #responseGenderData;
     #responseGenreData;
     #responseSeasonData;
 
     constructor() {
-        this.#titleInputObj = document.querySelectorAll(".inputs")[0];
-        this.#singerInputObj = document.querySelectorAll(".inputs")[1];
-        this.#infoInputObj = document.querySelectorAll(".inputs")[2];
-        this.#linkInputObj = document.querySelectorAll(".inputs")[3];
         this.#categoryInputObj = document.querySelectorAll(".inputs")[4];
         this.#genderInputObj = document.querySelectorAll(".inputs")[5];
         this.#genreInputObj = document.querySelectorAll(".inputs")[6];
         this.#seasonInputObj = document.querySelectorAll(".inputs")[7];
-        this.#updateButton = document.querySelector(".update-button");
 
         this.#responseCategoryData = Api.getInstance().getCategoryApi();
         this.#responseGenderData = Api.getInstance().getGenderApi();
         this.#responseGenreData = Api.getInstance().getGenreApi();
         this.#responseSeasonData = Api.getInstance().getSeasonApi();
 
-        this.init();
-        this.addTitleEvent();
-        this.addSingerEvent();
-        this.addInfoEvent();
-        this.addLinkEvent();
-        this.addCategoryEvent();
-        this.addGenderEvent();
-        this.addGenreEvent();
-        this.addSeasonEvent();
+        this.selectInputEvent();
+        this.selectCatagoryEvent();
     }
 
-    init() {
-        this.#singerInputObj.disabled = true;
-        this.#infoInputObj.disabled = true;
-        this.#linkInputObj.disabled = true;
-        this.#categoryInputObj.disabled = true;
-        this.#genderInputObj.disabled = true;
-        this.#genreInputObj.disabled = true;
-        this.#seasonInputObj.disabled = true;
-        this.#updateButton.disabled = true;
-
+    selectInputEvent() {
         this.#categoryInputObj.innerHTML = `<option value="0">분류</option>`;
         this.#genderInputObj.innerHTML = `<option value="0">성별</option>`;
         this.#genreInputObj.innerHTML = `<option value="0">장르</option>`;
         this.#seasonInputObj.innerHTML = `<option value="0">계절</option>`;
+
+        this.#responseCategoryData.forEach(data => {
+            this.#categoryInputObj.innerHTML += `
+            <option value="${data.optionId}">${data.optionName}</option>
+            `;
+        });
+        this.#responseGenderData.forEach(data => {
+            this.#genderInputObj.innerHTML += `
+            <option value="${data.optionId}">${data.optionName}</option>
+            `;
+        });
+        this.#responseGenreData.forEach(data => {
+            this.#genreInputObj.innerHTML += `
+            <option value="${data.optionId}">${data.optionName}</option>
+            `;
+        });
+        this.#responseSeasonData.forEach(data => {
+            this.#seasonInputObj.innerHTML += `
+            <option value="${data.optionId}">${data.optionName}</option>
+            `;
+        });
     }
 
-    addTitleEvent() {
-        this.#titleInputObj.onkeyup = () => {
-            if(this.#titleInputObj.value.length == 0) {
-                this.#singerInputObj.disabled = true;
-            }else {
-                this.#singerInputObj.disabled = false;
-            }
-        }
-    }
-
-    addSingerEvent() {
-        this.#singerInputObj.onkeyup = () => {
-            if(this.#singerInputObj.value.length == 0) {
-                this.#infoInputObj.disabled = true;
-            }else {
-                this.#infoInputObj.disabled = false;
-            }
-        }
-    }
-
-    addInfoEvent() {
-        this.#infoInputObj.onkeyup = () => {
-            if(this.#infoInputObj.value.length == 0) {
-                this.#linkInputObj.disabled = true;
-            }else {
-                this.#linkInputObj.disabled = false;
-            }
-        }
-    }
-
-    addLinkEvent() {
-        this.#linkInputObj.onkeyup = () => {
-            if(this.#linkInputObj.value.length == 0) {
-                this.#categoryInputObj.disabled = true;
-            }else {
-                this.#categoryInputObj.disabled = false;
-                this.#categoryInputObj.innerHTML = `<option value="0">분류</option>`;
-                this.#responseCategoryData.forEach(data => {
-                    this.#categoryInputObj.innerHTML += `
-                    <option value="${data.optionId}">${data.optionName}</option>
-                    `;
-                });
-            }
-        }
-    }
-
-    addCategoryEvent() {
+    selectCatagoryEvent() {
         this.#categoryInputObj.onchange = () => {
             if(this.#categoryInputObj.value == "0") {
-                this.#genderInputObj.disabled = true;
-                this.#genderInputObj.innerHTML = `<option value="0">성별</option>`;
             }else if(this.#categoryInputObj.value == "1") {
-                this.#genderInputObj.disabled = false;
                 this.#genderInputObj.innerHTML = `<option value="0">성별</option>`;
                 this.#responseGenderData.forEach(data => {
                     if (data.optionId == 3){
@@ -126,48 +77,6 @@ class AddEventService {
                     <option value="${data.optionId}">${data.optionName}</option>
                     `;
                 });
-            }
-        }
-    }
-
-    addGenderEvent() {
-        this.#genderInputObj.onchange = () => {
-            if(this.#genderInputObj.value == "0") {
-                this.#genreInputObj.disabled = true;
-            }else {
-                this.#genreInputObj.disabled = false;
-                this.#genreInputObj.innerHTML = `<option value="0">장르</option>`;
-                this.#responseGenreData.forEach(data => {
-                    this.#genreInputObj.innerHTML += `
-                    <option value="${data.optionId}">${data.optionName}</option>
-                    `;
-                });
-            }
-        }
-    }
-    
-    addGenreEvent() {
-        this.#genreInputObj.onchange = () => {
-            if(this.#genreInputObj.value == "0") {
-                this.#seasonInputObj.disabled = true;
-            }else {
-                this.#seasonInputObj.disabled = false;
-                this.#seasonInputObj.innerHTML = `<option value="0">계절</option>`;
-                this.#responseSeasonData.forEach(data => {
-                    this.#seasonInputObj.innerHTML += `
-                    <option value="${data.optionId}">${data.optionName}</option>
-                    `;
-                });
-            }
-        }
-    }
-
-    addSeasonEvent() {
-        this.#seasonInputObj.onchange = () => {
-            if(this.#seasonInputObj.value == "0") {
-                this.#updateButton.disabled = true;
-            }else {
-                this.#updateButton.disabled = false;
             }
         }
     }
@@ -279,8 +188,6 @@ class Api {
     }
 
     updateMusicApi(musicUpdateData) {
-        const url = location.href;
-        const musicId = url.substring(url.lastIndexOf("/") + 1)
         $.ajax({
             async: false,
             type: "post",
@@ -289,7 +196,7 @@ class Api {
             data: JSON.stringify(musicUpdateData), // 전송할 데이터가 있으면
             success: (response) => {
                 alert("Music 수정 완료");
-                location.replace("/music" + musicId);
+                location.replace("/music" + response.data);
             },
             error: (error) => {
                 console.log(error.responseJSON.data);
@@ -312,37 +219,83 @@ class Music {
         return this.#instance;
     }
 
+    #userCheck;
     constructor() {
+        this.#userCheck = UserCheckService.getInstance().check();
+        this.getMusicData();
         this.updateMusicEvent();
     }
 
+    getMusicData() {
+        const musicData = Api.getInstance().getMusicApi();
+
+        document.querySelectorAll(".inputs")[0].value = musicData.title;
+        document.querySelectorAll(".inputs")[1].value = musicData.singer;
+        document.querySelectorAll(".inputs")[2].value = musicData.info;
+        document.querySelectorAll(".inputs")[3].value = musicData.url;
+        document.querySelectorAll(".inputs")[4].value = musicData.categoryId;
+        document.querySelectorAll(".inputs")[5].value = musicData.genderId;
+        document.querySelectorAll(".inputs")[6].value = musicData.genreId;
+        document.querySelectorAll(".inputs")[7].value = musicData.seasonId;
+    }
     updateMusicEvent() {
         const updateButton = document.querySelector(".update-button");
 
-        updateButton.onclick = () => {           
-            let youtubeUrl = document.querySelectorAll(".inputs")[3].value;
-            youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('/') + 1);
-            if (youtubeUrl.includes('=')) {
-                youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('=') + 1);
-            }
+        updateButton.onclick = () => {    
+            if(this.#userCheck){
+                let youtubeUrl = document.querySelectorAll(".inputs")[3].value;
+                youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('/') + 1);
+                if (youtubeUrl.includes('=')) {
+                    youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('=') + 1);
+                }
 
-            const musicUpdateData = {
-                "title" : document.querySelectorAll(".inputs")[0].value,
-                "singer" : document.querySelectorAll(".inputs")[1].value,
-                "info" : document.querySelectorAll(".inputs")[2].value,
-                "url" : youtubeUrl,
-                "categoryId" : document.querySelectorAll(".inputs")[4].value,
-                "genderId" : document.querySelectorAll(".inputs")[5].value,
-                "genreId" : document.querySelectorAll(".inputs")[6].value,
-                "seasonId" : document.querySelectorAll(".inputs")[7].value
+                const musicUpdateData = {
+                    "title" : document.querySelectorAll(".inputs")[0].value,
+                    "singer" : document.querySelectorAll(".inputs")[1].value,
+                    "info" : document.querySelectorAll(".inputs")[2].value,
+                    "url" : youtubeUrl,
+                    "categoryId" : document.querySelectorAll(".inputs")[4].value,
+                    "genderId" : document.querySelectorAll(".inputs")[5].value,
+                    "genreId" : document.querySelectorAll(".inputs")[6].value,
+                    "seasonId" : document.querySelectorAll(".inputs")[7].value
+                }
+                Api.getInstance().addMusicApi(musicUpdateData);
+            }else {
+                alert("권한이 없는 사용자입니다.");
+                location.replace("/");
             }
-            Api.getInstance().addMusicApi(musicUpdateData);
         }
     }
 }
+
+class UserCheckService {
+    static #instance = null;
+    static getInstance() {
+      if(this.#instance == null) {
+        this.#instance = new UserCheckService();
+      }
+      return this.#instance;
+    }
+    #responseData;
+    #principal;
+  
+    constructor() {
+      this.#responseData = Api.getInstance().getMusicApi();
+      this.#principal = PrincipalDtl.getInstance().getResponseData();
+    } 
+  
+    check() {
+      if(this.#principal != ""){
+        if(this.#principal.username == this.#responseData.username){
+          return true;
+        }
+      }
+      return false;
+    }
+  }
 window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
-    new AddEventService();
+    new SelectService();
     new Music();
 }

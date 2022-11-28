@@ -1,7 +1,7 @@
 package com.Music.Group.Service;
 
 import com.Music.Group.Domain.Music;
-import com.Music.Group.Dto.MusicAddDto;
+import com.Music.Group.Dto.MusicRequestDto;
 import com.Music.Group.Dto.MusicListResponseDto;
 import com.Music.Group.Dto.MusicPostDto;
 import com.Music.Group.Dto.SelectOptionResponseDto;
@@ -55,8 +55,8 @@ public class MusicServiceImpl implements MusicService{
     }
 
     @Override
-    public void musicAdd(MusicAddDto musicAddDto) throws Exception {
-        musicRepository.musicAdd(musicAddDto.toEntity());
+    public void musicAdd(MusicRequestDto musicRequestDto) throws Exception {
+        musicRepository.musicAdd(musicRequestDto.toEntity());
     }
 
     @Override
@@ -84,6 +84,11 @@ public class MusicServiceImpl implements MusicService{
     public MusicPostDto getMusicPostService(int musicId) throws Exception {
 
         return musicRepository.getMusicPost(musicId).toMusicPostDto();
+    }
+
+    @Override
+    public void musicUpdate(MusicRequestDto musicRequestDto, int musicId) throws Exception {
+        musicRepository.musicUpdate(musicRequestDto.toEntity(), musicId);
     }
 
 }

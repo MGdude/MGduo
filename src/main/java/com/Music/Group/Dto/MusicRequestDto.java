@@ -7,7 +7,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class MusicAddDto {
+public class MusicRequestDto {
 
     private String userName;
 

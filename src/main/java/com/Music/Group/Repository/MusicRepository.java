@@ -19,4 +19,6 @@ public interface MusicRepository {
     public List<Music> getMusicTypeList(String type, String value) throws Exception;
 
     public Music getMusicPost(int musicId) throws Exception;
+
+    public int musicUpdate(Music music, int musicId) throws Exception;
 }

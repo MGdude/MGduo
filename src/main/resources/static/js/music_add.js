@@ -192,7 +192,6 @@ class Api {
             dataType: "json",
             success: response => {
                 responseData = response.data;
-                console.log(response.data);
             },
             error: error => {
                 console.log(error);
@@ -211,7 +210,6 @@ class Api {
             dataType: "json",
             success: response => {
                 responseData = response.data;
-                console.log(response.data);
             },
             error: error => {
                 console.log(error);
@@ -230,7 +228,6 @@ class Api {
             dataType: "json",
             success: response => {
                 responseData = response.data;
-                console.log(response.data);
             },
             error: error => {
                 console.log(error);
@@ -249,7 +246,6 @@ class Api {
             dataType: "json",
             success: response => {
                 responseData = response.data;
-                console.log(response.data);
             },
             error: error => {
                 console.log(error);
@@ -270,7 +266,6 @@ class Api {
                 location.replace("/");
             },
             error: (error) => {
-                console.log(error.responseJSON.data);
                 Object.values(error.responseJSON.data).forEach((errormessage,index) => {
                     if (index == 0){
                         alert("Music 등록 실패\n" + errormessage);
@@ -298,7 +293,6 @@ class Music {
             let userName = PrincipalDtl.getInstance().getResponseData().username;
             
             let youtubeUrl = document.querySelectorAll(".inputs")[3].value;
-            console.log(youtubeUrl);
             youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('/') + 1);
             if (youtubeUrl.includes('=')) {
                 youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('=') + 1);

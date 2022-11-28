@@ -2,7 +2,7 @@ package com.Music.Group.Api;
 
 import com.Music.Group.Dto.CMRespDto;
 import com.Music.Group.Dto.CommentAddDto;
-import com.Music.Group.Dto.MusicAddDto;
+import com.Music.Group.Dto.MusicRequestDto;
 import com.Music.Group.Service.CommentService;
 import com.Music.Group.Service.MusicService;
 import com.Music.Group.Service.MusicServiceImpl;
@@ -43,9 +43,9 @@ public class MusicApi {
     }
 
     @PostMapping("/music/add")
-    public ResponseEntity<?> musicAdd(@Valid @RequestBody MusicAddDto musicAddDto, BindingResult bindingResult) throws Exception {
-        musicService.musicAdd(musicAddDto);
-        return ResponseEntity.created(URI.create("/")).body(new CMRespDto<>("Music add Successfully", null));
+    public ResponseEntity<?> musicAdd(@Valid @RequestBody MusicRequestDto musicRequestDto, BindingResult bindingResult) throws Exception {
+        musicService.musicAdd(musicRequestDto);
+        return ResponseEntity.created(URI.create("/")).body(new CMRespDto<>("Music Add Successfully", null));
     }
 
     @GetMapping("/music/all")
@@ -60,12 +60,13 @@ public class MusicApi {
 
     @GetMapping("/music/{musicId}")
     public ResponseEntity<?> getMusicPost(@PathVariable int musicId) throws Exception {
-        return ResponseEntity.ok(new CMRespDto<>("success", musicService.getMusicPostService(musicId)));
+        return ResponseEntity.ok(new CMRespDto<>("Success", musicService.getMusicPostService(musicId)));
     }
 
-    @GetMapping("/music/update/{musicId}")
-    public ResponseEntity<?> getMusicUpdate(@PathVariable int musicId) throws Exception {
-        return ResponseEntity.ok(new CMRespDto<>("success", musicService.getMusicPostService(musicId)));
+    @PutMapping("/music/update/{musicId}")
+    public ResponseEntity<?> musicUpdate(@Valid @RequestBody MusicRequestDto musicRequestDto, BindingResult bindingResult, @PathVariable int musicId) throws Exception {
+        musicService.musicUpdate(musicRequestDto, musicId);
+        return ResponseEntity.ok(new CMRespDto<>("Music Update Success", musicId));
     }
 
 

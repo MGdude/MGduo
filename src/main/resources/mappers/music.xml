@@ -22,6 +22,22 @@
             now()
             )
     </insert>
+    <update id="musicUpdate">
+        update
+            music_mst
+        set
+            title = #{title},
+            singer = #{singer},
+            info = #{info},
+            url = #{url},
+            category_id = #{category_id},
+            gender_id = #{gender_id},
+            genre_id = #{genre_id},
+            season_id = #{season_id},
+            update_date = now()
+        where
+            id = #{musicId}
+    </update>
     <select id="getCategoryOptions" resultType="com.Music.Group.Domain.SelectOption">
         select
             id, name

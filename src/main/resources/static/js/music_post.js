@@ -79,11 +79,10 @@ class MusicDtl {
     return this.#instance;
   }
   #responseData;
-  #principal;
-
+  #userCheck;
   constructor() {
-    this.#principal = PrincipalDtl.getInstance().getResponseData();
     this.#responseData = Api.getInstance().getMusicApi();
+    this.#userCheck = UserCheckService.getInstance().check();
     this.getMusicDtl();
     this.getMusicButton();
   }
@@ -111,16 +110,13 @@ class MusicDtl {
   }
 
   getMusicButton() {
-    if(this.#principal != ""){
-      if(this.#principal.username == this.#responseData.username){
-        const button = document.querySelector(".modify-btn");
-        button.innerHTML += `
-          <button class="btn post-update-btn">수정</button>
-          <button class="btn post-delete-btn">삭제</button>
-        `;
-
-        this.getMusicButtonEvent();
-      }
+    if(this.#userCheck){
+      const button = document.querySelector(".modify-btn");
+      button.innerHTML += `
+        <button class="btn post-update-btn">수정</button>
+        <button class="btn post-delete-btn">삭제</button>
+      `;
+      this.getMusicButtonEvent();
     }
   }
 
@@ -130,7 +126,7 @@ class MusicDtl {
     
     updateBtn.onclick = () => {
       if(confirm("게시물을 수정하시겠습니까?")) {
-        if(this.#principal.username == this.#responseData.username){
+        if(this.#userCheck){
           location.href = "/music_update/" + this.#responseData.id;
         }else {
           alert("권한이 없는 사용자입니다.");
@@ -140,7 +136,7 @@ class MusicDtl {
 
     deleteBtn.onclick = () => {
       if(confirm("게시물을 삭제하시겠습니까?")) {
-        if(this.#principal.username == this.#responseData.username){
+        if(this.#userCheck){
           
         }else {
           alert("권한이 없는 사용자입니다.");
@@ -149,7 +145,6 @@ class MusicDtl {
     }
   }
 }
-
 
 class CommentEvent {
   static #instance = null;
@@ -207,7 +202,31 @@ class CommentEvent {
   }
 }
 
+class UserCheckService {
+  static #instance = null;
+  static getInstance() {
+    if(this.#instance == null) {
+      this.#instance = new UserCheckService();
+    }
+    return this.#instance;
+  }
+  #responseData;
+  #principal;
 
+  constructor() {
+    this.#responseData = Api.getInstance().getMusicApi();
+    this.#principal = PrincipalDtl.getInstance().getResponseData();
+  } 
+
+  check() {
+    if(this.#principal != ""){
+      if(this.#principal.username == this.#responseData.username){
+        return true;
+      }
+    }
+    return false;
+  }
+}
 
 
 window.onload = () => {
