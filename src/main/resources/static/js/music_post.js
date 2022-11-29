@@ -108,14 +108,14 @@ class MusicDtl {
     if(this.#responseData != null) {
       content.innerHTML += `
          <div class="video-size">
-          <iframe class="video" width="783" height="440" src="https://www.youtube.com/embed/${this.#responseData.url}" title="[MV] IU(아이유)_LILAC(라일락)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe class="video" src="https://www.youtube.com/embed/${this.#responseData.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="music-info">
           <p class="writer">작성자 : ${this.#responseData.username}</p>
           <p class="song-name">${this.#responseData.title}</p>
           <p class="singer">${this.#responseData.singer}</p>
           <p class="song-info">곡 설명 : ${this.#responseData.info}</p>
-          <p class="youtube-link">유튜브 링크 : <a href="https://www.youtube.com/watch?v=${this.#responseData.url}">https://www.youtube.com/watch?v=${this.#responseData.info.url}</a></p>
+          <p class="youtube-link">유튜브 링크 : <a href="https://www.youtube.com/watch?v=${this.#responseData.url}">https://www.youtube.com/watch?v=${this.#responseData.url}</a></p>
           <div class="modify-btn">
 
           </div>
@@ -248,6 +248,7 @@ class UserCheckService {
 window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
+    new SearchEvent();
     new MusicDtl();
     new CommentEvent();
 }

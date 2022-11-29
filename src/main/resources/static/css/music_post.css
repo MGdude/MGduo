@@ -38,7 +38,7 @@
   height: 20%;
   margin-top: 5px;
   border-radius: 7px;
-
+  position: relative;
   background-color: #ebebeb;
 }
 
@@ -73,17 +73,16 @@
   font-weight: 700;
 }
 
-.modify-btn {
-  margin-right: 10px;
-  text-align: right;
-}
-
 .post-update-btn {
-  margin-right: 5px;
+  position: absolute;
+  top: 70%;
+  left: 90%;
 }
 
 .post-delete-btn {
-  margin-left: 5px;
+  position: absolute;
+  top: 70%;
+  left: 95%;
 }
 
 .comments-content {  

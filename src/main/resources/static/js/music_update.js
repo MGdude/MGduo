@@ -299,6 +299,7 @@ class UserCheckService {
 window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
+    new SearchEvent();
     new SelectService();
     new Music();
 }

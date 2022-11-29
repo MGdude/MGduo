@@ -99,34 +99,6 @@ class HeaderEvent {
   }
 }
 
-// class SearchApi {
-//   static #instance = null;
-//   static getInstance() {
-//     if(this.#instance == null) {
-//       this.#instance = new SearchApi();
-//     }
-//     return this.#instance;
-//   }
-
-//   getSearchApi(search) {
-//     let responseData = null;
-//     $.ajax({
-//       async: false,
-//       type: "get",
-//       url: "/api/" + search,
-//       dataType: "json",
-//       success: (response) => {
-//         responseData = response.data;
-//         console.log(responseData);
-//       },
-//       error: (error) => {
-//         console.log(error);
-//       }
-//     });
-//     return responseData;
-//   }
-// }
-
 class SearchEvent {
   static #instance = null;
   static getInstance() {
@@ -135,8 +107,6 @@ class SearchEvent {
     }
     return this.#instance;
   }
-
-  #searchList;
 
   constructor() { 
     this.getSearchList();
@@ -147,47 +117,10 @@ class SearchEvent {
     
     searchBtn.onclick = () => {
       const search = document.querySelector(".search").value;
-      console.log(search);
-      location.href = "/?search=" + search;
-      // this.#searchList = SearchApi.getInstance().getSearchApi(search);
-      // console.log(this.#searchList);
-      // this.getSearchListEvent();
-      // this.getMusicBtnEvent();
+      if (search != ""){
+        location.href = "/?search=" + search;
+      }
     }
   }
 
-  // getSearchListEvent() {
-  //   const mainContent = document.querySelector(".main-content");
-  //   mainContent.innerHTML = "";
-
-  //   if(this.#searchList != null) {
-  //     if(this.#searchList.length > 0) {
-  //       this.#searchList.forEach(search => {
-  //         mainContent.innerHTML += `
-  //           <div class="main-infolist">
-  //               <div class="main-info">
-  //                   <div class="main-img">
-  //                       <img src="https://i.ytimg.com/vi/${search.url}/hqdefault.jpg" alt="">
-  //                   </div>
-  //                   <div class="title">곡명: ${search.title}</div>
-  //                   <div class="singer">가수명: ${search.singer}</div>
-  //                   <div class="tag">#${search.categoryName}(${search.genderName}) #${search.genreName} #${search.seasonName}</div>
-  //               </div>
-  //           </div>
-  //         `;
-  //       });
-  //     }
-  //   }
-    
-  // }
-  
-  // getMusicBtnEvent() {
-  //   if(this.#searchList != null)
-  //   this.#searchList.forEach((music, index) => {
-  //     const mainInfo = document.querySelectorAll(".main-info")[index];
-  //     mainInfo.onclick = () => {
-  //       location.href = "/music/" + music.id;
-  //     }
-  //   });
-  // }
 }

@@ -316,6 +316,7 @@ class Music {
 window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
+    new SearchEvent();
     new AddEventService();
     Music.getInstance().addMusicEvent();
 }

@@ -56,7 +56,7 @@ class BtnEvent {
 window.onload = () => {
   PrincipalDtl.getInstance();
   HeaderEvent.getInstance();
+  new SearchEvent();
   ErrorName.getInstance();
   BtnEvent.getInstance().btnEvent();
-  new SearchEvent();
 }

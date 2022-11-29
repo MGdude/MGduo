@@ -110,7 +110,7 @@ class MusicEvent {
                 `;
             });
         }else {
-            alert("등록된 Music이 없습니다.")
+            alert("음악이 없습니다.")
             location.href = "/";
         }
     }

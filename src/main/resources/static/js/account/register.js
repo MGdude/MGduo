@@ -127,8 +127,8 @@ class BtnEvent {
 window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
+    new SearchEvent();
     BtnEvent.getInstance().btnEvent();
     new Option();
     UserData.getInstance().getUserApi();
-    new SearchEvent();
 }
