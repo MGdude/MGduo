@@ -1,6 +1,6 @@
 package com.Music.Group.Service;
 
-import com.Music.Group.Dto.SearchDto;
+import com.Music.Group.Dto.MusicListResponseDto;
 import com.Music.Group.Repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,11 @@ public class SearchServiceImpl implements SearchService {
     private final SearchRepository searchRepository;
 
     @Override
-    public List<SearchDto> getSearchList(String search) throws Exception {
-        List<SearchDto> searchList = new ArrayList<SearchDto>();
-        searchRepository.getSearchList(search).forEach(test -> {
-            searchList.add(test.toSearchDto());
+    public List<MusicListResponseDto> getSearchList(String search) throws Exception {
+        search = "%" + search + "%";
+        List<MusicListResponseDto> searchList = new ArrayList<MusicListResponseDto>();
+        searchRepository.getSearchList(search).forEach(list -> {
+            searchList.add(list.toSearchDto());
         });
         return searchList;
     }

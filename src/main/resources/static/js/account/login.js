@@ -58,4 +58,5 @@ window.onload = () => {
   HeaderEvent.getInstance();
   ErrorName.getInstance();
   BtnEvent.getInstance().btnEvent();
+  new SearchEvent();
 }

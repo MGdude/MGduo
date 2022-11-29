@@ -2,7 +2,6 @@ package com.Music.Group.Domain;
 
 import com.Music.Group.Dto.MusicListResponseDto;
 import com.Music.Group.Dto.MusicPostDto;
-import com.Music.Group.Dto.SearchDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -58,9 +57,9 @@ public class Music {
                 .build();
     }
 
-    public SearchDto toSearchDto() {
-        return SearchDto.builder()
-                .id(id)
+    public MusicListResponseDto toSearchDto() {
+        return MusicListResponseDto.builder()
+                .musicId(id)
                 .title(title)
                 .singer(singer)
                 .url(url)
