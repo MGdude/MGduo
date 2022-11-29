@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Music.Group.Repository.SearchRepository">
+    <select id="getSearchList" resultType="com.Music.Group.Domain.Music">
+        SELECT
+            mm.id,
+            mm.title,
+            mm.singer,
+            mm.url,
+            category.name AS category_name,
+            gender.name AS gender_name,
+            genre.name AS genre_name,
+            season.name AS season_name
+        FROM
+            music_mst mm
+            LEFT OUTER JOIN category ON(category.id = mm.category_id)
+            LEFT OUTER JOIN gender ON(gender.id = mm.gender_id)
+            LEFT OUTER JOIN genre ON(genre.id = mm.genre_id)
+            LEFT OUTER JOIN season ON(season.id = mm.season_id)
+        WHERE
+            singer like #{search}
+
+        union
+
+        SELECT
+            mm.id,
+            mm.title,
+            mm.singer,
+            mm.url,
+            category.name AS category_name,
+            gender.name AS gender_name,
+            genre.name AS genre_name,
+            season.name AS season_name
+        FROM
+            music_mst mm
+            LEFT OUTER JOIN category ON(category.id = mm.category_id)
+            LEFT OUTER JOIN gender ON(gender.id = mm.gender_id)
+            LEFT OUTER JOIN genre ON(genre.id = mm.genre_id)
+            LEFT OUTER JOIN season ON(season.id = mm.season_id)
+        WHERE
+            title like #{search}
+    </select>
+</mapper>

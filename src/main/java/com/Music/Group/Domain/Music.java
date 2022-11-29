@@ -60,4 +60,17 @@ public class Music {
                 .seasonId(season_id)
                 .build();
     }
+
+    public MusicListResponseDto toSearchDto() {
+        return MusicListResponseDto.builder()
+                .musicId(id)
+                .title(title)
+                .singer(singer)
+                .url(url)
+                .categoryName(category_name)
+                .genderName(gender_name)
+                .genreName(genre_name)
+                .seasonName(season_name)
+                .build();
+    }
 }

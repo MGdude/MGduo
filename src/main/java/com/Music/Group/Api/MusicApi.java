@@ -6,6 +6,7 @@ import com.Music.Group.Dto.MusicRequestDto;
 import com.Music.Group.Service.CommentService;
 import com.Music.Group.Service.MusicService;
 import com.Music.Group.Service.MusicServiceImpl;
+import com.Music.Group.Service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ public class MusicApi {
 
     private final MusicService musicService;
     private final CommentService commentService;
+    private final SearchService searchService;
 
     @GetMapping("/music/option/category")
     public ResponseEntity<?> getCategoryOption() throws Exception {

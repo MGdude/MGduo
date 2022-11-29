@@ -130,4 +130,5 @@ window.onload = () => {
     BtnEvent.getInstance().btnEvent();
     new Option();
     UserData.getInstance().getUserApi();
+    new SearchEvent();
 }

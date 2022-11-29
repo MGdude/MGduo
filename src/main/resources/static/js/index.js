@@ -43,6 +43,24 @@ class Api {
         });
         return responseData;
     }
+    getSearchApi(search) {
+      let responseData = null;
+
+      $.ajax({
+        async: false,
+        type: "get",
+        url: "/api/" + search,
+        dataType: "json",
+        success: (response) => {
+          responseData = response.data;
+          console.log(responseData);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+      return responseData;
+    }
 }
 
 class MusicEvent {
@@ -58,12 +76,19 @@ class MusicEvent {
         let url = location.href;
         const value = url.substring(url.lastIndexOf("/") + 1);
         const type = url.slice(0,url.lastIndexOf("/")).substring(url.slice(0,url.lastIndexOf("/")).lastIndexOf("/")+1);
+        const searchUrl = decodeURI(location.search);
+        const param = new URLSearchParams(searchUrl);
+        const search = param.get("search");
 
-        if (value != "") {
-            this.#musicList = Api.getInstance().getMusicTypeListApi(type,value);
-        }else {
-            this.#musicList = Api.getInstance().getMusicAllListApi();
+        if(search != null) {
+          this.#musicList = Api.getInstance().getSearchApi(search);
         }
+        else if (value != "") {
+           this.#musicList = Api.getInstance().getMusicTypeListApi(type,value);
+        }else {
+           this.#musicList = Api.getInstance().getMusicAllListApi();
+        }
+        console.log(this.#musicList);
     }
 
     getMusicList() {
@@ -108,5 +133,6 @@ window.onload = () => {
 //    }
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
+    new SearchEvent();
     new MusicEvent();
 }
