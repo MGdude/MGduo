@@ -29,9 +29,24 @@ public class MusicRequestDto {
     private int seasonId;
 
 
+    private int musicId;
     public Music toEntity() {
         return Music.builder()
                 .username(userName)
+                .title(title)
+                .singer(singer)
+                .info(info)
+                .url(url)
+                .category_id(categoryId)
+                .gender_id(genderId)
+                .genre_id(genreId)
+                .season_id(seasonId)
+                .build();
+    }
+
+    public Music toUpdateEntity() {
+        return Music.builder()
+                .id(musicId)
                 .title(title)
                 .singer(singer)
                 .info(info)

@@ -87,8 +87,13 @@ public class MusicServiceImpl implements MusicService{
     }
 
     @Override
-    public void musicUpdate(MusicRequestDto musicRequestDto, int musicId) throws Exception {
-        musicRepository.musicUpdate(musicRequestDto.toEntity(), musicId);
+    public void musicUpdate(MusicRequestDto musicRequestDto) throws Exception {
+        musicRepository.musicUpdate(musicRequestDto.toUpdateEntity());
+    }
+
+    @Override
+    public void musicDelete(int musicId) throws Exception {
+        musicRepository.musicDelete(musicId);
     }
 
 }

@@ -190,13 +190,13 @@ class Api {
     updateMusicApi(musicUpdateData) {
         $.ajax({
             async: false,
-            type: "post",
-            url: "/api/music/add",
+            type: "put",
+            url: "/api/music/update/" + musicUpdateData.musicId,
             contentType: "application/json",// 전송할 데이터가 json인 경우
             data: JSON.stringify(musicUpdateData), // 전송할 데이터가 있으면
             success: (response) => {
                 alert("Music 수정 완료");
-                location.replace("/music" + response.data);
+                location.replace("/music/" + musicUpdateData.musicId);
             },
             error: (error) => {
                 console.log(error.responseJSON.data);
@@ -248,8 +248,11 @@ class Music {
                 if (youtubeUrl.includes('=')) {
                     youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('=') + 1);
                 }
+                const url = location.href;
+                const musicId = url.substring(url.lastIndexOf("/") + 1)
 
                 const musicUpdateData = {
+                    "musicId" : musicId,
                     "title" : document.querySelectorAll(".inputs")[0].value,
                     "singer" : document.querySelectorAll(".inputs")[1].value,
                     "info" : document.querySelectorAll(".inputs")[2].value,
@@ -259,7 +262,7 @@ class Music {
                     "genreId" : document.querySelectorAll(".inputs")[6].value,
                     "seasonId" : document.querySelectorAll(".inputs")[7].value
                 }
-                Api.getInstance().addMusicApi(musicUpdateData);
+                Api.getInstance().updateMusicApi(musicUpdateData);
             }else {
                 alert("권한이 없는 사용자입니다.");
                 location.replace("/");

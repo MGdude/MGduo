@@ -67,6 +67,22 @@ class Api {
       }
     });
   }
+
+  musicDeleteApi(musicId) {
+    $.ajax({
+      async: false,
+      type: "delete",
+      url: "/api/music/delete/" + musicId,
+      dataType: "json",
+      success: (response) => {
+        console.log("Music 삭제 완료.");
+        location.href = "/";
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
 }
 
 
@@ -137,7 +153,7 @@ class MusicDtl {
     deleteBtn.onclick = () => {
       if(confirm("게시물을 삭제하시겠습니까?")) {
         if(this.#userCheck){
-          
+          Api.getInstance().musicDeleteApi(this.#responseData.id);
         }else {
           alert("권한이 없는 사용자입니다.");
         }

@@ -65,9 +65,13 @@ public class MusicApi {
 
     @PutMapping("/music/update/{musicId}")
     public ResponseEntity<?> musicUpdate(@Valid @RequestBody MusicRequestDto musicRequestDto, BindingResult bindingResult, @PathVariable int musicId) throws Exception {
-        musicService.musicUpdate(musicRequestDto, musicId);
-        return ResponseEntity.ok(new CMRespDto<>("Music Update Success", musicId));
+        musicService.musicUpdate(musicRequestDto);
+        return ResponseEntity.ok(new CMRespDto<>("Music Update Success", null));
     }
 
-
+    @DeleteMapping("/music/delete/{musicId}")
+    public ResponseEntity<?> musicDelete(@PathVariable int musicId) throws Exception {
+        musicService.musicDelete(musicId);
+        return ResponseEntity.ok(new CMRespDto<>("Music Delete Success", null));
+    }
 }

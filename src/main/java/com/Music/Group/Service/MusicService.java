@@ -21,6 +21,7 @@ public interface MusicService{
 
     public MusicPostDto getMusicPostService(int musicId) throws Exception;
 
-    public void musicUpdate(MusicRequestDto musicRequestDto, int musicId) throws Exception;
+    public void musicUpdate(MusicRequestDto musicRequestDto) throws Exception;
 
+    public void musicDelete(int musicId) throws Exception;
 }

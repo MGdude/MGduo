@@ -36,8 +36,14 @@
             season_id = #{season_id},
             update_date = now()
         where
-            id = #{musicId}
+            id = #{id}
     </update>
+    <delete id="musicDelete">
+        delete from
+            music_mst
+        where
+            id = #{musicId}
+    </delete>
     <select id="getCategoryOptions" resultType="com.Music.Group.Domain.SelectOption">
         select
             id, name
