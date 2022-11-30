@@ -1,7 +1,3 @@
-class Usercheck {
-
-}
-
 class SelectService {
     #categoryInputObj;
     #genderInputObj;
@@ -25,7 +21,7 @@ class SelectService {
         this.#responseSeasonData = Api.getInstance().getSeasonApi();
 
         this.selectInputEvent();
-        this.selectCatagoryEvent();
+        this.selectCategoryEvent();
     }
 
     selectInputEvent() {
@@ -56,7 +52,7 @@ class SelectService {
         });
     }
 
-    selectCatagoryEvent() {
+    selectCategoryEvent() {
         this.#categoryInputObj.onchange = () => {
             if(this.#categoryInputObj.value == "0") {
             }else if(this.#categoryInputObj.value == "1") {
