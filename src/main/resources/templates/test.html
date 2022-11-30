@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <input type="radio" class="solo" name="solo" value="solo1">
+        <input type="radio" class="solo" name="solo" value="solo2">
+        <input type="radio" class="solo" name="solo" value="solo3">
+        <input type="radio" class="duo" name="duo" value="Duo1">
+        <input type="radio" class="duo" name="duo" value="Duo2">
+        <input type="radio" class="duo" name="duo" value="Duo3">
+    </form>
+    
+    <script>
+        let urlPrams = {
+            "CATEGORY": null,
+            "GENDER": null,
+        }
+
+        // "/api/aaa?" + urlPrams.CATEGORY != null ? `category=${urlPrams.CATEGORY}`
+        console.log(urlPrams);
+        document.querySelectorAll(".solo").forEach(solo => {
+            solo.onclick = () => {
+                if (urlPrams.CATEGORY == solo.value){
+                    solo.checked = false;
+                    urlPrams.CATEGORY = null;
+                }
+                    let formData = new FormData(document.querySelector("form"));
+                    formData.forEach((v, k) => {
+                    if(k == "solo") {
+                        urlPrams.CATEGORY = v;
+                    }
+                    // else if(k == "duo") {
+                    //     urlPrams.GENDER = v;
+                    // }
+                        console.log("key: " + k);
+                        console.log("value: " + v);
+                    });
+                // location.href = 
+
+                console.log(urlPrams);
+            }
+        })
+
+
+        document.querySelectorAll(".duo").forEach(duo => {
+            duo.onclick = () => {
+                if (urlPrams.GENDER == duo.value){
+                    duo.checked = false;
+                    urlPrams.GENDER = null;
+                }
+                let formData = new FormData(document.querySelector("form"));
+                formData.forEach((v, k) => {
+                    // if(k == "solo") {
+                    //     urlPrams.CATEGORY = v;
+                    // }else 
+                    if(k == "duo") {
+                        urlPrams.GENDER = v;
+                    }
+                    console.log("key: " + k);
+                    console.log("value: " + v);
+                });
+                console.log(urlPrams);
+            }
+        })
+
+
+    </script>
+</body>
+</html>
