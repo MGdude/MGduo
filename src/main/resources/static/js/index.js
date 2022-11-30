@@ -125,6 +125,109 @@ class MusicEvent {
     }
 }
 
+class AsideEvent {
+  static #instance = null;
+  static getInstance() {
+    if(this.#instance == null) {
+      this.#instance = new AsideEvent();
+    }
+    return this.#instance;
+  }
+
+  #urlParams;
+
+  constructor() {
+    this.init();
+    this.getCategoryEvent();
+    this.getGenderEvent();
+    this.getGenreEvent();
+    this.getSeasonEvent();
+  }
+  
+  init() {
+    this.#urlParams = {
+      "category" : null,
+      "gender" : null,
+      "genre" : null,
+      "season" : null
+    }
+  }
+
+  getCategoryEvent() {
+    console.log(this.#urlParams);
+
+    document.querySelectorAll(".category-radio").forEach(category => {
+      category.onclick = () => {
+        if(this.#urlParams.category == category.value) {
+          category.checked = false;
+          this.#urlParams.category = null;
+        }
+        let formData = new FormData(document.querySelector("form"));
+        formData.forEach((v, k) => {
+          this.#urlParams.category = v;
+          console.log("k = " + k);
+          console.log("v = " + v);
+        });
+        console.log(this.#urlParams);
+      }
+    });
+  }
+
+  getGenderEvent() {
+    console.log(this.#urlParams);
+
+    document.querySelectorAll(".gender-radio").forEach(gender => {
+      gender.onclick = () => {
+        if(this.#urlParams.gender == gender.value) {
+          gender.checked = false;
+          this.#urlParams.gender = null;
+        }
+        let formData = new FormData(document.querySelector("form"));
+        formData.forEach((v, k) => {
+          this.#urlParams.gender = v;
+        });
+        console.log(this.#urlParams);
+      }
+    });
+  }
+
+  getGenreEvent() {
+    console.log(this.#urlParams);
+
+    document.querySelectorAll(".genre-radio").forEach(genre => {
+      genre.onclick = () => {
+        if(this.#urlParams.genre == genre.value) {
+          genre.checked = false;
+          this.#urlParams.genre = null;
+        }
+        let formData = new FormData(document.querySelector("form"));
+        formData.forEach((v, k) => {
+          this.#urlParams.genre = v;
+        });
+        console.log(this.#urlParams);
+      }
+    });
+  }
+
+  getSeasonEvent() {
+    console.log(this.#urlParams);
+
+    document.querySelectorAll(".season-radio").forEach(season => {
+      season.onclick = () => {
+        if(this.#urlParams.season == season.value) {
+          season.checked = false;
+          this.#urlParams.season = null;
+        }
+        let formData = new FormData(document.querySelector("form"));
+        formData.forEach((v, k) => {
+          this.#urlParams.season = v;
+        });
+        console.log(this.#urlParams);
+      }
+    });
+  }
+}
+
 window.onload = () => {
 //    let preUrl = localStorage.preUrl;
 //    localStorage.removeItem("preUrl");
@@ -134,5 +237,7 @@ window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
     new SearchEvent();
+    new AsideEvent();
     new MusicEvent();
+    
 }

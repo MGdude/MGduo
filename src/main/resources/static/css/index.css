@@ -25,11 +25,15 @@
 }
 
 
-.main-aside ul li a {
+.main-aside ul li label {
     text-decoration: none;
     list-style: none;
     font-size: 15px;
     color: black;
+}
+
+.main-aside ul input {
+    display: none;
 }
 
 
