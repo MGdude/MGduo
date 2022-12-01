@@ -7,13 +7,15 @@ class Api {
       return this.#instance;
     }
 
-    getMusicAllListApi() {
+    getMusicAllListApi(filter) {
         let responseData = null;
         $.ajax({
             async: false,
             type: "get",
             url: "/api/music/all",
+            contentType: "application/json",
             dataType: "json",
+            data: JSON.stringify(filter),
             success: response => {
                 responseData = response.data;
                 console.log(response.data);
@@ -25,24 +27,6 @@ class Api {
         return responseData;
     }
 
-    getMusicTypeListApi(type,value) {
-        let responseData = null;
-
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "/api/music/" + type + "/" + value,
-            dataType: "json",
-            success: response => {
-                responseData = response.data;
-                console.log(response.data);
-            },
-            error: error => {
-                console.log(error);
-            }
-        });
-        return responseData;
-    }
     getSearchApi(search) {
       let responseData = null;
 
@@ -61,6 +45,10 @@ class Api {
       });
       return responseData;
     }
+
+    getFilterApi() {
+
+    }
 }
 
 class MusicEvent {
@@ -73,20 +61,15 @@ class MusicEvent {
     }
 
     getMusicType() {
-        let url = location.href;
-        const value = url.substring(url.lastIndexOf("/") + 1);
-        const type = url.slice(0,url.lastIndexOf("/")).substring(url.slice(0,url.lastIndexOf("/")).lastIndexOf("/")+1);
         const searchUrl = decodeURI(location.search);
         const param = new URLSearchParams(searchUrl);
         const search = param.get("search");
+        const filter = encodeURI(AsideEvent.getInstance().getUrlParam());
 
         if(search != null) {
           this.#musicList = Api.getInstance().getSearchApi(search);
-        }
-        else if (value != "") {
-           this.#musicList = Api.getInstance().getMusicTypeListApi(type,value);
         }else {
-           this.#musicList = Api.getInstance().getMusicAllListApi();
+           this.#musicList = Api.getInstance().getMusicAllListApi(filter);
         }
         console.log(this.#musicList);
     }
@@ -146,85 +129,101 @@ class AsideEvent {
   
   init() {
     this.#urlParams = {
-      "category" : null,
-      "gender" : null,
-      "genre" : null,
-      "season" : null
+      "category" : 0,
+      "gender" : 0,
+      "genre" : 0,
+      "season" : 0
     }
   }
 
   getCategoryEvent() {
-    console.log(this.#urlParams);
 
     document.querySelectorAll(".category-radio").forEach(category => {
       category.onclick = () => {
         if(this.#urlParams.category == category.value) {
           category.checked = false;
-          this.#urlParams.category = null;
+          this.#urlParams.category = 0;
+        }else {
+          this.#urlParams.category = category.value;
         }
-        let formData = new FormData(document.querySelector("form"));
-        formData.forEach((v, k) => {
-          this.#urlParams.category = v;
-          console.log("k = " + k);
-          console.log("v = " + v);
-        });
+        // let formData = new FormData(document.querySelector("form"));
+        // formData.forEach((v, k) => {
+        //   if(k == "category"){
+        //     this.#urlParams.category = v;
+        //   }
+        //   console.log("k = " + k);
+        //   console.log("v = " + v);
+        // });
         console.log(this.#urlParams);
       }
     });
   }
 
   getGenderEvent() {
-    console.log(this.#urlParams);
 
     document.querySelectorAll(".gender-radio").forEach(gender => {
       gender.onclick = () => {
         if(this.#urlParams.gender == gender.value) {
           gender.checked = false;
-          this.#urlParams.gender = null;
+          this.#urlParams.gender = 0;
+        }else {
+          this.#urlParams.gender = gender.value;
         }
-        let formData = new FormData(document.querySelector("form"));
-        formData.forEach((v, k) => {
-          this.#urlParams.gender = v;
-        });
+        // let formData = new FormData(document.querySelector("form"));
+        // formData.forEach((v, k) => {
+        //   if(k == "gender") {
+        //     this.#urlParams.gender = v;
+        //   }
+        // });
         console.log(this.#urlParams);
       }
     });
   }
 
   getGenreEvent() {
-    console.log(this.#urlParams);
 
     document.querySelectorAll(".genre-radio").forEach(genre => {
       genre.onclick = () => {
         if(this.#urlParams.genre == genre.value) {
           genre.checked = false;
-          this.#urlParams.genre = null;
+          this.#urlParams.genre = 0;
+        }else {
+          this.#urlParams.genre = genre.value;
         }
-        let formData = new FormData(document.querySelector("form"));
-        formData.forEach((v, k) => {
-          this.#urlParams.genre = v;
-        });
+        // let formData = new FormData(document.querySelector("form"));
+        // formData.forEach((v, k) => {
+        //   if(k == "genre") {
+        //     this.#urlParams.genre = v;
+        //   }
+        // });
         console.log(this.#urlParams);
       }
     });
   }
 
   getSeasonEvent() {
-    console.log(this.#urlParams);
 
     document.querySelectorAll(".season-radio").forEach(season => {
       season.onclick = () => {
         if(this.#urlParams.season == season.value) {
           season.checked = false;
-          this.#urlParams.season = null;
+          this.#urlParams.season = 0;
+        }else {
+          this.#urlParams.season = season.value;
         }
-        let formData = new FormData(document.querySelector("form"));
-        formData.forEach((v, k) => {
-          this.#urlParams.season = v;
-        });
+        // let formData = new FormData(document.querySelector("form"));
+        // formData.forEach((v, k) => {
+        //   if(k == "season") {
+        //     this.#urlParams.season = v;
+        //   }
+        // });
         console.log(this.#urlParams);
       }
     });
+  }
+  
+  getUrlParam() {
+    return this.#urlParams;
   }
 }
 

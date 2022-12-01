@@ -2,6 +2,7 @@ package com.Music.Group.Api;
 
 import com.Music.Group.Dto.CMRespDto;
 import com.Music.Group.Dto.CommentAddDto;
+import com.Music.Group.Dto.FilterDto;
 import com.Music.Group.Dto.MusicRequestDto;
 import com.Music.Group.Service.CommentService;
 import com.Music.Group.Service.MusicService;
@@ -51,8 +52,8 @@ public class MusicApi {
     }
 
     @GetMapping("/music/all")
-    public ResponseEntity<?> getMusicAll() throws Exception {
-        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", musicService.getMusicAll()));
+    public ResponseEntity<?> getMusicAll(FilterDto filterDto) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", musicService.getMusicAll(filterDto)));
     }
 
     @GetMapping("/music/{type}/{value}")

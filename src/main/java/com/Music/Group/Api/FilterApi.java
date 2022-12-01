@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class SearchApi {
+public class FilterApi {
     private final SearchService searchService;
 
     @GetMapping("/{search}")
     public ResponseEntity<?> search(@PathVariable String search) throws Exception {
         return ResponseEntity.ok(new CMRespDto<>("Search Successfully", searchService.getSearchList(search)));
     }
+
 }

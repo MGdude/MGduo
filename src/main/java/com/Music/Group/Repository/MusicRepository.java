@@ -1,5 +1,6 @@
 package com.Music.Group.Repository;
 
+import com.Music.Group.Domain.Filter;
 import com.Music.Group.Domain.Music;
 import com.Music.Group.Domain.SelectOption;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,7 +16,7 @@ public interface MusicRepository {
 
     public int musicAdd(Music music) throws Exception;
 
-    public List<Music> getMusicList() throws Exception;
+    public List<Music> getMusicList(Filter filter) throws Exception;
     public List<Music> getMusicTypeList(String type, String value) throws Exception;
 
     public Music getMusicPost(int musicId) throws Exception;

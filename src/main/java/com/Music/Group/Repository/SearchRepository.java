@@ -1,5 +1,6 @@
 package com.Music.Group.Repository;
 
+import com.Music.Group.Domain.Filter;
 import com.Music.Group.Domain.Music;
 import org.apache.ibatis.annotations.Mapper;
 

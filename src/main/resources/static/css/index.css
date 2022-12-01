@@ -32,11 +32,14 @@
     color: black;
 }
 
+.main-aside ul input:checked + li label {
+    color: black;
+    font-weight: 800;
+}
+
 .main-aside ul input {
     display: none;
 }
-
-
 
 .main-content {
     display: flex;

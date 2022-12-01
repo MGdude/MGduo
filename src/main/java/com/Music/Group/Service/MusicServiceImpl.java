@@ -1,10 +1,8 @@
 package com.Music.Group.Service;
 
+import com.Music.Group.Domain.Filter;
 import com.Music.Group.Domain.Music;
-import com.Music.Group.Dto.MusicRequestDto;
-import com.Music.Group.Dto.MusicListResponseDto;
-import com.Music.Group.Dto.MusicPostDto;
-import com.Music.Group.Dto.SelectOptionResponseDto;
+import com.Music.Group.Dto.*;
 import com.Music.Group.Repository.MusicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -60,10 +58,10 @@ public class MusicServiceImpl implements MusicService{
     }
 
     @Override
-    public List<MusicListResponseDto> getMusicAll() throws Exception {
+    public List<MusicListResponseDto> getMusicAll(FilterDto filterDto) throws Exception {
         List<MusicListResponseDto> musicListResponseDtoList = new ArrayList<MusicListResponseDto>();
 
-        musicRepository.getMusicList().forEach(music -> {
+        musicRepository.getMusicList(filterDto.toEntity()).forEach(music -> {
             musicListResponseDtoList.add(music.toDto());
         });
 

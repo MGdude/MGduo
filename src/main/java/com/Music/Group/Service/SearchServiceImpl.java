@@ -1,5 +1,6 @@
 package com.Music.Group.Service;
 
+import com.Music.Group.Dto.FilterDto;
 import com.Music.Group.Dto.MusicListResponseDto;
 import com.Music.Group.Repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,10 @@ public class SearchServiceImpl implements SearchService {
             searchList.add(list.toSearchDto());
         });
         return searchList;
+    }
+
+    @Override
+    public List<FilterDto> getFilterList() throws Exception {
+        return null;
     }
 }
