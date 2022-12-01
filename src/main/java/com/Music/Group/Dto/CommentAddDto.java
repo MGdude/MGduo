@@ -8,16 +8,14 @@ public class CommentAddDto {
     private int musicId;
     private String userName;
     private String comment;
-    private int step;
-    private int groups;
+    private int parentsId;
 
     public Comment toEntity() {
         return Comment.builder()
                 .music_id(musicId)
                 .username(userName)
                 .comment(comment)
-                .step(step)
-                .groups(groups)
+                .parents_id(parentsId)
                 .build();
     }
 }

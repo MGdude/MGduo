@@ -10,4 +10,5 @@ public interface CommentService {
     public List<CommentDto> getComments(int musicId) throws Exception;
 
     public void addComment(CommentAddDto commentAddDto) throws Exception;
+
 }

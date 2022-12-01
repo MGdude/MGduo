@@ -11,8 +11,7 @@ public class CommentDto {
     private int musicId;
     private String userName;
     private String comment;
-    private int step;
-    private int groups;
+    private int parentsId;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 }

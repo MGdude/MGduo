@@ -1,6 +1,5 @@
 package com.Music.Group.Service;
 
-import com.Music.Group.Domain.User;
 import com.Music.Group.Dto.CommentAddDto;
 import com.Music.Group.Dto.CommentDto;
 import com.Music.Group.Repository.CommentRepository;
@@ -9,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -37,4 +34,6 @@ public class CommentServiceImpl implements CommentService{
             throw new CustomInternalServerErrorException("Server Error");
         }
     }
+
+
 }

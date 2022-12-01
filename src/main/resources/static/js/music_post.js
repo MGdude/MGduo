@@ -170,46 +170,81 @@ class CommentEvent {
     }
     return this.#instance;
   }
+  #comment;
 
+  #userCheck;
   constructor() {
+    this.#userCheck = UserCheckService.getInstance().check();
+    this.#comment = Api.getInstance().getCommentApi();
+    this.getCommentCount();
     this.getComment();
     this.addComment();
   }
 
+  getCommentCount() {
+    const commentCount = document.querySelector(".comments-content");
+    commentCount.innerHTML = "";
+    commentCount.innerHTML += `        
+      <p>댓글 (${this.#comment.length}개)</p>
+      <div class="comments-input">
+        <input class="comment" type="text" placeholder="댓글을 입력해주세요 :)">
+        <button class="btn add-btn" type="button">작성</button>
+      </div>
+      <div class="comments">
+      </div>
+    `;
+  }
+
   getComment() {
-    let responseData = Api.getInstance().getCommentApi();
     const comments = document.querySelector(".comments");
     comments.innerHTML = "";
-
-    responseData.forEach(comment => {
-      comments.innerHTML += `
-        <div class="comment-box">
-          <div class="comment-username">${comment.userName}</div>
-          <div class="comment-text">${comment.comment}</div>
-          <div class="comment-date">${comment.updateDate}</div>
-        </div>
-      `;
-    });
+    if (this.#comment.length > 0){
+      this.#comment.forEach(comment => {
+        if(comment.parentsId == 0){
+          comments.innerHTML += `
+            <div class="comment-box">
+              <div class="comment-data">
+                <div class="comment-username">${comment.userName}</div>
+                <div class="comment-date">(${comment.updateDate})</div>
+              </div>
+              <div class="comment-text">${comment.comment}</div>
+              <div>
+                <button class="reply-btn" type="button">답글</button>
+                
+              </div>
+            </div>
+          `;
+        }else {
+          comments.innerHTML += `
+            <div class="comment-box reply-box">
+              <div class="comment-data">
+                <div class="comment-username">${comment.userName}</div>
+                <div class="comment-date">(${comment.updateDate})</div>
+              </div>
+              <div class="comment-text">${comment.comment}</div>
+            </div>
+          `;
+        }
+      });
+    }
     
   }
 
   addComment() {
     const addCommentBtn = document.querySelector(".add-btn");
     let responseData = Api.getInstance().getMusicApi();
-    let principalDtlData = PrincipalDtl.getInstance().getResponseData();
     addCommentBtn.onclick = () => {
       const comment = document.querySelector(".comment").value;
-      if (principalDtlData == "") {
-        alert("로그인 후 이용 가능합니다.");
+      if (!this.#userCheck) {
 //        localStorage.preUrl = location.pathname;
         location.href = "/login";
-      } else if (comment == "") {
+      }else if (comment == "") {
         alert("내용을 입력하세요.");
-      } else {
+      }else {
         let commentData = {
           "comment" : comment,
           "musicId" : responseData.id,
-          "userName" : principalDtlData.user.username
+          "userName" : PrincipalDtl.getInstance().getResponseData().username
         }
         console.log(commentData);
         Api.getInstance().addCommentApi(commentData);

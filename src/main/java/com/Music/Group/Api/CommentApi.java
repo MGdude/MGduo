@@ -23,7 +23,9 @@ public class CommentApi {
     }
 
     @GetMapping("/comment/{musicId}")
-    public ResponseEntity<?> commentAdd(@PathVariable int musicId) throws Exception {
+    public ResponseEntity<?> getComment(@PathVariable int musicId) throws Exception {
         return ResponseEntity.ok(new CMRespDto<>("Get Successfully", commentService.getComments(musicId)));
     }
+
+
 }

@@ -13,7 +13,6 @@
         #{username},
         #{comment},
         0,
-        0,
         NOW(),
         NOW()
         )
@@ -23,12 +22,14 @@
             music_id,
             username,
             comment,
-            step,
-            groups,
+            parents_id,
             update_date
         FROM
             comments_mst
         where
             music_id = #{music_id}
+        ORDER BY
+            if(parents_id =0, id, parents_id), id
     </select>
+
 </mapper>
