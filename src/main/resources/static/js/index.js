@@ -13,12 +13,10 @@ class Api {
             async: false,
             type: "get",
             url: "/api/music/all",
-            contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify(filter),
+            data: filter,
             success: response => {
                 responseData = response.data;
-                console.log(response.data);
             },
             error: error => {
                 console.log(error);
@@ -37,17 +35,12 @@ class Api {
         dataType: "json",
         success: (response) => {
           responseData = response.data;
-          console.log(responseData);
         },
         error: (error) => {
           console.log(error);
         }
       });
       return responseData;
-    }
-
-    getFilterApi() {
-
     }
 }
 
@@ -56,22 +49,21 @@ class MusicEvent {
     
     constructor() {
         this.getMusicType();
-        this.getMusicList();
-        this.addMusicBtn();
     }
 
     getMusicType() {
         const searchUrl = decodeURI(location.search);
         const param = new URLSearchParams(searchUrl);
-        const search = param.get("search");
-        const filter = encodeURI(AsideEvent.getInstance().getUrlParam());
-
+        const search = param.get("search");  
+        const filter = AsideEvent.getInstance().getUrlParam(); 
+        
         if(search != null) {
           this.#musicList = Api.getInstance().getSearchApi(search);
         }else {
            this.#musicList = Api.getInstance().getMusicAllListApi(filter);
         }
         console.log(this.#musicList);
+        this.getMusicList();
     }
 
     getMusicList() {
@@ -92,10 +84,8 @@ class MusicEvent {
                 </div>
                 `;
             });
-        }else {
-            alert("음악이 없습니다.")
-            location.href = "/";
         }
+        this.addMusicBtn();
     }
 
     addMusicBtn() {
@@ -129,10 +119,10 @@ class AsideEvent {
   
   init() {
     this.#urlParams = {
-      "category" : 0,
-      "gender" : 0,
-      "genre" : 0,
-      "season" : 0
+      "categoryId" : 0,
+      "genderId" : 0,
+      "genreId" : 0,
+      "seasonId" : 0
     }
   }
 
@@ -140,21 +130,13 @@ class AsideEvent {
 
     document.querySelectorAll(".category-radio").forEach(category => {
       category.onclick = () => {
-        if(this.#urlParams.category == category.value) {
+        if(this.#urlParams.categoryId == category.value) {
           category.checked = false;
-          this.#urlParams.category = 0;
+          this.#urlParams.categoryId = 0;
         }else {
-          this.#urlParams.category = category.value;
+          this.#urlParams.categoryId = category.value;
         }
-        // let formData = new FormData(document.querySelector("form"));
-        // formData.forEach((v, k) => {
-        //   if(k == "category"){
-        //     this.#urlParams.category = v;
-        //   }
-        //   console.log("k = " + k);
-        //   console.log("v = " + v);
-        // });
-        console.log(this.#urlParams);
+        new MusicEvent;
       }
     });
   }
@@ -163,19 +145,13 @@ class AsideEvent {
 
     document.querySelectorAll(".gender-radio").forEach(gender => {
       gender.onclick = () => {
-        if(this.#urlParams.gender == gender.value) {
+        if(this.#urlParams.genderId == gender.value) {
           gender.checked = false;
-          this.#urlParams.gender = 0;
+          this.#urlParams.genderId = 0;
         }else {
-          this.#urlParams.gender = gender.value;
+          this.#urlParams.genderId = gender.value;
         }
-        // let formData = new FormData(document.querySelector("form"));
-        // formData.forEach((v, k) => {
-        //   if(k == "gender") {
-        //     this.#urlParams.gender = v;
-        //   }
-        // });
-        console.log(this.#urlParams);
+        new MusicEvent;
       }
     });
   }
@@ -184,19 +160,13 @@ class AsideEvent {
 
     document.querySelectorAll(".genre-radio").forEach(genre => {
       genre.onclick = () => {
-        if(this.#urlParams.genre == genre.value) {
+        if(this.#urlParams.genreId == genre.value) {
           genre.checked = false;
-          this.#urlParams.genre = 0;
+          this.#urlParams.genreId = 0;
         }else {
-          this.#urlParams.genre = genre.value;
+          this.#urlParams.genreId = genre.value;
         }
-        // let formData = new FormData(document.querySelector("form"));
-        // formData.forEach((v, k) => {
-        //   if(k == "genre") {
-        //     this.#urlParams.genre = v;
-        //   }
-        // });
-        console.log(this.#urlParams);
+        new MusicEvent;
       }
     });
   }
@@ -205,19 +175,13 @@ class AsideEvent {
 
     document.querySelectorAll(".season-radio").forEach(season => {
       season.onclick = () => {
-        if(this.#urlParams.season == season.value) {
+        if(this.#urlParams.seasonId == season.value) {
           season.checked = false;
-          this.#urlParams.season = 0;
+          this.#urlParams.seasonId = 0;
         }else {
-          this.#urlParams.season = season.value;
+          this.#urlParams.seasonId = season.value;
         }
-        // let formData = new FormData(document.querySelector("form"));
-        // formData.forEach((v, k) => {
-        //   if(k == "season") {
-        //     this.#urlParams.season = v;
-        //   }
-        // });
-        console.log(this.#urlParams);
+        new MusicEvent;
       }
     });
   }
@@ -225,14 +189,12 @@ class AsideEvent {
   getUrlParam() {
     return this.#urlParams;
   }
+
+
+
 }
 
 window.onload = () => {
-//    let preUrl = localStorage.preUrl;
-//    localStorage.removeItem("preUrl");
-//    if(preUrl != null) {
-//        location.replace(preUrl);
-//    }
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
     new SearchEvent();

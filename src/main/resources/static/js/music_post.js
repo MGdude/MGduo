@@ -171,7 +171,7 @@ class CommentEvent {
     return this.#instance;
   }
 
-  constructor() {
+  constructor() {Z
     this.getComment();
     this.addComment();
   }
