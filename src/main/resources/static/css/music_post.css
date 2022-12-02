@@ -135,6 +135,10 @@
   align-items: flex-end;
 }
 
+.comment-id {
+  display: none;
+}
+
 .comment-username {
   margin-bottom: 5px;
   font-size: 14px;
@@ -182,4 +186,12 @@
 
 .reply-box {
   margin-left: 30px;
+}
+
+.size-invisible {
+  display: none;
+}
+
+.invisible {
+  display: none;
 }

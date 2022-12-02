@@ -28,6 +28,22 @@ class Api {
     });
     return responseData;
   }
+  
+  musicDeleteApi(musicId) {
+    $.ajax({
+      async: false,
+      type: "delete",
+      url: "/api/music/delete/" + musicId,
+      dataType: "json",
+      success: (response) => {
+        console.log("Music 삭제 완료.");
+        location.href = "/";
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
 
   getCommentApi(){
     let responseData = null;
@@ -39,6 +55,28 @@ class Api {
       async: false,
       type: "get",
       url: "/api/comment/" + musicId,
+      dataType: "json",
+      success: (response) => {
+        responseData = response.data;
+        console.log(responseData);
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+    return responseData;
+  }
+  
+  getCommentReplyApi(commentId){
+    let responseData = null;
+
+    const url = location.href;
+    const musicId = url.substring(url.lastIndexOf("/") + 1);
+    
+    $.ajax({
+      async: false,
+      type: "get",
+      url: "/api/comment/reply/" + musicId + "/" + commentId ,
       dataType: "json",
       success: (response) => {
         responseData = response.data;
@@ -68,15 +106,16 @@ class Api {
     });
   }
 
-  musicDeleteApi(musicId) {
+  addReplyApi(replyData) {
     $.ajax({
       async: false,
-      type: "delete",
-      url: "/api/music/delete/" + musicId,
-      dataType: "json",
+      type: "post",
+      url: "/api/reply/add",
+      contentType: "application/json",
+      data: JSON.stringify(replyData),
       success: (response) => {
-        console.log("Music 삭제 완료.");
-        location.href = "/";
+        console.log(response);
+        location.href = "/music/" + response.data;
       },
       error: (error) => {
         console.log(error);
@@ -171,7 +210,6 @@ class CommentEvent {
     return this.#instance;
   }
   #comment;
-
   #userCheck;
   constructor() {
     this.#userCheck = UserCheckService.getInstance().check();
@@ -200,40 +238,31 @@ class CommentEvent {
     comments.innerHTML = "";
     if (this.#comment.length > 0){
       this.#comment.forEach(comment => {
-        if(comment.parentsId == 0){
           comments.innerHTML += `
             <div class="comment-box">
               <div class="comment-data">
+                <input class="comment-id" value="${comment.id}"/>
                 <div class="comment-username">${comment.userName}</div>
                 <div class="comment-date">(${comment.updateDate})</div>
               </div>
               <div class="comment-text">${comment.comment}</div>
               <div>
                 <button class="reply-btn" type="button">답글</button>
-                
+                <input class="reply-input invisible" type="text" placeholder="답글을 입력해주세요 :)">
+                <button class="reply-input-btn invisible" type="button">작성</button>
               </div>
             </div>
-          `;
-        }else {
-          comments.innerHTML += `
-            <div class="comment-box reply-box">
-              <div class="comment-data">
-                <div class="comment-username">${comment.userName}</div>
-                <div class="comment-date">(${comment.updateDate})</div>
-              </div>
-              <div class="comment-text">${comment.comment}</div>
+            <div class="reply-box invisible">
             </div>
           `;
-        }
       });
     }
-    
   }
 
   addComment() {
     const addCommentBtn = document.querySelector(".add-btn");
-    let responseData = Api.getInstance().getMusicApi();
     addCommentBtn.onclick = () => {
+      let responseData = Api.getInstance().getMusicApi();
       const comment = document.querySelector(".comment").value;
       if (!this.#userCheck) {
 //        localStorage.preUrl = location.pathname;
@@ -244,12 +273,98 @@ class CommentEvent {
         let commentData = {
           "comment" : comment,
           "musicId" : responseData.id,
-          "userName" : PrincipalDtl.getInstance().getResponseData().username
+          "userName" : PrincipalDtl.getInstance().getResponseData().username,
+          "parentsId" : 0
         }
         console.log(commentData);
         Api.getInstance().addCommentApi(commentData);
       }
     }
+  }
+}
+
+class ReplyEvent {
+  static #instance = null;
+  static getInstance() {
+    if(this.#instance == null) {
+      this.#instance = new ReplyEvent();
+    }
+    return this.#instance;
+  }
+  #userCheck;
+  #comment;
+  constructor() {
+    this.#userCheck = UserCheckService.getInstance().check();
+    this.#comment = Api.getInstance().getCommentApi();
+    this.getReply();
+    this.getReplyButton();
+    this.addReply();
+  }
+
+  getReply() {
+    this.#comment.forEach((comment, index) => {
+      const replyData = Api.getInstance().getCommentReplyApi(comment.id);
+      const replyBox = document.querySelectorAll(".reply-box")[index];
+      console.log(comment);
+      console.log(replyData);
+      if (replyData.length > 0) {
+        replyData.forEach(reply => {
+          replyBox.innerHTML += `
+            <div class="comment-box">
+              <div class="comment-data">
+              <div class="comment-username">${reply.userName}</div>
+              <div class="comment-date">(${reply.updateDate})</div>
+              </div>
+              <div class="comment-text">${reply.comment}</div>
+            </div>
+        `;
+        });
+      }else {
+        replyBox.classList.add("size-invisible");
+      }
+    })
+  }
+
+  getReplyButton() {
+    this.#comment.forEach((data,index) => {
+      console.log(data);
+      console.log(index);
+      
+      const replyBtn = document.querySelectorAll(".reply-btn")[index];
+      const replyInputClass = document.querySelectorAll(".reply-input")[index];
+      const replyInputBtnClass = document.querySelectorAll(".reply-input-btn")[index];
+      const replyBoxClass = document.querySelectorAll(".reply-box")[index];
+      replyBtn.onclick = () => {
+        replyInputClass.classList.toggle("invisible");
+        replyInputBtnClass.classList.toggle("invisible");
+        replyBoxClass.classList.toggle("invisible");
+      }
+    });
+  }
+
+  addReply() {
+    const commentId = document.querySelectorAll(".comment-id");
+    const replyBtn = document.querySelectorAll(".reply-input-btn");
+    const replyInput = document.querySelectorAll(".reply-input");
+    replyBtn.forEach((btn, index) => {
+      btn.onclick = () => {
+        let responseData = Api.getInstance().getMusicApi();
+        if (!this.#userCheck) {
+          location.href = "/login";
+        }else if (replyInput[index].value == "") {
+          alert("내용을 입력하세요.");
+        }else {
+          let commentData = {
+            "comment" : replyInput[index].value,
+            "musicId" : responseData.id,
+            "userName" : PrincipalDtl.getInstance().getResponseData().username,
+            "parentsId" : commentId[index].value
+          }
+          console.log(commentData);
+          Api.getInstance().addCommentApi(commentData);
+        }
+      }
+    });
   }
 }
 
@@ -281,9 +396,10 @@ class UserCheckService {
 
 
 window.onload = () => {
-    PrincipalDtl.getInstance();
-    HeaderEvent.getInstance();
-    new SearchEvent();
-    new MusicDtl();
-    new CommentEvent();
+  PrincipalDtl.getInstance();
+  HeaderEvent.getInstance();
+  new SearchEvent();
+  new MusicDtl();
+  new CommentEvent();
+  new ReplyEvent();
 }

@@ -21,11 +21,13 @@ public class CommentApi {
         commentService.addComment(commentAddDto);
         return ResponseEntity.created(URI.create("/")).body(new CMRespDto<>("Comment add Successfully", commentAddDto.getMusicId()));
     }
-
     @GetMapping("/comment/{musicId}")
     public ResponseEntity<?> getComment(@PathVariable int musicId) throws Exception {
-        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", commentService.getComments(musicId)));
+        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", commentService.getComment(musicId)));
     }
 
-
+    @GetMapping("/comment/reply/{musicId}/{id}")
+    public ResponseEntity<?> getCommentReply(@PathVariable int musicId, @PathVariable int id) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Get Successfully", commentService.getCommentReply(musicId, id)));
+    }
 }

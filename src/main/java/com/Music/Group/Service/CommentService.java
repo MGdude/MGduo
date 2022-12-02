@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface CommentService {
 
-    public List<CommentDto> getComments(int musicId) throws Exception;
-
+    public List<CommentDto> getComment(int musicId) throws Exception;
+    public List<CommentDto> getCommentReply(int musicId, int id) throws Exception;
     public void addComment(CommentAddDto commentAddDto) throws Exception;
 
 }

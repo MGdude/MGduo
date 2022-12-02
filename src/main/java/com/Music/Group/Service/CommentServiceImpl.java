@@ -18,13 +18,23 @@ public class CommentServiceImpl implements CommentService{
 
 
     @Override
-    public List<CommentDto> getComments(int musicId) throws Exception {
+    public List<CommentDto> getComment(int musicId) throws Exception {
         List<CommentDto> commentDto = new ArrayList<CommentDto>();
-        commentRepository.getComments(musicId).forEach(comment -> {
+        commentRepository.getComment(musicId).forEach(comment -> {
             commentDto.add(comment.toDto());
         });
 
         return commentDto;
+    }
+
+    @Override
+    public List<CommentDto> getCommentReply(int musicId, int id) throws Exception {
+        List<CommentDto> commentReplyDto = new ArrayList<CommentDto>();
+        commentRepository.getCommentReply(musicId, id).forEach(comment -> {
+            commentReplyDto.add(comment.toDto());
+        });
+
+        return commentReplyDto;
     }
 
     @Override

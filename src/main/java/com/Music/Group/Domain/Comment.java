@@ -23,6 +23,7 @@ public class Comment {
 
     public CommentDto toDto() {
         return CommentDto.builder()
+                .id(id)
                 .musicId(music_id)
                 .userName(username)
                 .comment(comment)

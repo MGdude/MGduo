@@ -7,6 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface CommentRepository {
-    public List<Comment> getComments(int musicId) throws Exception;
+    public List<Comment> getComment(int musicId) throws Exception;
+    public List<Comment> getCommentReply(int musicId, int id) throws Exception;
     public int addComment(Comment comment) throws Exception;
 }

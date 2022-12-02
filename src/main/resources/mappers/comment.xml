@@ -12,13 +12,21 @@
         #{music_id},
         #{username},
         #{comment},
-        0,
+        <choose>
+            <when test='parents_id == 0'>
+                0,
+            </when>
+            <when test='parents_id != 0'>
+                #{parents_id},
+            </when>
+        </choose>
         NOW(),
         NOW()
         )
 </insert>
-    <select id="getComments" resultType="com.Music.Group.Domain.Comment">
+    <select id="getComment" resultType="com.Music.Group.Domain.Comment">
         SELECT
+            id,
             music_id,
             username,
             comment,
@@ -28,8 +36,29 @@
             comments_mst
         where
             music_id = #{music_id}
+                and
+            parents_id = 0
         ORDER BY
-            if(parents_id =0, id, parents_id), id
+            id desc;
+<!--        ORDER BY-->
+<!--            if(parents_id =0, id, parents_id), id-->
+    </select>
+    <select id="getCommentReply" resultType="com.Music.Group.Domain.Comment">
+        SELECT
+            id,
+            music_id,
+            username,
+            comment,
+            parents_id,
+            update_date
+        FROM
+            comments_mst
+        where
+            music_id = #{musicId}
+                AND
+            parents_id = #{id}
+        ORDER BY
+            id;
     </select>
 
 </mapper>
