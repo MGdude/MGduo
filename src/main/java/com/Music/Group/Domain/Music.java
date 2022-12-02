@@ -73,4 +73,18 @@ public class Music {
                 .seasonName(season_name)
                 .build();
     }
+
+    public MusicListResponseDto toUserInfoDto() {
+        return MusicListResponseDto.builder()
+                .musicId(id)
+                .username(username)
+                .title(title)
+                .singer(singer)
+                .url(url)
+                .categoryName(category_name)
+                .genderName(gender_name)
+                .genreName(genre_name)
+                .seasonName(season_name)
+                .build();
+    }
 }

@@ -53,4 +53,25 @@
             now()
         )
     </insert>
+    <select id="getUserInfoList" resultType="com.Music.Group.Domain.Music">
+        select
+            mm.id,
+            mm.username,
+            mm.title,
+            mm.singer,
+            mm.url,
+            category.name AS category_name,
+            gender.name AS gender_name,
+            genre.name AS genre_name,
+            season.name AS season_name
+        from
+            music_mst mm
+            LEFT OUTER JOIN category ON(category.id = mm.category_id)
+            LEFT OUTER JOIN gender ON(gender.id = mm.gender_id)
+            LEFT OUTER JOIN genre ON(genre.id = mm.genre_id)
+            LEFT OUTER JOIN season ON(season.id = mm.season_id)
+        where
+            username = #{username}
+    </select>
+
 </mapper>

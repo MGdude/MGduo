@@ -53,7 +53,6 @@ public class MusicApi {
 
     @GetMapping("/music/all")
     public ResponseEntity<?> getMusicAll(FilterDto filterDto) throws Exception {
-        System.out.println(filterDto);
         return ResponseEntity.ok(new CMRespDto<>("Get Successfully", musicService.getMusicAll(filterDto)));
     }
 

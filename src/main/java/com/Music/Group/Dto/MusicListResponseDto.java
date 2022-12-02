@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class MusicListResponseDto {
     private int musicId;
+    private String username;
     private String title;
     private String singer;
     private String url;

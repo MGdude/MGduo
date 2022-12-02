@@ -1,6 +1,7 @@
 package com.Music.Group.Service;
 
 import com.Music.Group.Domain.User;
+import com.Music.Group.Dto.MusicListResponseDto;
 import com.Music.Group.Repository.AccountRepository;
 import com.Music.Group.Dto.RegisterDto;
 import com.Music.Group.exception.CustomInternalServerErrorException;
@@ -8,7 +9,9 @@ import com.Music.Group.exception.CustomValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -47,4 +50,12 @@ public class AccountServiceImpl implements AccountService{
         }
     }
 
+    @Override
+    public List<MusicListResponseDto> UserInfo(String username) throws Exception {
+        List<MusicListResponseDto> userInfoList = new ArrayList<MusicListResponseDto>();
+        accountRepository.getUserInfoList(username).forEach(user -> {
+            userInfoList.add(user.toUserInfoDto());
+        });
+        return userInfoList;
+    }
 }

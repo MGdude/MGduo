@@ -37,5 +37,9 @@ public class AccountApi {
         return ResponseEntity.ok().body(new CMRespDto<>("success", principalDetails == null ? "" : principalDetails));
     }
 
+    @GetMapping("/userInfo/{username}")
+    public ResponseEntity<?> userInfo(@PathVariable String username) throws Exception {
+        return ResponseEntity.ok().body(new CMRespDto<>("UserInfo Success", accountService.UserInfo(username)));
+    }
 
 }

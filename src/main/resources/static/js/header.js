@@ -57,6 +57,8 @@ class HeaderEvent {
     const logoutBtn = document.querySelector(".logout-btn");
     const registBtn = document.querySelector(".regist-btn");
     const addMusicBtn = document.querySelector(".addmusic-btn");
+    const userInfo = document.querySelector(".user-info");
+    const userName = PrincipalDtl.getInstance().getPrincipalData().username;
 
     logoImgBtn.onclick = () => {
       location.href = "/";
@@ -77,6 +79,11 @@ class HeaderEvent {
     addMusicBtn.onclick = () => {
       location.href = "/music_add";
     }
+
+    userInfo.onclick = () => {
+      location.href = "/userInfo/" + userName;
+    }
+
   }
 
   changeBtn() {
@@ -85,16 +92,25 @@ class HeaderEvent {
     const logoutBtn = document.querySelector(".logout-btn");
     const registBtn = document.querySelector(".regist-btn");
     const addmusicBtn = document.querySelector(".addmusic-btn");
+    const userInfo = document.querySelector(".user-info");
+    const userName = PrincipalDtl.getInstance().getPrincipalData().username;
+    userInfo.innerHTML = "";
+
     if(responseData == "") {
       loginBtn.classList.remove("invisible");
       logoutBtn.classList.add("invisible");
       registBtn.classList.remove("invisible");
       addmusicBtn.classList.add("invisible");
+      userInfo.classList.add("invisible");
     }else {
       loginBtn.classList.add("invisible");
       logoutBtn.classList.remove("invisible");
       registBtn.classList.add("invisible");
       addmusicBtn.classList.remove("invisible");
+      userInfo.classList.remove("invisible");
+      userInfo.innerHTML += `
+        ${userName}님 환영합니다.
+      `;
     }
   }
 }

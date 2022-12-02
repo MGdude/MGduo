@@ -37,6 +37,12 @@
   margin-right: 10px;
 }
 
+.user-info {
+  font-size: 14px;
+  font-weight: 800;
+  margin-right: 12px;
+}
+
 .logout-btn {
   width: 130px;
   margin-right: 10px;
