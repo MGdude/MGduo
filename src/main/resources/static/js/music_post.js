@@ -122,10 +122,44 @@ class Api {
       }
     });
   }
+
+  updateCommentApi(updateCommentData) {
+    $.ajax({
+      async: false,
+      type: "put",
+      url: "/api/comment/update",
+      contentType: "application/json",
+      data: JSON.stringify(updateCommentData),
+      success: (response) => {
+        console.log(response);
+        location.href = "/music/" + response.data;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  deleteCommentApi(deleteCommentData) {
+    $.ajax({
+      async: false,
+      type: "delete",
+      url: "/api/comment/delete",
+      contentType: "application/json",
+      data: JSON.stringify(deleteCommentData),
+      success: (response) => {
+        console.log(response);
+        location.href = "/music/" + response.data;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
 }
 
 
-class MusicDtl {
+class MusicDtl {  
   static #instance = null;
   static getInstance() {
     if(this.#instance == null) {
@@ -137,7 +171,7 @@ class MusicDtl {
   #userCheck;
   constructor() {
     this.#responseData = Api.getInstance().getMusicApi();
-    this.#userCheck = UserCheckService.getInstance().check();
+    this.#userCheck = UserCheckService.getInstance().musicUserCheck();
     this.getMusicDtl();
     this.getMusicButton();
   }
@@ -212,7 +246,7 @@ class CommentEvent {
   #comment;
   #userCheck;
   constructor() {
-    this.#userCheck = UserCheckService.getInstance().check();
+    this.#userCheck = UserCheckService.getInstance().musicUserCheck();
     this.#comment = Api.getInstance().getCommentApi();
     this.getCommentCount();
     this.getComment();
@@ -241,11 +275,21 @@ class CommentEvent {
           comments.innerHTML += `
             <div class="comment-box">
               <div class="comment-data">
-                <input class="comment-id" value="${comment.id}"/>
-                <div class="comment-username">${comment.userName}</div>
-                <div class="comment-date">(${comment.updateDate})</div>
+                <input class="comment-id" value="${comment.id}" readonly/>
+                <div class="comment-info">
+                  <div class="comment-username">${comment.userName}</div>
+                  <div class="comment-date">(${comment.updateDate})</div>
+                </div>
+                <div class="comment-service service-invisible">
+                  <button class="comment-update-evnet-btn" type="button">수정</button>
+                  <button class="comment-delete-btn" type="button">삭제</button>
+                </div>
               </div>
               <div class="comment-text">${comment.comment}</div>
+              <div class="comment-update-text invisible">
+                <input type="text" class="update-text" value="${comment.comment}">
+                <div class="comment-update-btn" type="button">수정</div>
+              </div>
               <div>
                 <button class="reply-btn" type="button">답글</button>
                 <input class="reply-input invisible" type="text" placeholder="답글을 입력해주세요 :)">
@@ -276,7 +320,6 @@ class CommentEvent {
           "userName" : PrincipalDtl.getInstance().getResponseData().username,
           "parentsId" : 0
         }
-        console.log(commentData);
         Api.getInstance().addCommentApi(commentData);
       }
     }
@@ -294,7 +337,7 @@ class ReplyEvent {
   #userCheck;
   #comment;
   constructor() {
-    this.#userCheck = UserCheckService.getInstance().check();
+    this.#userCheck = UserCheckService.getInstance().musicUserCheck();
     this.#comment = Api.getInstance().getCommentApi();
     this.getReply();
     this.getReplyButton();
@@ -312,10 +355,26 @@ class ReplyEvent {
           replyBox.innerHTML += `
             <div class="comment-box">
               <div class="comment-data">
-              <div class="comment-username">${reply.userName}</div>
-              <div class="comment-date">(${reply.updateDate})</div>
+                <input class="comment-id" value="${reply.id}" readonly/>
+                <div class="comment-info">
+                  <div class="comment-username">${reply.userName}</div>
+                  <div class="comment-date">(${reply.updateDate})</div>
+                </div>
+                <div class="comment-service service-invisible">
+                  <button class="comment-update-evnet-btn" type="button">수정</button>
+                  <button class="comment-delete-btn" type="button">삭제</button>
+                </div>
               </div>
               <div class="comment-text">${reply.comment}</div>
+              <div class="comment-update-text invisible">
+                <input type="text" class="update-text" value="${reply.comment}">
+                <div class="comment-update-btn" type="button">수정</div>
+              </div>
+              <div>
+                <button class="reply-btn" type="button">답글</button>
+                <input class="reply-input invisible" type="text" placeholder="답글을 입력해주세요 :)">
+                <button class="reply-input-btn invisible" type="button">작성</button>
+              </div>
             </div>
         `;
         });
@@ -368,6 +427,86 @@ class ReplyEvent {
   }
 }
 
+class CommentService {
+  static #instance = null;
+  static getInstance() {
+    if(this.#instance == null) {
+      this.#instance = new CommentService();
+    }
+    return this.#instance;
+  }
+  #principal;
+  #userName;
+  #responseData;
+  constructor() {
+    this.#principal = PrincipalDtl.getInstance().getResponseData();
+    this.#userName = PrincipalDtl.getInstance().getResponseData().username;
+    this.#responseData = Api.getInstance().getMusicApi();
+    this.btnVisibleEvent();
+    this.updateBtnEvent();
+    this.updateBtn();
+    this.deletebtn();
+  }
+
+  btnVisibleEvent() {
+    const commentBtnService = document.querySelectorAll(".comment-service");
+    const commentuserName = document.querySelectorAll(".comment-username");
+    commentBtnService.forEach((data,index) => {
+      if(this.#userName == commentuserName[index].innerHTML) {
+        commentBtnService[index].classList.remove("service-invisible");
+      }
+    });
+  }
+
+  updateBtnEvent() {
+    const commentUpdateEvent = document.querySelectorAll(".comment-update-evnet-btn");
+    const commentText = document.querySelectorAll(".comment-text");
+    const commentUpdateText = document.querySelectorAll(".comment-update-text");
+    commentUpdateEvent.forEach((button, index) => {
+      button.onclick = () => {
+        commentText[index].classList.toggle("invisible");
+        commentUpdateText[index].classList.toggle("invisible");  
+      }
+    })
+  }
+
+  updateBtn() {
+    const commentUpdateBtn = document.querySelectorAll(".comment-update-btn");
+    const commentId = document.querySelectorAll(".comment-id");
+    const updateText = document.querySelectorAll(".update-text");
+    console.log(updateText);
+    commentUpdateBtn.forEach((button, index) => {
+      console.log(updateText[index]);
+      button.onclick = () => {
+        const updateCommentData = {
+          "id" : commentId[index].value,
+          "musicId" : this.#responseData.id,
+          "userName" : this.#principal.username,
+          "comment" : updateText[index].value
+        }
+        console.log(updateCommentData);
+        Api.getInstance().updateCommentApi(updateCommentData);
+      }
+    }) 
+  }
+
+  deletebtn() {
+    const commentDeleteBtn = document.querySelectorAll(".comment-delete-btn");
+    const commentId = document.querySelectorAll(".comment-id");
+    commentDeleteBtn.forEach((button, index) => {
+      button.onclick = () => {
+        const deleteCommentData = {
+          "id" : commentId[index].value,
+          "musicId" : this.#responseData.id,
+          "userName" : this.#principal.username
+        }
+        console.log(deleteCommentData);
+        Api.getInstance().deleteCommentApi(deleteCommentData);
+      }
+    }) 
+  }
+}
+
 class UserCheckService {
   static #instance = null;
   static getInstance() {
@@ -384,7 +523,7 @@ class UserCheckService {
     this.#principal = PrincipalDtl.getInstance().getResponseData();
   } 
 
-  check() {
+  musicUserCheck() {
     if(this.#principal != ""){
       if(this.#principal.username == this.#responseData.username){
         return true;
@@ -402,4 +541,5 @@ window.onload = () => {
   new MusicDtl();
   new CommentEvent();
   new ReplyEvent();
+  new CommentService();
 }

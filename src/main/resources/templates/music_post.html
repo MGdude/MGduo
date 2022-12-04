@@ -51,7 +51,7 @@
           </div> -->
       </div>
       <div class="comments-content">
-        <!-- <p>댓글 (총 0개)</p>
+        <p>댓글 (총 0개)</p>
         <div class="comments-input">
           <input class="comment" type="text" placeholder="댓글을 입력해주세요 :)">
           <button class="btn add-btn" type="button">작성</button>
@@ -60,72 +60,60 @@
           <div class="comment-box">
             <div class="comment-data">
               <input class="comment-id" value="id"/>
-              <div class="comment-username">사용자</div>
-              <div class="comment-date">날짜</div>
+              <div class="comment-info">
+                <div class="comment-username">사용자</div>
+                <div class="comment-date">(날짜)</div>
+              </div>
+              <div class="comment-service service-invisible">
+                <button class="comment-update-evnet-btn" type="button">수정</button>
+                <button class="comment-delete-btn" type="button">삭제</button>
+              </div>
             </div>
             <div class="comment-text">댓글 내용</div>
+            <div class="comment-update-text">
+              <input type="text" class="comment-text update-comment" value="댓글 내용">
+              <div class="comment-update-btn" type="button">수정</div>
+            </div>
             <div>
               <button class="reply-btn" type="button">답글</button>
-              <input class="reply-input invisible" type="text" placeholder="답글을 입력해주세요 :)">
-              <button class="reply-input-btn invisible" type="button">작성</button>
+              <input class="reply-input " type="text" placeholder="답글을 입력해주세요 :)">
+              <button class="reply-input-btn " type="button">작성</button>
             </div>
           </div>
           <div class="reply-box ">
-            <div class="comment-box bottom-invisible">
+            <div class="comment-box">
               <div class="comment-data">
-                <div class="comment-username">사용자</div>
-                <div class="comment-date">날짜</div>
+                <input class="comment-id" />
+                <div class="comment-info">
+                  <div class="comment-username">사용자</div>
+                  <div class="comment-date">(날짜)</div>
+                </div>
+                <div class="comment-service service-invisible">
+                  <button class="comment-update-btn" type="button">수정</button>
+                  <button class="comment-delete-btn" type="button">삭제</button>
+                </div>
               </div>
-              <div class="comment-text">댓글 내용</div>
+              <div class="comment-text">내용</div>
             </div>
           </div>
           <div class="reply-box ">
-            <div class="comment-box bottom-invisible">
+            <div class="comment-box">
               <div class="comment-data">
-                <div class="comment-username">사용자</div>
-                <div class="comment-date">날짜</div>
+                <input class="comment-id" />
+                <div class="comment-info">
+                  <div class="comment-username">사용자</div>
+                  <div class="comment-date">(날짜)</div>
+                </div>
+                <div class="comment-service service-invisible">
+                  <button class="comment-update-btn" type="button">수정</button>
+                  <button class="comment-delete-btn" type="button">삭제</button>
+                </div>
               </div>
-              <div class="comment-text">댓글 내용</div>
-            </div>
-          </div>
-          <div class="reply-box ">
-            <div class="comment-box bottom-invisible">
-              <div class="comment-data">
-                <div class="comment-username">사용자</div>
-                <div class="comment-date">날짜</div>
-              </div>
-              <div class="comment-text">댓글 내용</div>
-            </div>
-          </div>
-          <div class="reply-box ">
-            <div class="comment-box bottom-invisible">
-              <div class="comment-data">
-                <div class="comment-username">사용자</div>
-                <div class="comment-date">날짜</div>
-              </div>
-              <div class="comment-text">댓글 내용</div>
-            </div>
-          </div>
-          <div class="reply-box">
-            <div class="comment-box bottom-invisible">
-              <div class="comment-data">
-                <div class="comment-username">사용자</div>
-                <div class="comment-date">날짜</div>
-              </div>
-              <div class="comment-text">댓글 내용</div>
-            </div>
-          </div>
-          <div class="reply-box ">
-            <div class="comment-box bottom-invisible">
-              <div class="comment-data">
-                <div class="comment-username">사용자</div>
-                <div class="comment-date">날짜</div>
-              </div>
-              <div class="comment-text">댓글 내용</div>
+              <div class="comment-text">내용</div>
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
     </main>
     <script src="/static/js/header.js"></script>
   <script src="/static/js/music_post.js"></script>
