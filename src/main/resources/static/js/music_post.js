@@ -243,17 +243,12 @@ class CommentEvent {
     }
     return this.#instance;
   }
-<<<<<<< HEAD
-
-  constructor() {Z
-=======
   #comment;
   #userCheck;
   constructor() {
     this.#userCheck = UserCheckService.getInstance().musicUserCheck();
     this.#comment = Api.getInstance().getCommentApi();
     this.getCommentCount();
->>>>>>> Oh
     this.getComment();
     this.addComment();
   }
