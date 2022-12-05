@@ -4,31 +4,90 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.Music.Group.Repository.CommentRepository">
-<insert id="addComment" parameterType="com.Music.Group.Domain.Comment">
-    INSERT INTO
-        comments_mst
-    VALUES(
-        0,
-        #{music_id},
-        #{username},
-        #{comment},
-        0,
-        0,
-        NOW(),
-        NOW()
-        )
-</insert>
-    <select id="getComments" resultType="com.Music.Group.Domain.Comment">
+    <insert id="commentAdd" parameterType="com.Music.Group.Domain.Comment">
+        INSERT INTO
+            comments_mst
+        VALUES(
+            0,
+            #{music_id},
+            #{username},
+            #{comment},
+            <choose>
+                <when test='parents_id == 0'>
+                    0,
+                </when>
+                <when test='parents_id != 0'>
+                    #{parents_id},
+                </when>
+            </choose>
+            NOW(),
+            NOW()
+            )
+    </insert>
+    <update id="commentUpdate">
+        update
+            comments_mst
+        set
+            comment = #{comment},
+            update_date = now()
+        where
+            id = #{id}
+    </update>
+    <delete id="commentDelete">
+        delete from
+            comments_mst
+        where
+            id = #{id}
+    </delete>
+    <select id="getComment" resultType="com.Music.Group.Domain.Comment">
         SELECT
+            id,
             music_id,
             username,
             comment,
-            step,
-            groups,
+            parents_id,
             update_date
         FROM
             comments_mst
         where
             music_id = #{music_id}
+                and
+            parents_id = 0
+        ORDER BY
+            id desc;
+<!--        ORDER BY-->
+<!--            if(parents_id =0, id, parents_id), id-->
     </select>
+    <select id="getCommentReply" resultType="com.Music.Group.Domain.Comment">
+        SELECT
+            id,
+            music_id,
+            username,
+            comment,
+            parents_id,
+            update_date
+        FROM
+            comments_mst
+        where
+            music_id = #{musicId}
+                AND
+            parents_id = #{id}
+        ORDER BY
+            id;
+    </select>
+    <select id="findCommentByUsername" resultType="com.Music.Group.Domain.Comment">
+        SELECT
+            id,
+            music_id,
+            username,
+            comment,
+            parents_id,
+            create_date
+            update_date
+        FROM
+            comments_mst
+        WHERE
+            id = #{id}
+    </select>
+
 </mapper>

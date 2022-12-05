@@ -17,18 +17,17 @@ public class Comment {
     private int music_id;
     private String username;
     private String comment;
-    private int step;
-    private int groups;
+    private int parents_id;
     private LocalDateTime create_date;
     private LocalDateTime update_date;
 
     public CommentDto toDto() {
         return CommentDto.builder()
+                .id(id)
                 .musicId(music_id)
                 .userName(username)
                 .comment(comment)
-                .step(step)
-                .groups(groups)
+                .parentsId(parents_id)
                 .createDate(create_date)
                 .updateDate(update_date)
                 .build();

@@ -28,6 +28,22 @@ class Api {
     });
     return responseData;
   }
+  
+  musicDeleteApi(musicId) {
+    $.ajax({
+      async: false,
+      type: "delete",
+      url: "/api/music/delete/" + musicId,
+      dataType: "json",
+      success: (response) => {
+        console.log("Music 삭제 완료.");
+        location.href = "/";
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
 
   getCommentApi(){
     let responseData = null;
@@ -39,6 +55,28 @@ class Api {
       async: false,
       type: "get",
       url: "/api/comment/" + musicId,
+      dataType: "json",
+      success: (response) => {
+        responseData = response.data;
+        console.log(responseData);
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+    return responseData;
+  }
+  
+  getCommentReplyApi(commentId){
+    let responseData = null;
+
+    const url = location.href;
+    const musicId = url.substring(url.lastIndexOf("/") + 1);
+    
+    $.ajax({
+      async: false,
+      type: "get",
+      url: "/api/comment/reply/" + musicId + "/" + commentId ,
       dataType: "json",
       success: (response) => {
         responseData = response.data;
@@ -68,15 +106,50 @@ class Api {
     });
   }
 
-  musicDeleteApi(musicId) {
+  addReplyApi(replyData) {
+    $.ajax({
+      async: false,
+      type: "post",
+      url: "/api/reply/add",
+      contentType: "application/json",
+      data: JSON.stringify(replyData),
+      success: (response) => {
+        console.log(response);
+        location.href = "/music/" + response.data;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  updateCommentApi(updateCommentData) {
+    $.ajax({
+      async: false,
+      type: "put",
+      url: "/api/comment/update",
+      contentType: "application/json",
+      data: JSON.stringify(updateCommentData),
+      success: (response) => {
+        console.log(response);
+        location.href = "/music/" + response.data;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  deleteCommentApi(deleteCommentData) {
     $.ajax({
       async: false,
       type: "delete",
-      url: "/api/music/delete/" + musicId,
-      dataType: "json",
+      url: "/api/comment/delete",
+      contentType: "application/json",
+      data: JSON.stringify(deleteCommentData),
       success: (response) => {
-        console.log("Music 삭제 완료.");
-        location.href = "/";
+        console.log(response);
+        location.href = "/music/" + response.data;
       },
       error: (error) => {
         console.log(error);
@@ -86,7 +159,7 @@ class Api {
 }
 
 
-class MusicDtl {
+class MusicDtl {  
   static #instance = null;
   static getInstance() {
     if(this.#instance == null) {
@@ -98,7 +171,7 @@ class MusicDtl {
   #userCheck;
   constructor() {
     this.#responseData = Api.getInstance().getMusicApi();
-    this.#userCheck = UserCheckService.getInstance().check();
+    this.#userCheck = UserCheckService.getInstance().musicUserCheck();
     this.getMusicDtl();
     this.getMusicButton();
   }
@@ -170,51 +243,272 @@ class CommentEvent {
     }
     return this.#instance;
   }
+<<<<<<< HEAD
 
   constructor() {Z
+=======
+  #comment;
+  #userCheck;
+  constructor() {
+    this.#userCheck = UserCheckService.getInstance().musicUserCheck();
+    this.#comment = Api.getInstance().getCommentApi();
+    this.getCommentCount();
+>>>>>>> Oh
     this.getComment();
     this.addComment();
   }
 
+  getCommentCount() {
+    const commentCount = document.querySelector(".comments-content");
+    commentCount.innerHTML = "";
+    commentCount.innerHTML += `        
+      <p>댓글 (${this.#comment.length}개)</p>
+      <div class="comments-input">
+        <input class="comment" type="text" placeholder="댓글을 입력해주세요 :)">
+        <button class="btn add-btn" type="button">작성</button>
+      </div>
+      <div class="comments">
+      </div>
+    `;
+  }
+
   getComment() {
-    let responseData = Api.getInstance().getCommentApi();
     const comments = document.querySelector(".comments");
     comments.innerHTML = "";
-
-    responseData.forEach(comment => {
-      comments.innerHTML += `
-        <div class="comment-box">
-          <div class="comment-username">${comment.userName}</div>
-          <div class="comment-text">${comment.comment}</div>
-          <div class="comment-date">${comment.updateDate}</div>
-        </div>
-      `;
-    });
-    
+    if (this.#comment.length > 0){
+      this.#comment.forEach(comment => {
+          comments.innerHTML += `
+            <div class="comment-box">
+              <div class="comment-data">
+                <input class="comment-id" value="${comment.id}" readonly/>
+                <div class="comment-info">
+                  <div class="comment-username">${comment.userName}</div>
+                  <div class="comment-date">(${comment.updateDate})</div>
+                </div>
+                <div class="comment-service service-invisible">
+                  <button class="comment-update-evnet-btn" type="button">수정</button>
+                  <button class="comment-delete-btn" type="button">삭제</button>
+                </div>
+              </div>
+              <div class="comment-text">${comment.comment}</div>
+              <div class="comment-update-text invisible">
+                <input type="text" class="update-text" value="${comment.comment}">
+                <div class="comment-update-btn" type="button">수정</div>
+              </div>
+              <div>
+                <button class="reply-btn" type="button">답글</button>
+                <input class="reply-input invisible" type="text" placeholder="답글을 입력해주세요 :)">
+                <button class="reply-input-btn invisible" type="button">작성</button>
+              </div>
+            </div>
+            <div class="reply-box invisible">
+            </div>
+          `;
+      });
+    }
   }
 
   addComment() {
     const addCommentBtn = document.querySelector(".add-btn");
-    let responseData = Api.getInstance().getMusicApi();
-    let principalDtlData = PrincipalDtl.getInstance().getResponseData();
     addCommentBtn.onclick = () => {
+      let responseData = Api.getInstance().getMusicApi();
       const comment = document.querySelector(".comment").value;
-      if (principalDtlData == "") {
-        alert("로그인 후 이용 가능합니다.");
+      if (!this.#userCheck) {
 //        localStorage.preUrl = location.pathname;
         location.href = "/login";
-      } else if (comment == "") {
+      }else if (comment == "") {
         alert("내용을 입력하세요.");
-      } else {
+      }else {
         let commentData = {
           "comment" : comment,
           "musicId" : responseData.id,
-          "userName" : principalDtlData.user.username
+          "userName" : PrincipalDtl.getInstance().getResponseData().username,
+          "parentsId" : 0
         }
-        console.log(commentData);
         Api.getInstance().addCommentApi(commentData);
       }
     }
+  }
+}
+
+class ReplyEvent {
+  static #instance = null;
+  static getInstance() {
+    if(this.#instance == null) {
+      this.#instance = new ReplyEvent();
+    }
+    return this.#instance;
+  }
+  #userCheck;
+  #comment;
+  constructor() {
+    this.#userCheck = UserCheckService.getInstance().musicUserCheck();
+    this.#comment = Api.getInstance().getCommentApi();
+    this.getReply();
+    this.getReplyButton();
+    this.addReply();
+  }
+
+  getReply() {
+    this.#comment.forEach((comment, index) => {
+      const replyData = Api.getInstance().getCommentReplyApi(comment.id);
+      const replyBox = document.querySelectorAll(".reply-box")[index];
+      console.log(comment);
+      console.log(replyData);
+      if (replyData.length > 0) {
+        replyData.forEach(reply => {
+          replyBox.innerHTML += `
+            <div class="comment-box">
+              <div class="comment-data">
+                <input class="comment-id" value="${reply.id}" readonly/>
+                <div class="comment-info">
+                  <div class="comment-username">${reply.userName}</div>
+                  <div class="comment-date">(${reply.updateDate})</div>
+                </div>
+                <div class="comment-service service-invisible">
+                  <button class="comment-update-evnet-btn" type="button">수정</button>
+                  <button class="comment-delete-btn" type="button">삭제</button>
+                </div>
+              </div>
+              <div class="comment-text">${reply.comment}</div>
+              <div class="comment-update-text invisible">
+                <input type="text" class="update-text" value="${reply.comment}">
+                <div class="comment-update-btn" type="button">수정</div>
+              </div>
+            </div>
+        `;
+        });
+      }else {
+        replyBox.classList.add("size-invisible");
+      }
+    })
+  }
+
+  getReplyButton() {
+    this.#comment.forEach((data,index) => {
+      console.log(data);
+      console.log(index);
+      
+      const replyBtn = document.querySelectorAll(".reply-btn")[index];
+      const replyInputClass = document.querySelectorAll(".reply-input")[index];
+      const replyInputBtnClass = document.querySelectorAll(".reply-input-btn")[index];
+      const replyBoxClass = document.querySelectorAll(".reply-box")[index];
+      replyBtn.onclick = () => {
+        replyInputClass.classList.toggle("invisible");
+        replyInputBtnClass.classList.toggle("invisible");
+        replyBoxClass.classList.toggle("invisible");
+      }
+    });
+  }
+
+  addReply() {
+    const commentId = document.querySelectorAll(".comment-id");
+    const replyBtn = document.querySelectorAll(".reply-input-btn");
+    const replyInput = document.querySelectorAll(".reply-input");
+    replyBtn.forEach((btn, index) => {
+      btn.onclick = () => {
+        let responseData = Api.getInstance().getMusicApi();
+        if (!this.#userCheck) {
+          location.href = "/login";
+        }else if (replyInput[index].value == "") {
+          alert("내용을 입력하세요.");
+        }else {
+          let commentData = {
+            "comment" : replyInput[index].value,
+            "musicId" : responseData.id,
+            "userName" : PrincipalDtl.getInstance().getResponseData().username,
+            "parentsId" : commentId[index].value
+          }
+          console.log(commentData);
+          Api.getInstance().addCommentApi(commentData);
+        }
+      }
+    });
+  }
+}
+
+class CommentService {
+  static #instance = null;
+  static getInstance() {
+    if(this.#instance == null) {
+      this.#instance = new CommentService();
+    }
+    return this.#instance;
+  }
+  #principal;
+  #userName;
+  #responseData;
+  constructor() {
+    this.#principal = PrincipalDtl.getInstance().getResponseData();
+    this.#userName = PrincipalDtl.getInstance().getResponseData().username;
+    this.#responseData = Api.getInstance().getMusicApi();
+    this.btnVisibleEvent();
+    this.updateBtnEvent();
+    this.updateBtn();
+    this.deletebtn();
+  }
+
+  btnVisibleEvent() {
+    const commentBtnService = document.querySelectorAll(".comment-service");
+    const commentuserName = document.querySelectorAll(".comment-username");
+    commentBtnService.forEach((data,index) => {
+      if(this.#userName == commentuserName[index].innerHTML) {
+        commentBtnService[index].classList.remove("service-invisible");
+      }
+    });
+  }
+
+  updateBtnEvent() {
+    const commentUpdateEvent = document.querySelectorAll(".comment-update-evnet-btn");
+    const commentText = document.querySelectorAll(".comment-text");
+    const commentUpdateText = document.querySelectorAll(".comment-update-text");
+    commentUpdateEvent.forEach((button, index) => {
+      button.onclick = () => {
+        commentText[index].classList.toggle("invisible");
+        commentUpdateText[index].classList.toggle("invisible");  
+      }
+    })
+  }
+
+  updateBtn() {
+    const commentUpdateBtn = document.querySelectorAll(".comment-update-btn");
+    const commentId = document.querySelectorAll(".comment-id");
+    const updateText = document.querySelectorAll(".update-text");
+    commentUpdateBtn.forEach((button, index) => {
+      button.onclick = () => {
+        const updateCommentData = {
+          "id" : commentId[index].value,
+          "musicId" : this.#responseData.id,
+          "userName" : this.#principal.username,
+          "comment" : updateText[index].value
+        }
+        console.log(updateCommentData);
+        Api.getInstance().updateCommentApi(updateCommentData);
+      }
+    }) 
+  }
+
+  deletebtn() {
+    const commentDeleteBtn = document.querySelectorAll(".comment-delete-btn");
+    const commentId = document.querySelectorAll(".comment-id");
+    const commentUsername = document.querySelectorAll(".comment-username");
+    commentDeleteBtn.forEach((button, index) => {
+      button.onclick = () => {
+        if(confirm("댓글을 삭제하시겠습니까?")){
+          if(this.#principal.user.username == commentUsername[index].innerHTML) {
+            const deleteCommentData = {
+              "id" : commentId[index].value,
+              "musicId" : this.#responseData.id,
+              "userName" : this.#principal.username
+              }
+            console.log(deleteCommentData);
+            Api.getInstance().deleteCommentApi(deleteCommentData);
+            }else {
+            alert("권한이 없는 사용자입니다.");
+          }
+        }
+      }
+    }) 
   }
 }
 
@@ -234,7 +528,7 @@ class UserCheckService {
     this.#principal = PrincipalDtl.getInstance().getResponseData();
   } 
 
-  check() {
+  musicUserCheck() {
     if(this.#principal != ""){
       if(this.#principal.username == this.#responseData.username){
         return true;
@@ -246,9 +540,11 @@ class UserCheckService {
 
 
 window.onload = () => {
-    PrincipalDtl.getInstance();
-    HeaderEvent.getInstance();
-    new SearchEvent();
-    new MusicDtl();
-    new CommentEvent();
+  PrincipalDtl.getInstance();
+  HeaderEvent.getInstance();
+  new SearchEvent();
+  new MusicDtl();
+  new CommentEvent();
+  new ReplyEvent();
+  new CommentService();
 }

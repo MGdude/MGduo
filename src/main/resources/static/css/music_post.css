@@ -125,8 +125,24 @@
 }
 
 .comment-box {
-  margin: 5px;
+  margin: 10px 5px 5px 5px;
+  padding: 3px 0px 3px;
   border-bottom: 1px solid rgb(198, 198, 198);
+}
+
+.comment-data {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.comment-id {
+  display: none;
+}
+
+.comment-info, .comment-service {
+  display: flex;
+  align-items: flex-end;
 }
 
 .comment-username {
@@ -135,15 +151,107 @@
   font-weight: 1000;
 }
 
-.comment-text {
-  margin-bottom: 5px;
-  margin-left: 2px;
-  font-size: 14px;
-}
-
 .comment-date {
   margin-bottom: 5px;  
   margin-left: 2px;
   font-size: 11px;
   color: gray;
+}
+
+.comment-update-btn {
+  margin-right: 3px;
+  align-items: flex-end;
+  width: 40px;
+  height: 20px;
+  background-color: #ebebeb;
+  border-radius: 5px;
+}
+
+.comment-update-btn:hover {
+  background-color: gray;
+  border-radius: 5px;
+}
+
+.comment-delete-btn {
+  margin-left: 3px;
+  align-items: flex-end;
+  width: 40px;
+  height: 20px;
+  background-color: #ebebeb;
+  border-radius: 5px;
+}
+
+.comment-delete-btn:hover {
+  background-color: gray;
+  border-radius: 5px;
+}
+
+.service-invisible {
+  display: none;
+}
+
+.comment-text {
+  margin-bottom: 7px;
+  margin-left: 2px;
+  font-size: 14px;
+}
+
+.comment-update-text {
+  display: flex;
+  margin-bottom: 7px;
+  margin-left: 2px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.comment-update-text input {
+  width: 90%;
+} 
+
+.comment-update-btn {
+  margin-left: 5px;
+  align-items: flex-end;
+  text-align: center;
+  color: white;
+  width: 40px;
+  height: 20px;
+  background-color: black;
+  border-radius: 5px;
+}
+.reply-btn {
+  align-items: flex-end;
+  width: 40px;
+  height: 20px;
+  background-color: #ebebeb;
+  border-radius: 5px;
+}
+
+.reply-btn:hover {
+  background-color: gray;
+  border-radius: 5px;
+}
+
+.reply-input {
+  width: 80%;
+}
+
+.reply-input-btn {
+  align-items: flex-end;
+  color: white;
+  width: 40px;
+  height: 20px;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.reply-box {
+  margin-left: 30px;
+}
+
+.size-invisible {
+  display: none;
+}
+
+.invisible {
+  display: none;
 }
