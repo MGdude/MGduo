@@ -370,11 +370,6 @@ class ReplyEvent {
                 <input type="text" class="update-text" value="${reply.comment}">
                 <div class="comment-update-btn" type="button">수정</div>
               </div>
-              <div>
-                <button class="reply-btn" type="button">답글</button>
-                <input class="reply-input invisible" type="text" placeholder="답글을 입력해주세요 :)">
-                <button class="reply-input-btn invisible" type="button">작성</button>
-              </div>
             </div>
         `;
         });
@@ -474,9 +469,7 @@ class CommentService {
     const commentUpdateBtn = document.querySelectorAll(".comment-update-btn");
     const commentId = document.querySelectorAll(".comment-id");
     const updateText = document.querySelectorAll(".update-text");
-    console.log(updateText);
     commentUpdateBtn.forEach((button, index) => {
-      console.log(updateText[index]);
       button.onclick = () => {
         const updateCommentData = {
           "id" : commentId[index].value,
@@ -493,15 +486,22 @@ class CommentService {
   deletebtn() {
     const commentDeleteBtn = document.querySelectorAll(".comment-delete-btn");
     const commentId = document.querySelectorAll(".comment-id");
+    const commentUsername = document.querySelectorAll(".comment-username");
     commentDeleteBtn.forEach((button, index) => {
       button.onclick = () => {
-        const deleteCommentData = {
-          "id" : commentId[index].value,
-          "musicId" : this.#responseData.id,
-          "userName" : this.#principal.username
+        if(confirm("댓글을 삭제하시겠습니까?")){
+          if(this.#principal.user.username == commentUsername[index].innerHTML) {
+            const deleteCommentData = {
+              "id" : commentId[index].value,
+              "musicId" : this.#responseData.id,
+              "userName" : this.#principal.username
+              }
+            console.log(deleteCommentData);
+            Api.getInstance().deleteCommentApi(deleteCommentData);
+            }else {
+            alert("권한이 없는 사용자입니다.");
+          }
         }
-        console.log(deleteCommentData);
-        Api.getInstance().deleteCommentApi(deleteCommentData);
       }
     }) 
   }
