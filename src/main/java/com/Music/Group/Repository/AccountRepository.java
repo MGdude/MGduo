@@ -11,4 +11,5 @@ public interface AccountRepository {
     public User findUserByUsername(String username) throws Exception;
     public int saveUser(User user) throws Exception;
     public List<Music> getUserInfoList(String username) throws Exception;
+    public List<Music> getUserLikeList(String username) throws Exception;
 }
