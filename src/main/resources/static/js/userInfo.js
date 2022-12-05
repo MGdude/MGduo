@@ -25,24 +25,6 @@ class Api {
       return responseData;
     }
 
-    getMusicAllListApi(filter) {
-        let responseData = null;
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "/api/music/all",
-            dataType: "json",
-            data: filter,
-            success: response => {
-                responseData = response.data;
-            },
-            error: error => {
-                console.log(error);
-            }
-        });
-        return responseData;
-    }
-
     getSearchApi(search) {
       let responseData = null;
 
@@ -113,107 +95,12 @@ class MusicEvent {
     }
 }
 
-class AsideEvent {
-  static #instance = null;
-  static getInstance() {
-    if(this.#instance == null) {
-      this.#instance = new AsideEvent();
-    }
-    return this.#instance;
-  }
 
-  #urlParams;
-
-  constructor() {
-    this.init();
-    this.getCategoryEvent();
-    this.getGenderEvent();
-    this.getGenreEvent();
-    this.getSeasonEvent();
-  }
-  
-  init() {
-    this.#urlParams = {
-      "categoryId" : 0,
-      "genderId" : 0,
-      "genreId" : 0,
-      "seasonId" : 0
-    }
-  }
-
-  getCategoryEvent() {
-
-    document.querySelectorAll(".category-radio").forEach(category => {
-      category.onclick = () => {
-        if(this.#urlParams.categoryId == category.value) {
-          category.checked = false;
-          this.#urlParams.categoryId = 0;
-        }else {
-          this.#urlParams.categoryId = category.value;
-        }
-        new MusicEvent;
-      }
-    });
-  }
-
-  getGenderEvent() {
-
-    document.querySelectorAll(".gender-radio").forEach(gender => {
-      gender.onclick = () => {
-        if(this.#urlParams.genderId == gender.value) {
-          gender.checked = false;
-          this.#urlParams.genderId = 0;
-        }else {
-          this.#urlParams.genderId = gender.value;
-        }
-        new MusicEvent;
-      }
-    });
-  }
-
-  getGenreEvent() {
-
-    document.querySelectorAll(".genre-radio").forEach(genre => {
-      genre.onclick = () => {
-        if(this.#urlParams.genreId == genre.value) {
-          genre.checked = false;
-          this.#urlParams.genreId = 0;
-        }else {
-          this.#urlParams.genreId = genre.value;
-        }
-        new MusicEvent;
-      }
-    });
-  }
-
-  getSeasonEvent() {
-
-    document.querySelectorAll(".season-radio").forEach(season => {
-      season.onclick = () => {
-        if(this.#urlParams.seasonId == season.value) {
-          season.checked = false;
-          this.#urlParams.seasonId = 0;
-        }else {
-          this.#urlParams.seasonId = season.value;
-        }
-        new MusicEvent;
-      }
-    });
-  }
-  
-  getUrlParam() {
-    return this.#urlParams;
-  }
-
-
-
-}
 
 window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
     new SearchEvent();
-    new AsideEvent();
     new MusicEvent();
     
 }

@@ -27,7 +27,6 @@
 
 .main-aside ul li label {
     text-decoration: none;
-    cursor: pointer;
     list-style: none;
     font-size: 15px;
     color: black;
@@ -100,4 +99,8 @@
     font-size: 12px;
     font-weight: 600;
     color: #660099;
+}
+
+.register, .like {
+  cursor: pointer;
 }
