@@ -21,4 +21,7 @@ public interface MusicService{
     public void musicUpdate(MusicRequestDto musicRequestDto) throws Exception;
 
     public void musicDelete(int musicId) throws Exception;
+
+    public int musicLikeState(int musicId, String username) throws Exception;
+    public void musicLike(int musicId, String username) throws Exception;
 }

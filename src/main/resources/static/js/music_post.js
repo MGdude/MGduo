@@ -184,6 +184,7 @@ class MusicDtl {
           <iframe class="video" src="https://www.youtube.com/embed/${this.#responseData.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="music-info">
+          <div class="like-box"></div>
           <p class="writer">작성자 : ${this.#responseData.username}</p>
           <p class="song-name">${this.#responseData.title}</p>
           <p class="singer">${this.#responseData.singer}</p>
@@ -195,7 +196,6 @@ class MusicDtl {
         </div>
       `;
     }
-    
   }
 
   getMusicButton() {

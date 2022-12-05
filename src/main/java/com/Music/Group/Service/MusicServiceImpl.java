@@ -94,4 +94,18 @@ public class MusicServiceImpl implements MusicService{
         musicRepository.musicDelete(musicId);
     }
 
+    @Override
+    public int musicLikeState(int musicId, String username) throws Exception {
+        return musicRepository.musicLikeState(musicId, username);
+    }
+
+    @Override
+    public void musicLike(int musicId, String username) throws Exception {
+        int result = musicRepository.musicLikeState(musicId, username);
+        if (result == 0) {
+            musicRepository.musicLike(musicId, username);
+        }else {
+            musicRepository.musicDisLike(musicId, username);
+        }
+    }
 }
