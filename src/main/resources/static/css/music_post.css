@@ -42,6 +42,19 @@
   background-color: #ebebeb;
 }
 
+.like-box {
+  position: absolute;
+  top: 25%;
+  left: 95%;
+  width: 30px;
+  height: 30px;
+}
+
+.like-box img {
+  width: 100%;
+  height: 100%;
+}
+
 .writer {
   text-align: right;
   margin: 5px 10px 5px 0px;
