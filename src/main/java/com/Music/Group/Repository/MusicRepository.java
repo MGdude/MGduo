@@ -24,6 +24,7 @@ public interface MusicRepository {
     public int musicDelete(int musicId) throws Exception;
 
     public int musicLikeState(int musicId, String username) throws Exception;
+    public int musicLikeCount(int musicId) throws Exception;
     public int musicLike(int musicId, String username) throws Exception;
     public int musicDisLike(int musicId, String username) throws Exception;
 }

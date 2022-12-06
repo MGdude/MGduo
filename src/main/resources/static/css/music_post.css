@@ -45,12 +45,18 @@
 .like-box {
   position: absolute;
   top: 25%;
-  left: 95%;
+  left: 92%;
   width: 30px;
   height: 30px;
   
   border-radius: 5px;
   cursor: pointer;
+}
+
+.like-number {
+  text-align: center;
+  position: relative;
+  top: 60%;
 }
 
 .like-img {

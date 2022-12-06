@@ -177,12 +177,20 @@
     </select>
     <select id="musicLikeState" resultType="java.lang.Integer">
         SELECT
-            *
+            COUNT(*) AS count
         FROM
             like_mst
         WHERE
             username = #{username}
                 and
+            music_id = #{musicId}
+    </select>
+    <select id="musicLikeCount" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*) AS count
+        FROM
+            like_mst
+        WHERE
             music_id = #{musicId}
     </select>
 </mapper>

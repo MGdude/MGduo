@@ -83,9 +83,14 @@ public class MusicApi {
         return ResponseEntity.ok(new CMRespDto<>("Success", musicService.musicLikeState(musicId, username)));
     }
 
+    @GetMapping("/music/like/count/{musicId}")
+    public ResponseEntity<?> musicLikeState(@PathVariable int musicId) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Success", musicService.musicLikeCount(musicId)));
+    }
+
+
     @PostMapping("/music/like")
     public ResponseEntity<?> musicLike(int musicId, String username) throws Exception {
-        musicService.musicLike(musicId, username);
-        return ResponseEntity.ok(new CMRespDto<>("Success", null ));
+        return ResponseEntity.ok(new CMRespDto<>("Success", musicService.musicLike(musicId, username)));
     }
 }
