@@ -48,18 +48,17 @@ class MusicEvent {
     #musicList;
     
     constructor() {
-        this.getMusicType();
+        // this.getMusicType();
+        this.getRegisterBtnEvent();
     }
 
     getMusicType() {
         let url = location.href;
         let username = url.substring(url.lastIndexOf("/") + 1);
-        console.log(username);
 
         if(username != null) {
           this.#musicList = Api.getInstance().getUserInfoApi(username);
         }
-        console.log(this.#musicList);
         this.getMusicList();
     }
 
@@ -92,6 +91,20 @@ class MusicEvent {
                 location.href = "/music/" + music.musicId;
             }
         });
+    }
+    
+    getRegisterBtnEvent() {
+      const registerMusicBtn = document.querySelector(".register-music");
+      registerMusicBtn.onclick = () => {
+        this.getMusicType();
+      }
+    }
+
+    getLikeBtnEvent() {
+      const likeMusicBtn = document.querySelector(".like-music");
+      likeMusicBtn.onclick = () => {
+
+      }
     }
 }
 
