@@ -28,7 +28,69 @@ class Api {
     });
     return responseData;
   }
+
+  getMusicLikeStateApi(musicId, username) {
+    let responseData = null;
+
+    $.ajax({
+      async: false,
+      type: "get",
+      url: "/api/music/like/state",
+      dataType: "json",
+      data: {
+        "musicId" : musicId,
+        "username" : username
+      },
+      success: (response) => {
+        responseData = response.data;
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+    return responseData;
+  }
+
+  getMusicLikeCountApi(musicId) {
+    let responseData = null;
+
+    $.ajax({
+      async: false,
+      type: "get",
+      url: "/api/music/like/count/" + musicId,
+      dataType: "json",
+      success: (response) => {
+        responseData = response.data;
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+    return responseData;
+  }
   
+  musicLikeApi(musicId, username) {
+    let responseData = null;
+
+    $.ajax({
+      async: false,
+      type: "post",
+      url: "/api/music/like",
+      dataType: "json",
+      data: {
+        "musicId" : musicId,
+        "username" : username
+      },
+      success: (response) => {
+        responseData = response.data;
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+    return responseData;
+  }
+
   musicDeleteApi(musicId) {
     $.ajax({
       async: false,
@@ -80,7 +142,6 @@ class Api {
       dataType: "json",
       success: (response) => {
         responseData = response.data;
-        console.log(responseData);
       },
       error: (error) => {
         console.log(error)
@@ -97,7 +158,6 @@ class Api {
       contentType: "application/json",
       data: JSON.stringify(commentData),
       success: (response) => {
-        console.log(response);
         location.href = "/music/" + response.data;
       },
       error: (error) => {
@@ -114,7 +174,6 @@ class Api {
       contentType: "application/json",
       data: JSON.stringify(replyData),
       success: (response) => {
-        console.log(response);
         location.href = "/music/" + response.data;
       },
       error: (error) => {
@@ -131,7 +190,6 @@ class Api {
       contentType: "application/json",
       data: JSON.stringify(updateCommentData),
       success: (response) => {
-        console.log(response);
         location.href = "/music/" + response.data;
       },
       error: (error) => {
@@ -148,7 +206,6 @@ class Api {
       contentType: "application/json",
       data: JSON.stringify(deleteCommentData),
       success: (response) => {
-        console.log(response);
         location.href = "/music/" + response.data;
       },
       error: (error) => {
@@ -169,11 +226,14 @@ class MusicDtl {
   }
   #responseData;
   #userCheck;
+  #userRoleCheck;
+  #principal;
   constructor() {
     this.#responseData = Api.getInstance().getMusicApi();
     this.#userCheck = UserCheckService.getInstance().musicUserCheck();
+    this.#userRoleCheck = UserCheckService.getInstance().userRoleCheck();
+    this.#principal = PrincipalDtl.getInstance().getResponseData();
     this.getMusicDtl();
-    this.getMusicButton();
   }
 
   getMusicDtl() {
@@ -184,6 +244,7 @@ class MusicDtl {
           <iframe class="video" src="https://www.youtube.com/embed/${this.#responseData.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="music-info">
+          <div class="like-box"><p class="like-number"></p></div>
           <p class="writer">작성자 : ${this.#responseData.username}</p>
           <p class="song-name">${this.#responseData.title}</p>
           <p class="singer">${this.#responseData.singer}</p>
@@ -194,8 +255,51 @@ class MusicDtl {
           </div>
         </div>
       `;
+      this.getMusicLikeEvent();
+      this.getMusicButton();
     }
-    
+  }
+  
+  getMusicLikeEvent() {
+    const likeBox = document.querySelector(".like-box");
+    const likeNumber = document.querySelector(".like-number");
+    if(this.#principal != "") {
+      const likeState = Api.getInstance().getMusicLikeStateApi(this.#responseData.id,this.#principal.username);
+      if(likeState == 0) {
+        likeBox.classList.add("dislike-img");
+      }else {
+        likeBox.classList.add("like-img");
+      }
+    }else {
+      likeBox.classList.add("dislike-img");
+    }
+
+    const likeCount = Api.getInstance().getMusicLikeCountApi(this.#responseData.id);
+    likeNumber.innerHTML = `${likeCount}`;
+    this.musicLikeButton();
+  }
+
+  musicLikeButton() {
+    const likeBox = document.querySelector(".like-box");
+    const likeNumber = document.querySelector(".like-number");
+    likeBox.onclick = () => {
+      if(!this.#userRoleCheck){
+        if(confirm("로그인 시 이용가능한 서비스입니다. \n 로그인 페이지로 이동하시겠습니까?")){
+          location.href = "/login";
+        }
+      }else {
+        const likeState = Api.getInstance().musicLikeApi(this.#responseData.id,this.#principal.username);
+        likeNumber.innerHTML = "";
+        likeNumber.innerHTML = `${likeState}`;
+        if(likeBox.classList.contains("dislike-img")) {
+          likeBox.classList.remove("dislike-img");
+          likeBox.classList.add("like-img");
+        }else {
+          likeBox.classList.add("dislike-img");
+          likeBox.classList.remove("like-img");
+        }
+      }
+    }
   }
 
   getMusicButton() {
@@ -244,9 +348,9 @@ class CommentEvent {
     return this.#instance;
   }
   #comment;
-  #userCheck;
+  #userRoleCheck;
   constructor() {
-    this.#userCheck = UserCheckService.getInstance().musicUserCheck();
+    this.#userRoleCheck = UserCheckService.getInstance().userRoleCheck();
     this.#comment = Api.getInstance().getCommentApi();
     this.getCommentCount();
     this.getComment();
@@ -308,7 +412,7 @@ class CommentEvent {
     addCommentBtn.onclick = () => {
       let responseData = Api.getInstance().getMusicApi();
       const comment = document.querySelector(".comment").value;
-      if (!this.#userCheck) {
+      if (!this.#userRoleCheck) {
 //        localStorage.preUrl = location.pathname;
         location.href = "/login";
       }else if (comment == "") {
@@ -334,10 +438,10 @@ class ReplyEvent {
     }
     return this.#instance;
   }
-  #userCheck;
+  #userRoleCheck;
   #comment;
   constructor() {
-    this.#userCheck = UserCheckService.getInstance().musicUserCheck();
+    this.#userRoleCheck = UserCheckService.getInstance().userRoleCheck();
     this.#comment = Api.getInstance().getCommentApi();
     this.getReply();
     this.getReplyButton();
@@ -403,7 +507,7 @@ class ReplyEvent {
     replyBtn.forEach((btn, index) => {
       btn.onclick = () => {
         let responseData = Api.getInstance().getMusicApi();
-        if (!this.#userCheck) {
+        if (!this.#userRoleCheck) {
           location.href = "/login";
         }else if (replyInput[index].value == "") {
           alert("내용을 입력하세요.");
@@ -528,6 +632,13 @@ class UserCheckService {
       if(this.#principal.username == this.#responseData.username){
         return true;
       }
+    }
+    return false;
+  }
+
+  userRoleCheck() {
+    if(this.#principal != ""){
+        return true;
     }
     return false;
   }

@@ -1,7 +1,5 @@
 package com.Music.Group.Service;
 
-import com.Music.Group.Domain.Filter;
-import com.Music.Group.Domain.Music;
 import com.Music.Group.Dto.*;
 import com.Music.Group.Repository.MusicRepository;
 import lombok.RequiredArgsConstructor;
@@ -94,4 +92,24 @@ public class MusicServiceImpl implements MusicService{
         musicRepository.musicDelete(musicId);
     }
 
+    @Override
+    public int musicLikeState(int musicId, String username) throws Exception {
+        return musicRepository.musicLikeState(musicId, username);
+    }
+
+    @Override
+    public int musicLikeCount(int musicId) throws Exception {
+        return musicRepository.musicLikeCount(musicId);
+    }
+
+    @Override
+    public int musicLike(int musicId, String username) throws Exception {
+        int result = musicRepository.musicLikeState(musicId, username);
+        if (result == 0) {
+            musicRepository.musicLike(musicId, username);
+        }else {
+            musicRepository.musicDisLike(musicId, username);
+        }
+        return musicRepository.musicLikeCount(musicId);
+    }
 }

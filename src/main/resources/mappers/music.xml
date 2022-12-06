@@ -22,6 +22,16 @@
             now()
             )
     </insert>
+    <insert id="musicLike">
+        INSERT INTO
+            like_mst
+        VALUES(
+            0,
+            #{username},
+            #{musicId},
+            now()
+            )
+    </insert>
     <update id="musicUpdate">
         update
             music_mst
@@ -43,6 +53,14 @@
             music_mst
         where
             id = #{musicId}
+    </delete>
+    <delete id="musicDisLike">
+        delete from
+            like_mst
+        where
+            username = #{username}
+                and
+            music_id = #{musicId}
     </delete>
     <select id="getCategoryOptions" resultType="com.Music.Group.Domain.SelectOption">
         select
@@ -156,5 +174,23 @@
             music_mst
         WHERE
             id = #{musicId}
+    </select>
+    <select id="musicLikeState" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*) AS count
+        FROM
+            like_mst
+        WHERE
+            username = #{username}
+                and
+            music_id = #{musicId}
+    </select>
+    <select id="musicLikeCount" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*) AS count
+        FROM
+            like_mst
+        WHERE
+            music_id = #{musicId}
     </select>
 </mapper>

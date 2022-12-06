@@ -77,4 +77,20 @@ public class MusicApi {
         musicService.musicDelete(musicId);
         return ResponseEntity.ok(new CMRespDto<>("Music Delete Success", null));
     }
+
+    @GetMapping("/music/like/state")
+    public ResponseEntity<?> musicLikeState(int musicId, String username) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Success", musicService.musicLikeState(musicId, username)));
+    }
+
+    @GetMapping("/music/like/count/{musicId}")
+    public ResponseEntity<?> musicLikeState(@PathVariable int musicId) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Success", musicService.musicLikeCount(musicId)));
+    }
+
+
+    @PostMapping("/music/like")
+    public ResponseEntity<?> musicLike(int musicId, String username) throws Exception {
+        return ResponseEntity.ok(new CMRespDto<>("Success", musicService.musicLike(musicId, username)));
+    }
 }
