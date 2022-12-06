@@ -58,4 +58,13 @@ public class AccountServiceImpl implements AccountService{
         });
         return userInfoList;
     }
+
+    @Override
+    public List<MusicListResponseDto> likeMusicList(String username) throws Exception {
+        List<MusicListResponseDto> likeMusicList = new ArrayList<MusicListResponseDto>();
+        accountRepository.getUserLikeList(username).forEach(like -> {
+            likeMusicList.add(like.toLikeMusicListDto());
+        });
+        return likeMusicList;
+    }
 }

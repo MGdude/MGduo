@@ -11,4 +11,5 @@ public interface AccountService {
     public void passwordChecking(RegisterDto registerDto) throws Exception;
     public void register(RegisterDto registerDto) throws Exception;
     public List<MusicListResponseDto> UserInfo(String username)throws Exception;
+    public List<MusicListResponseDto> likeMusicList(String username)throws Exception;
 }

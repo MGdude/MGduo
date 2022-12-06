@@ -16,10 +16,27 @@ class Api {
         dataType: "json",
         success: (response) => {
           responseData = response.data;
-          console.log(responseData);
         },
         error: (error) => {
           console.log(error);
+        }
+      });
+      return responseData;
+    }
+
+    getLikeApi(username) {
+      let responseData = null;
+      $.ajax({
+        async: false,
+        type: "get",
+        url: "/api/account/like/" + username,
+        dataType: "json",
+        success: (response) => {
+          responseData = response.data;
+          console.log(responseData);
+        },
+        error: (error) => {
+          console.log(error)
         }
       });
       return responseData;
@@ -48,8 +65,9 @@ class MusicEvent {
     #musicList;
     
     constructor() {
-        // this.getMusicType();
+        this.getMusicType();
         this.getRegisterBtnEvent();
+        this.getLikeBtnEvent();
     }
 
     getMusicType() {
@@ -59,11 +77,35 @@ class MusicEvent {
         if(username != null) {
           this.#musicList = Api.getInstance().getUserInfoApi(username);
         }
+
         this.getMusicList();
+    }
+
+    getRegisterBtnEvent() {
+      let url = location.href;
+      let username = url.substring(url.lastIndexOf("/") + 1);
+      const registerMusicBtn = document.querySelector(".register-music");
+      registerMusicBtn.onclick = () => {
+        this.#musicList = Api.getInstance().getUserInfoApi(username);
+        this.getMusicList();
+        console.log("registerApi Test");
+      }
+    }
+
+    getLikeBtnEvent() {
+      let url = location.href;
+      let username = url.substring(url.lastIndexOf("/") + 1);
+      const likeMusicBtn = document.querySelector(".like-music");
+      likeMusicBtn.onclick = () => {
+        this.#musicList = Api.getInstance().getLikeApi(username);
+        this.getMusicList();
+        console.log("likeApi Test");
+      }
     }
 
     getMusicList() {
         const mainContent = document.querySelector(".main-content");
+        console.log(this.#musicList);
         mainContent.innerHTML = "";
         if (this.#musicList.length > 0) {
             this.#musicList.forEach(music => {
@@ -92,20 +134,30 @@ class MusicEvent {
             }
         });
     }
-    
-    getRegisterBtnEvent() {
-      const registerMusicBtn = document.querySelector(".register-music");
-      registerMusicBtn.onclick = () => {
-        this.getMusicType();
-      }
-    }
+}
 
-    getLikeBtnEvent() {
-      const likeMusicBtn = document.querySelector(".like-music");
-      likeMusicBtn.onclick = () => {
+class Aside {
+  constructor() {
+    this.getUsername();
+  }
+  getUsername() {
+    let url = location.href;
+    let username = url.substring(url.lastIndexOf("/") + 1);
+    const asideEvent = document.querySelector(".main-aside");
 
-      }
-    }
+    asideEvent.innerHTML = "";
+    if(username != null) {
+      asideEvent.innerHTML = `
+      <ul class="test"> ${username}'s List
+        <input type="radio" class="register-music" name="category" id="register-music" value="1" checked/>
+        <li><label for="register-music" class="register"> - 등록 음악</label></li>
+        <input type="radio" class="like-music" name="category" id="like-music" value="2"/>
+        <li><label for="like-music" class="like"> - 좋아요</label></li>
+      </ul>
+      `;
+    } 
+
+  }
 }
 
 
@@ -114,6 +166,7 @@ window.onload = () => {
     PrincipalDtl.getInstance();
     HeaderEvent.getInstance();
     new SearchEvent();
+    new Aside();
     new MusicEvent();
     
 }

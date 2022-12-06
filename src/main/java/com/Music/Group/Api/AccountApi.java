@@ -42,4 +42,10 @@ public class AccountApi {
         return ResponseEntity.ok().body(new CMRespDto<>("UserInfo Success", accountService.UserInfo(username)));
     }
 
+    @GetMapping("/like/{username}")
+    public ResponseEntity<?> getLikeMusic(@PathVariable String username) throws Exception {
+        System.out.println(accountService.likeMusicList(username));
+        return ResponseEntity.ok().body(new CMRespDto<>("LikeMusic Success", accountService.likeMusicList(username)));
+    }
+
 }
