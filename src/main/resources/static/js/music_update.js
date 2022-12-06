@@ -97,7 +97,6 @@ class Api {
             dataType: "json",
             success: response => {
                 responseData = response.data;
-                console.log(response.data);
             },
             error: error => {
                 console.log(error);
@@ -116,7 +115,6 @@ class Api {
             dataType: "json",
             success: response => {
                 responseData = response.data;
-                console.log(response.data);
             },
             error: error => {
                 console.log(error);
@@ -135,7 +133,6 @@ class Api {
             dataType: "json",
             success: response => {
                 responseData = response.data;
-                console.log(response.data);
             },
             error: error => {
                 console.log(error);

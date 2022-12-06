@@ -62,7 +62,6 @@ class MusicEvent {
         }else {
            this.#musicList = Api.getInstance().getMusicAllListApi(filter);
         }
-        console.log(this.#musicList);
         this.getMusicList();
     }
 
@@ -107,7 +106,15 @@ class AsideEvent {
     return this.#instance;
   }
 
+  categoryValue = 0;
+  genderValue = 0;
+  genreValue = 0;
+  seasonValue = 0;
   #urlParams;
+  #categoryRadio;
+  #genderRadio;
+  #genreRadio;
+  #seasonRadio;
 
   constructor() {
     this.init();
@@ -118,17 +125,41 @@ class AsideEvent {
   }
   
   init() {
+    this.#categoryRadio = document.querySelectorAll(".category-radio");
+    this.#categoryRadio.forEach(category => {
+      if(category.checked){
+        this.categoryValue = category.value;
+      }
+    })
+    this.#genderRadio = document.querySelectorAll(".gender-radio");
+    this.#genderRadio.forEach(gender => {
+      if(gender.checked){
+        this.genderValue = gender.value;
+      }
+    })
+    this.#genreRadio = document.querySelectorAll(".genre-radio");
+    this.#genreRadio.forEach(genre => {
+      if(genre.checked){
+        this.genreValue = genre.value;
+      }
+    })
+    this.#seasonRadio = document.querySelectorAll(".season-radio");
+    this.#seasonRadio.forEach(season => {
+      if(season.checked){
+        this.seasonValue = season.value;
+      }
+    })
+
     this.#urlParams = {
-      "categoryId" : 0,
-      "genderId" : 0,
-      "genreId" : 0,
-      "seasonId" : 0
+      "categoryId" : this.categoryValue,
+      "genderId" : this.genderValue,
+      "genreId" : this.genreValue,
+      "seasonId" : this.seasonValue
     }
   }
 
   getCategoryEvent() {
-
-    document.querySelectorAll(".category-radio").forEach(category => {
+    this.#categoryRadio.forEach(category => {
       category.onclick = () => {
         if(this.#urlParams.categoryId == category.value) {
           category.checked = false;
@@ -142,8 +173,7 @@ class AsideEvent {
   }
 
   getGenderEvent() {
-
-    document.querySelectorAll(".gender-radio").forEach(gender => {
+    this.#genderRadio.forEach(gender => {
       gender.onclick = () => {
         if(this.#urlParams.genderId == gender.value) {
           gender.checked = false;
@@ -157,8 +187,7 @@ class AsideEvent {
   }
 
   getGenreEvent() {
-
-    document.querySelectorAll(".genre-radio").forEach(genre => {
+    this.#genreRadio.forEach(genre => {
       genre.onclick = () => {
         if(this.#urlParams.genreId == genre.value) {
           genre.checked = false;
@@ -172,8 +201,7 @@ class AsideEvent {
   }
 
   getSeasonEvent() {
-
-    document.querySelectorAll(".season-radio").forEach(season => {
+    this.#seasonRadio.forEach(season => {
       season.onclick = () => {
         if(this.#urlParams.seasonId == season.value) {
           season.checked = false;
@@ -189,9 +217,6 @@ class AsideEvent {
   getUrlParam() {
     return this.#urlParams;
   }
-
-
-
 }
 
 window.onload = () => {

@@ -22,8 +22,6 @@ import java.net.URI;
 public class MusicApi {
 
     private final MusicService musicService;
-    private final CommentService commentService;
-    private final SearchService searchService;
 
     @GetMapping("/music/option/category")
     public ResponseEntity<?> getCategoryOption() throws Exception {

@@ -82,7 +82,6 @@ class UserData {
                 data: JSON.stringify(user),
                 dataType: "json",
                 success: (response, textStatus, request) => {
-                    console.log(response);
                     const successURI = request.getResponseHeader("Location");
                     location.replace(successURI + "?username=" + response.data);
                 },

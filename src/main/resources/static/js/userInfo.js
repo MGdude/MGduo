@@ -33,7 +33,6 @@ class Api {
         dataType: "json",
         success: (response) => {
           responseData = response.data;
-          console.log(responseData);
         },
         error: (error) => {
           console.log(error)
@@ -88,7 +87,6 @@ class MusicEvent {
       registerMusicBtn.onclick = () => {
         this.#musicList = Api.getInstance().getUserInfoApi(username);
         this.getMusicList();
-        console.log("registerApi Test");
       }
     }
 
@@ -99,13 +97,11 @@ class MusicEvent {
       likeMusicBtn.onclick = () => {
         this.#musicList = Api.getInstance().getLikeApi(username);
         this.getMusicList();
-        console.log("likeApi Test");
       }
     }
 
     getMusicList() {
         const mainContent = document.querySelector(".main-content");
-        console.log(this.#musicList);
         mainContent.innerHTML = "";
         if (this.#musicList.length > 0) {
             this.#musicList.forEach(music => {

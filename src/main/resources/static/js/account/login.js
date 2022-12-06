@@ -27,7 +27,6 @@ class ErrorName {
 
   alreadyLogin() {
     let test = PrincipalDtl.getInstance().getPrincipalData();
-    console.log(test);
 
     if(test != "") {
       location.replace("/");

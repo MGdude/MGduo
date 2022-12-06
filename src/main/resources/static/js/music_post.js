@@ -20,7 +20,6 @@ class Api {
       dataType: "json",
       success: (response) => {
         responseData = response.data;
-        console.log(responseData);
       },
       error: (error) => {
         console.log(error)
@@ -98,7 +97,7 @@ class Api {
       url: "/api/music/delete/" + musicId,
       dataType: "json",
       success: (response) => {
-        console.log("Music 삭제 완료.");
+        alert("Music 삭제 완료.");
         location.href = "/";
       },
       error: (error) => {
@@ -120,7 +119,6 @@ class Api {
       dataType: "json",
       success: (response) => {
         responseData = response.data;
-        console.log(responseData);
       },
       error: (error) => {
         console.log(error)
@@ -452,8 +450,6 @@ class ReplyEvent {
     this.#comment.forEach((comment, index) => {
       const replyData = Api.getInstance().getCommentReplyApi(comment.id);
       const replyBox = document.querySelectorAll(".reply-box")[index];
-      console.log(comment);
-      console.log(replyData);
       if (replyData.length > 0) {
         replyData.forEach(reply => {
           replyBox.innerHTML += `
@@ -484,10 +480,7 @@ class ReplyEvent {
   }
 
   getReplyButton() {
-    this.#comment.forEach((data,index) => {
-      console.log(data);
-      console.log(index);
-      
+    this.#comment.forEach((data,index) => {    
       const replyBtn = document.querySelectorAll(".reply-btn")[index];
       const replyInputClass = document.querySelectorAll(".reply-input")[index];
       const replyInputBtnClass = document.querySelectorAll(".reply-input-btn")[index];
@@ -518,7 +511,6 @@ class ReplyEvent {
             "userName" : PrincipalDtl.getInstance().getResponseData().username,
             "parentsId" : commentId[index].value
           }
-          console.log(commentData);
           Api.getInstance().addCommentApi(commentData);
         }
       }
@@ -581,7 +573,6 @@ class CommentService {
           "userName" : this.#principal.username,
           "comment" : updateText[index].value
         }
-        console.log(updateCommentData);
         Api.getInstance().updateCommentApi(updateCommentData);
       }
     }) 
@@ -600,7 +591,6 @@ class CommentService {
               "musicId" : this.#responseData.id,
               "userName" : this.#principal.username
               }
-            console.log(deleteCommentData);
             Api.getInstance().deleteCommentApi(deleteCommentData);
             }else {
             alert("권한이 없는 사용자입니다.");
