@@ -212,9 +212,11 @@ class Music {
         return this.#instance;
     }
 
-    #userCheck;
+    #musicUserCheck;
+    #adminCheck;
     constructor() {
-        this.#userCheck = UserCheckService.getInstance().check();
+        this.#musicUserCheck = UserCheckService.getInstance().musicUserCheck();
+        this.#adminCheck = UserCheckService.getInstance().adminCheck();
         this.getMusicData();
         this.updateMusicEvent();
     }
@@ -235,7 +237,7 @@ class Music {
         const updateButton = document.querySelector(".update-button");
 
         updateButton.onclick = () => {    
-            if(this.#userCheck){
+            if(this.#musicUserCheck || this.#adminCheck){
                 let youtubeUrl = document.querySelectorAll(".inputs")[3].value;
                 youtubeUrl = youtubeUrl.substring(youtubeUrl.lastIndexOf('/') + 1);
                 if (youtubeUrl.includes('=')) {
@@ -276,17 +278,26 @@ class UserCheckService {
     #principal;
   
     constructor() {
-      this.#responseData = Api.getInstance().getMusicApi();
-      this.#principal = PrincipalDtl.getInstance().getResponseData();
+        this.#responseData = Api.getInstance().getMusicApi();
+        this.#principal = PrincipalDtl.getInstance().getResponseData();
     } 
   
-    check() {
+    musicUserCheck() {
       if(this.#principal != ""){
         if(this.#principal.username == this.#responseData.username){
-          return true;
+        return true;
         }
       }
       return false;
+    }
+
+    adminCheck() {
+        if(this.#principal){
+          if(this.#principal.user.role_id == 2){
+            return true;
+          }
+        }
+        return false;
     }
   }
 window.onload = () => {

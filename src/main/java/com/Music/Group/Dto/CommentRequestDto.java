@@ -13,6 +13,7 @@ public class CommentRequestDto {
     private int musicId;
     private String userName;
     private String comment;
+    private int roleId;
 
     public Comment toEntity() {
         return Comment.builder()

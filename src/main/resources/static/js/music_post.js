@@ -226,11 +226,13 @@ class MusicDtl {
   #userCheck;
   #userRoleCheck;
   #principal;
+  #adminCheck;
   constructor() {
     this.#responseData = Api.getInstance().getMusicApi();
     this.#userCheck = UserCheckService.getInstance().musicUserCheck();
     this.#userRoleCheck = UserCheckService.getInstance().userRoleCheck();
     this.#principal = PrincipalDtl.getInstance().getResponseData();
+    this.#adminCheck = UserCheckService.getInstance().adminCheck();
     this.getMusicDtl();
   }
 
@@ -301,7 +303,7 @@ class MusicDtl {
   }
 
   getMusicButton() {
-    if(this.#userCheck){
+    if(this.#userCheck || this.#adminCheck){
       const button = document.querySelector(".modify-btn");
       button.innerHTML += `
         <button class="btn post-update-btn">수정</button>
@@ -317,7 +319,7 @@ class MusicDtl {
     
     updateBtn.onclick = () => {
       if(confirm("게시물을 수정하시겠습니까?")) {
-        if(this.#userCheck){
+        if(this.#userCheck || this.#adminCheck){
           location.href = "/music_update/" + this.#responseData.id;
         }else {
           alert("권한이 없는 사용자입니다.");
@@ -327,7 +329,7 @@ class MusicDtl {
 
     deleteBtn.onclick = () => {
       if(confirm("게시물을 삭제하시겠습니까?")) {
-        if(this.#userCheck){
+        if(this.#userCheck || this.#adminCheck){
           Api.getInstance().musicDeleteApi(this.#responseData.id);
         }else {
           alert("권한이 없는 사용자입니다.");
@@ -527,10 +529,12 @@ class CommentService {
     return this.#instance;
   }
   #principal;
+  #adminCheck;
   #userName;
   #responseData;
   constructor() {
     this.#principal = PrincipalDtl.getInstance().getResponseData();
+    this.#adminCheck = UserCheckService.getInstance().adminCheck();
     this.#userName = PrincipalDtl.getInstance().getResponseData().username;
     this.#responseData = Api.getInstance().getMusicApi();
     this.btnVisibleEvent();
@@ -541,9 +545,9 @@ class CommentService {
 
   btnVisibleEvent() {
     const commentBtnService = document.querySelectorAll(".comment-service");
-    const commentuserName = document.querySelectorAll(".comment-username");
+    const commentusername = document.querySelectorAll(".comment-username");
     commentBtnService.forEach((data,index) => {
-      if(this.#userName == commentuserName[index].innerHTML) {
+      if(this.#userName == commentusername[index].innerHTML || this.#adminCheck) {
         commentBtnService[index].classList.remove("service-invisible");
       }
     });
@@ -556,7 +560,7 @@ class CommentService {
     commentUpdateEvent.forEach((button, index) => {
       button.onclick = () => {
         commentText[index].classList.toggle("invisible");
-        commentUpdateText[index].classList.toggle("invisible");  
+        commentUpdateText[index].classList.toggle("invisible");
       }
     })
   }
@@ -564,18 +568,24 @@ class CommentService {
   updateBtn() {
     const commentUpdateBtn = document.querySelectorAll(".comment-update-btn");
     const commentId = document.querySelectorAll(".comment-id");
+    const commentusername = document.querySelectorAll(".comment-username");
     const updateText = document.querySelectorAll(".update-text");
     commentUpdateBtn.forEach((button, index) => {
       button.onclick = () => {
-        const updateCommentData = {
-          "id" : commentId[index].value,
-          "musicId" : this.#responseData.id,
-          "userName" : this.#principal.username,
-          "comment" : updateText[index].value
+        if(this.#principal.user.username == commentusername[index].innerHTML || this.#adminCheck) {
+          const updateCommentData = {
+            "id" : commentId[index].value,
+            "musicId" : this.#responseData.id,
+            "userName" : this.#principal.username,
+            "comment" : updateText[index].value,
+            "roleId" : this.#principal.user.role_id
+          }
+          Api.getInstance().updateCommentApi(updateCommentData);
+        }else {
+          alert("권한이 없는 사용자입니다.");
         }
-        Api.getInstance().updateCommentApi(updateCommentData);
       }
-    }) 
+    });
   }
 
   deletebtn() {
@@ -585,19 +595,20 @@ class CommentService {
     commentDeleteBtn.forEach((button, index) => {
       button.onclick = () => {
         if(confirm("댓글을 삭제하시겠습니까?")){
-          if(this.#principal.user.username == commentUsername[index].innerHTML) {
+          if(this.#principal.user.username == commentUsername[index].innerHTML || this.#adminCheck) {
             const deleteCommentData = {
               "id" : commentId[index].value,
               "musicId" : this.#responseData.id,
-              "userName" : this.#principal.username
-              }
+              "userName" : this.#principal.username,
+              "roleId" : this.#principal.user.role_id
+            }
             Api.getInstance().deleteCommentApi(deleteCommentData);
-            }else {
-            alert("권한이 없는 사용자입니다.");
+          }else {
+          alert("권한이 없는 사용자입니다.");
           }
         }
       }
-    }) 
+    });
   }
 }
 
@@ -629,6 +640,15 @@ class UserCheckService {
   userRoleCheck() {
     if(this.#principal != ""){
         return true;
+    }
+    return false;
+  }
+
+  adminCheck() {
+    if(this.#principal){
+      if(this.#principal.user.role_id == 2){
+        return true;
+      }
     }
     return false;
   }

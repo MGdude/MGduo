@@ -55,10 +55,12 @@ public class CommentServiceImpl implements CommentService{
     public void commentUpdate(CommentRequestDto commentRequestDto) throws Exception {
         Comment comment = commentRepository.findCommentByUsername(commentRequestDto.getId());
         
-        if(!comment.getUsername().equals(commentRequestDto.getUserName())) {
-            Map<String, String> errorMap = new HashMap<String, String>();
-            errorMap.put("error", "데이터베이스 오류입니다.");
-            throw new CustomValidationException("DataBase Error", errorMap);
+        if(commentRequestDto.getRoleId() != 2){
+            if(!comment.getUsername().equals(commentRequestDto.getUserName())){
+                Map<String, String> errorMap = new HashMap<String, String>();
+                errorMap.put("error", "데이터베이스 오류입니다.");
+                throw new CustomValidationException("DataBase Error", errorMap);
+            }
         }
         int result = commentRepository.commentUpdate(commentRequestDto.toEntity());
         if(result == 0) {
@@ -71,10 +73,12 @@ public class CommentServiceImpl implements CommentService{
     public void commentDelete(CommentRequestDto commentRequestDto) throws Exception {
         Comment comment = commentRepository.findCommentByUsername(commentRequestDto.getId());
 
-        if(!comment.getUsername().equals(commentRequestDto.getUserName())) {
-            Map<String, String> errorMap = new HashMap<String, String>();
-            errorMap.put("error", "데이터베이스 오류입니다.");
-            throw new CustomValidationException("DataBase Error", errorMap);
+        if(commentRequestDto.getRoleId() != 2){
+            if(!comment.getUsername().equals(commentRequestDto.getUserName())){
+                Map<String, String> errorMap = new HashMap<String, String>();
+                errorMap.put("error", "데이터베이스 오류입니다.");
+                throw new CustomValidationException("DataBase Error", errorMap);
+            }
         }
         int result = commentRepository.commentDelete(commentRequestDto.toEntity());
         if(result == 0) {
