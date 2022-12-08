@@ -89,9 +89,9 @@
             LEFT OUTER JOIN gender ON(gender.id = mm.gender_id)
             LEFT OUTER JOIN genre ON(genre.id = mm.genre_id)
             LEFT OUTER JOIN season ON(season.id = mm.season_id)
-            LEFT OUTER JOIN like_mst ON (like_mst.username = mm.username)
+            ,like_mst lm
         WHERE
-            mm.username = #{username} AND mm.id = like_mst.music_id
+            lm.username = #{username} AND mm.id = lm.music_id
     </select>
 
 </mapper>
