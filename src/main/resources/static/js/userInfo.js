@@ -18,7 +18,8 @@ class Api {
           responseData = response.data;
         },
         error: (error) => {
-          console.log(error);
+          alert("없는 사용자입니다.");
+          location.href = "/";
         }
       });
       return responseData;

@@ -52,6 +52,12 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public List<MusicListResponseDto> UserInfo(String username) throws Exception {
+        User findUser = accountRepository.findUserByUsername(username);
+        if (findUser == null) {
+            Map<String, String> errorMap = new HashMap<String, String>();
+            errorMap.put("UserCheck", "없는 사용자입니다.");
+            throw new CustomValidationException("User No Find", errorMap);
+        }
         List<MusicListResponseDto> userInfoList = new ArrayList<MusicListResponseDto>();
         accountRepository.getUserInfoList(username).forEach(user -> {
             userInfoList.add(user.toUserInfoDto());
