@@ -219,6 +219,7 @@ class Music {
         this.#adminCheck = UserCheckService.getInstance().adminCheck();
         this.getMusicData();
         this.updateMusicEvent();
+        this.cancelEvent();
     }
 
     getMusicData() {
@@ -261,6 +262,18 @@ class Music {
             }else {
                 alert("권한이 없는 사용자입니다.");
                 location.replace("/");
+            }
+        }
+    }
+
+    cancelEvent() {
+        const cancelButton = document.querySelector(".cancel-button");
+
+        const url = location.href;
+        const musicId = url.substring(url.lastIndexOf("/") + 1)
+        cancelButton.onclick = () => {
+            if(confirm("수정을 취소합니다.")){
+                location.replace("/music/" + musicId);
             }
         }
     }
